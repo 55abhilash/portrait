@@ -21,99 +21,99 @@
 
 <body>
 
-                        <script>
-                            $(function() {
-                                $("#tabs").tabs();
-                            });
-                        </script>
-                        </head>
+			<script>
+					$(function() {
+						$("#tabs").tabs();
+					});
+			</script>
+			</head>
 
-                        <body>
+			<body>
 
-                            <div id="tabs">
-                                <ul style="width:100%; text-align:center;">
-                                    <li style="width:30%;"><a href="#tabs-1">Nunc tincidunt</a></li>
-                                    <li style="width:30%;"><a href="#tabs-2">Proin dolor</a></li>
-                                    <li style="width:30%;"><a href="#tabs-3">Aenean lacinia</a></li>
-                                </ul>
-                                <div id="tabs-1">
-                               
+				<div id="tabs">
+						<ul style="width:100%; text-align:center;">
+							<li style="width:30%;"><a href="#tabs-1">Dashboard</a></li>
+							<li style="width:30%;"><a href="#tabs-2">Machines</a></li>
+							<li style="width:30%;"><a href="#tabs-3">Running Tasks</a></li>
+						</ul>
+						<div id="tabs-1">
+				   
 
-                                    <form method='post' id="f">
-                                    {% csrf_token %}
-        																			<button id="b" type='submit' form="f"> 
-            																				SEND
-																								</button>
-																								</form>
-																								<form method="post" id="f2">
-																								{% csrf_token %}
-																								<button id="b2" type='submit' form="f2"> 
-																									INSERT
-																								</button>
-																								</form>
-																								<form method="post" id="logout">
-																								{% csrf_token %}
-																								<button id="b2" type='submit' form="logout"> 
-																									LOGOUT
-																								</button>
-																								</form>
-																								<div id="div1"></div>
-																								<script>
+						<form method='post' id="f">
+						{% csrf_token %}
+									<button id="b" type='submit' form="f"> 
+											SEND
+												</button>
+												</form>
+												<form method="post" id="f2">
+												{% csrf_token %}
+												<button id="b2" type='submit' form="f2"> 
+													INSERT
+												</button>
+												</form>
+												<form method="post" id="logout">
+												{% csrf_token %}
+												<button id="b2" type='submit' form="logout"> 
+													LOGOUT
+												</button>
+												</form>
+												<div id="div1"></div>
+												<script>
 
-																								$(document).ready(function() {
-																								   $("#f").submit(function(event){
-																										$.ajax({
-																											 type:"POST",
-																											 url:"http://localhost",
-																											 data: {
-																												'postid' : '1',
-																												'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-																											 },
-																											 success: function(data){
-																												 if(data.status == '1') {
-																													$('#div1').html(data) 
-																												 }
-																												 else if(data.status == '0') {
-																													window.location(data.url)
-																												 }
-																											 }
-																										});
-																										return false; //<---- move it here
-																								   	});
-																								});
-																								$(document).ready(function() {
-																								   $("#f2").submit(function(event){
-																										$.ajax({
-																											 type:"POST",
-																											 url:"http://localhost",
-																											 data: {
-																												'postid' : '2',
-																												'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-																											 },
-																											 success: function(data){
-																													$('#div1').html(data) 
-																											}
-																										});
-																										return false; //<---- move it here
-																								   	});
-																								});
-																								$(document).ready(function() {
-																								   $("#logout").submit(function(event){
-																										$.ajax({
-																											 type:"POST",
-																											 url:"http://localhost",
-																											 data: {
-																												'postid' : '3',
-																												'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-																											 },
-																											 success: function(data){
-																													window.location.replace(data.url);   
-																											}
-																										});
-																										return false; //<---- move it here
-																								   	});
-																								});
-																								</script>
+												$(document).ready(function() {
+												   $("#f").submit(function(event){
+														$.ajax({
+															 type:"POST",
+															 url:"http://localhost",
+															 data: {
+																'postid' : '1',
+																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+															 },
+															 success: function(data){
+																 if(data.status == '1') {
+																	$('#div1').html(data) 
+																 }
+																 else if(data.status == '0') {
+																	window.location(data.url)
+																 }
+															 }
+														});
+														return false; //<---- move it here
+												   	});
+												});
+												$(document).ready(function() {
+												   $("#f2").submit(function(event){
+														$.ajax({
+															 type:"POST",
+															 url:"http://localhost",
+															 data: {
+																'postid' : '2',
+																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+															 },
+															 success: function(data){
+																	$('#div1').html(data) 
+															}
+														});
+														return false; //<---- move it here
+												   	});
+												});
+												$(document).ready(function() {
+												   $("#logout").submit(function(event){
+														$.ajax({
+															 type:"POST",
+															 url:"http://localhost",
+															 data: {
+																'postid' : '3',
+																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+															 },
+															 success: function(data){
+																	window.location.replace(data.url);   
+															}
+														});
+														return false; //<---- move it here
+												   	});
+												});
+									</script>
 
                                 </div>
                                 <div id="tabs-2">
