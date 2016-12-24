@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.login_portrait, name='login'),
+    url(r'^pending_reg/', views.pending_reg, name='pending_reg'),
 ]
