@@ -1,0 +1,85 @@
+<html> 
+    <head>
+        <b> Welcome to Portrait {{ request.user }}!!!</b>
+        <script src="/static/jquery.js"></script>
+    </head>
+
+   <body>
+        <form method='post' id="f">
+        {% csrf_token %}
+        <button id="b" type='submit' form="f"> 
+            SEND
+        </button>
+        </form>
+        <form method="post" id="f2">
+        {% csrf_token %}
+        <button id="b2" type='submit' form="f2"> 
+            INSERT
+        </button>
+        </form>
+        <form method="post" id="logout">
+        {% csrf_token %}
+        <button id="b2" type='submit' form="logout"> 
+            LOGOUT
+        </button>
+        </form>
+        <div id="div1"></div>
+   </body>
+    <script>
+
+	$(document).ready(function() {
+       $("#f").submit(function(event){
+            $.ajax({
+                 type:"POST",
+                 url:"http://localhost",
+                 data: {
+                    'postid' : '1',
+                    'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+                 },
+                 success: function(data){
+                     if(data.status == '1') {
+                        $('#div1').html(data) 
+                     }
+                     else if(data.status == '0') {
+                        window.location(data.url)
+                     }
+                 }
+            });
+            return false; //<---- move it here
+       	});
+	});
+	$(document).ready(function() {
+       $("#f2").submit(function(event){
+            $.ajax({
+                 type:"POST",
+                 url:"http://localhost",
+                 data: {
+                    'postid' : '2',
+                    'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+                 },
+                 success: function(data){
+                        $('#div1').html(data) 
+                }
+            });
+            return false; //<---- move it here
+       	});
+	});
+	$(document).ready(function() {
+       $("#logout").submit(function(event){
+            $.ajax({
+                 type:"POST",
+                 url:"http://localhost",
+                 data: {
+                    'postid' : '3',
+                    'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+                 },
+                 success: function(data){
+                        window.location.replace(data.url);   
+                }
+            });
+            return false; //<---- move it here
+       	});
+	});
+    </script>
+</html>
+
