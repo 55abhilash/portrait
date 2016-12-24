@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Bootstrap 3, from LayoutIt!</title>
+    <title>Portrait : A free and open source systems management software!</title>
 
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
@@ -16,6 +16,14 @@
     <link rel="stylesheet" href="/static/css/jquery-ui.css">
     
     <script src="/static/jquery-ui.js"></script>
+
+  <style>
+  #feedback { font-size: 1.4em; }
+    #selectable .ui-selecting { background: #FECA40; }
+      #selectable .ui-selected { background: #F39814; color: white; }
+        #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+          #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+            </style>
 
 </head>
 
@@ -131,7 +139,11 @@
 															 },
 															 success: function(data){
                                                                         $( "#dialog" ).dialog();
-                                                                        $( "#dialog" ).html(data);
+                                                                        $( function() {
+                                                                            $( "#selectable" ).selectable();
+                                                                        });
+                                                                        var in_dialog = '<ol id="selectable"> <li class="ui-widget-content">' + data + '</li>';
+                                                                        $( "#dialog" ).html(in_dialog);
                                                              }
 														});
 														return false; //<---- move it here
