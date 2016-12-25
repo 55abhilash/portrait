@@ -131,14 +131,6 @@
 																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
 															 },
 															 success: function(data){
-                                                                        //$( "#dialog" ).dialog();
-                                                                        $( function() {
-                                                                            $( "#selectable" ).selectable();
-                                                                        });
-                                                                        var in_dialog = '<ol id="selectable"><li class="ui-widget-content" id="list_item" ></li></ol>';
-                                                                        //$( "#dialog" ).html(in_dialog);
-                                                                        $( "#disp_area" ).append(in_dialog);
-                                                                        $( "#list_item" ).html(data);
                                                              }
 														});
 														return false; //<---- move it here
@@ -148,13 +140,6 @@
 								    </script>
                                     <div id="dialog" title="Pending Minion Registrations">
                                     </div>
-                                    <style>
-                                            #feedback { font-size: 1.4em; }
-                                            #selectable .ui-selecting { background: #FECA40; }
-                                            #selectable .ui-selected { background: #F39814; color: white; }
-                                            #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-                                            #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
-                                    </style>
                                     <div class="widget" id="disp_area">
                                         <input id="view_pending" type="submit" value="View Pending Registrations">
                                     </div>
