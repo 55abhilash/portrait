@@ -41,19 +41,19 @@ def index(request):
 def login_1(request):
     if(request.method=='POST'):
         all_entries = log.objects.all() 
-# all_entries is a query set. We have to iterate over a query set in order
-# to access each entry in the database table.
+        # all_entries is a query set. We have to iterate over a query set in order
+        # to access each entry in the database table.
         t = log(user="abhi", pwd=hashers.make_password('abhi'))
         t.save()
         for entry in all_entries :
-# entry.user -> access the value of column 'user' in the entry.
+        # entry.user -> access the value of column 'user' in the entry.
             if(request.POST.get('user') == entry.user):
                 if(hashers.check_password(request.POST.get('pwd'), entry.pwd)):
                     redirect('http://localhost/')
                 else :
                     return HttpResponse("WRONG PASSWORD")
         return HttpResponse("USER NOT FOUND")
-# not a post request, i.e. just the login.html url is typed         
+        # not a post request, i.e. just the login.html url is typed         
     else :
         return render(request, 'login.html')
 
@@ -82,4 +82,4 @@ def pending_reg(request):
         reg = registrations()
         if(request.POST.get('action') == 'show'):
             return HttpResponse(reg.show_pending_registrations())
-#        elif(request.POST.get('action') == 'accept'):
+        #elif(request.POST.get('action') == 'accept'):
