@@ -36,25 +36,6 @@ def index(request):
             return HttpResponse(json.dumps(resp), content_type='application/json')
     return render(request, 'index.html')
 
-def login_1(request):
-    if(request.method=='POST'):
-        all_entries = log.objects.all() 
-        # all_entries is a query set. We have to iterate over a query set in order
-        # to access each entry in the database table.
-        t = log(user="abhi", pwd=hashers.make_password('abhi'))
-        t.save()
-        for entry in all_entries :
-        # entry.user -> access the value of column 'user' in the entry.
-            if(request.POST.get('user') == entry.user):
-                if(hashers.check_password(request.POST.get('pwd'), entry.pwd)):
-                    redirect('http://localhost/')
-                else :
-                    return HttpResponse("WRONG PASSWORD")
-        return HttpResponse("USER NOT FOUND")
-        # not a post request, i.e. just the login.html url is typed         
-    else :
-        return render(request, 'login.html')
-
 def login_portrait(request):
     if(not request.user.is_anonymous()):
         return redirect('http://localhost/')
