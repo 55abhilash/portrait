@@ -31,7 +31,7 @@ class task():
     def run(self, selected_machines, inp):
         # cmd.run will take place here
         tmp = 0
-    return_status = list()
+    return_status = dict()
 
     def create_output(self):
         # Success status received from minions for this task
@@ -58,3 +58,9 @@ class registrations():
     def reject_ids(machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.reject(' + machine + ')')
+
+class job():
+    jid = ""
+
+    def notification(self):
+        return 0
