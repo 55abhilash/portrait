@@ -41,112 +41,119 @@
 				   
 
 						<form method='post' id="f">
-						{% csrf_token %}
-									<button id="b" type='submit' form="f"> 
-											SEND
-												</button>
-												</form>
-												<form method="post" id="f2">
-												{% csrf_token %}
-												<button id="b2" type='submit' form="f2"> 
-													INSERT
-												</button>
-												</form>
-												<form method="post" id="logout">
-												{% csrf_token %}
-												<button id="b2" type='submit' form="logout"> 
-													LOGOUT
-												</button>
-												</form>
-												<div id="div1"></div>
-												<script>
+						    {% csrf_token %}
+						    <button id="b" type='submit' form="f"> 
+							    SEND
+							</button>
+						</form>
+												
+                        <form method="post" id="f2">
+                            {% csrf_token %}
+                            <button id="b2" type='submit' form="f2"> 
+							    INSERT
+							</button>
+						</form>
+												
+                        <form method="post" id="logout">
+							{% csrf_token %}
+							<button id="b2" type='submit' form="logout"> 
+								LOGOUT
+							</button>
+						</form>
+												
+                        <div id="div1"></div>
+												
+                        <script>
+						    $(document).ready(function() {
+							    $("#f").submit(function(event){
+								    $.ajax({
+										type:"POST",
+				    					 url:"http://localhost",
+										 data: {
+							    			'postid' : '1',
+											'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+										 },
+										 success: function(data){
+				    						 if(data.status == '1') {   
+                                                $('#div1').html(data) 
+											 }
+	    									 else if(data.status == '0') {
+											    window.location(data.url)
+											 }
+										 }
+									});
+									return false; //<---- move it here
+								});
+						    });
 
-												$(document).ready(function() {
-												   $("#f").submit(function(event){
-														$.ajax({
-															 type:"POST",
-															 url:"http://localhost",
-															 data: {
-																'postid' : '1',
-																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-															 },
-															 success: function(data){
-																 if(data.status == '1') {
-																	$('#div1').html(data) 
-																 }
-																 else if(data.status == '0') {
-																	window.location(data.url)
-																 }
-															 }
-														});
-														return false; //<---- move it here
-												   	});
-												});
-												$(document).ready(function() {
-												   $("#f2").submit(function(event){
-														$.ajax({
-															 type:"POST",
-															 url:"http://localhost",
-															 data: {
-																'postid' : '2',
-																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-															 },
-															 success: function(data){
-																	$('#div1').html(data) 
-															}
-														});
-														return false; //<---- move it here
-												   	});
-												});
-												$(document).ready(function() {
-												   $("#logout").submit(function(event){
-														$.ajax({
-															 type:"POST",
-															 url:"http://localhost",
-															 data: {
-																'postid' : '3',
-																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-															 },
-															 success: function(data){
-																	window.location.replace(data.url);   
-															}
-														});
-														return false; //<---- move it here
-												   	});
-												});
-									</script>
+							$(document).ready(function() {
+							    $("#f2").submit(function(event){
+								    $.ajax({
+										 type:"POST",
+										 url:"http://localhost",
+				    					 data: {
+								    		'postid' : '2',
+											'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+										 },
+										 success: function(data){
+											$('#div1').html(data) 
+                                         }
+									});
+									return false; //<---- move it here
+								});
+							});
 
-                                </div>
-                                <div id="tabs-2">
-								    <script>
-						                $( function() {
-			                                $( ".widget input[type=submit], .widget a, .widget button" ).button();
-                                            $(document).ready(function () {
-                                                $( "#view_pending" ).button().click( function( event ) {
-														$.ajax({
-															 type:"POST",
-															 url:"http://localhost/pending_reg/",
-															 data: {
-                                                                'action' : 'show',
-																'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-															 },
-															 success: function(data){
-                                                             }
-														});
-														return false; //<---- move it here
-											    });
-				  				  	        });
-                                        });
-								    </script>
-                                    <div id="dialog" title="Pending Minion Registrations">
-                                    </div>
-                                    <div class="widget" id="disp_area">
-                                        <input id="view_pending" type="submit" value="View Pending Registrations">
-                                    </div>
-								</div>
-                                <div id="tabs-3">
-                                </div>
+							$(document).ready(function() {
+	      					    $("#logout").submit(function(event){
+		    						$.ajax({
+                                        type:"POST",
+								    	 url:"http://localhost",
+										 data: {
+                                             'postid' : '3',
+						     				 'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+										 },
+										 success: function(data){
+							   			    window.location.replace(data.url);   
+										}
+									});
+									return false; //<---- move it here
+								});
+							});
+							</script>
+                        </div>
+                        
+                        <div id="tabs-2">   
+                            <script>
+						        $( function() {
+			                        $( ".widget input[type=submit], .widget a, .widget button" ).button();
+                                    $(document).ready(function () {
+                                        $( "#view_pending" ).button().click( function( event ) {
+							    			$.ajax({
+												 type:"POST",
+												 url:"http://localhost/pending_reg/",
+                                                 data: {
+                                                    'action' : 'show',
+					    							'csrfmiddlewaretoken': '{{ csrf_token}}',       					
+												 },
+												 success: function(data){
+                                                 }
+											});
+											return false; //<---- move it here
+										});
+				  				  	});
+                                });
+							</script>
+                            
+                            <div id="dialog" title="Pending Minion Registrations">
+                            </div>
+                                    
+                            <div class="widget" id="disp_area">
+                                <input id="view_pending" type="submit" value="View Pending Registrations">
+                            </div>
+						</div>
+                        
+                        <div id="tabs-3">
+                        </div>
 
     </body>
-
 </html>

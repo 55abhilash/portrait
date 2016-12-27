@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html >
-<head>
-  <meta charset="UTF-8">
-  <title>Portrait : A free and open source system's management software</title>
-  
-  
-  
-      <style>
-      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
-      @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
 
 body{
@@ -29,7 +19,7 @@ body{
 	bottom: -40px;
 	width: auto;
 	height: auto;
-	background-image: url("/static/back.jpg");
+	background-image: url("/static/img/back.jpg");
 	background-size: cover;
 	-webkit-filter: blur(5px);
 	z-index: 0;
@@ -148,54 +138,4 @@ body{
 ::-moz-input-placeholder{
    color: rgba(255,255,255,0.6);
 }
-    </style>
 
-  <script src="/static/prefix.js"></script>
-
-</head>
-
-<body>
-  <div class="body"></div>
-		<div class="grad"></div>
-		<div class="header">
-			<div>PORTRAIT</span></div>
-		</div>
-		<br>
-		<div class="login">
-				<form method='post' id="loginform">
-        {% csrf_token %}
-					<input type="text" placeholder="username" id="user"><br>
-					<input type="password" placeholder="password" id="pwd"><br>
-					<input type="submit" value="Login" form="loginform">
-                    <b><div id="div1" color="red"></div></b>
-                </form>
-		</div>
-    <script src="/static/jquery.js"></script>
-    <script>
-            var u = document.getElementById('user');
-            var p = document.getElementById('pwd');
-    $(document).ready(function() {
-        $('#loginform').submit(function(event) {
-        	$.ajax({
-                 type:"POST",
-                 url:"http://localhost/login/",
-                 data: {
-                    'user': u.value,
-                    'pwd' : p.value,
-                    'csrfmiddlewaretoken': '{{ csrf_token}}',                           
-                 },
-                 success: function(data){
-                 			if(data.status == '1') {
-                        	    $('#div1').html(data.message) 
-                     		}
-                            else if(data.status == '0') {
-                        	    window.location.replace(data.url)
-                     		}
-                 }
-            });
-            return false; //<---- move it here
-        });
-    });
-    </script>
-</body>
-</html>
