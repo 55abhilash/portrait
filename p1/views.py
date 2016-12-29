@@ -63,3 +63,9 @@ def pending_reg(request):
 def all_minions(request):
     reg = registrations()
     return HttpResponse(json.dumps(reg.show_all_registrations()), content_type = 'application/text')
+
+def accept(request):
+    reg = registrations()
+    ids = request.GET.get("ids").split(',')
+    reg.accept_ids(ids)
+    return HttpResponse("accepted")
