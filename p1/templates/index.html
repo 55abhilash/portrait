@@ -17,36 +17,45 @@
 
     <style>
         #tabs .ui-tabs-active {
-            background: #000099;
+            background: #966220;
         }
         .ui-tabs {
         }
         #header {
 	        position: relative;
-	        height: 50px;
+	        height: 70px;
             width: 100%;
-            background: #000099;
+            background: #966220;
         }
         
         #welcome {
-            margin-left: 25px;
-            margin-top: 8px;
+            margin-top: 18px;
+            text-align: center;
             color: white;
+            font-size: 165%; 
         }
         
+        #loginuser {
+            margin-top: 25px;
+            text-align: center;
+            color: white;
+            font-size: 100%; 
+        }
+
         body {
             margin: 0;
-            font-family: Verdana, Tahoma, sans-serif;
+            font-family: 'Exo', sans-serif;
+            font-weight: 500;
         }
     </style>
 
 </head>
 
 <body>
-                <div class="row" id="header">
-                    <div class="col-md-5" id="welcome">Welcome to portrait {{ request.user }}</div>
-                    <div class="col-md-3"></div>
+                <div class="row header" id="header">
+                    <div class="col-md-4" id="welcome">PORTRAIT</div>
                     <div class="col-md-4"></div>
+                    <div class="col-md-4" id="loginuser">{{ request.user }}&nbsp; &nbsp; &nbsp; <a href="http://localhost/logout/" style="color:white;">Logout</a></div>
                 </div>
 			<script>
 					$(function() {

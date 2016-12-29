@@ -30,10 +30,6 @@ def index(request):
             return HttpResponse(json.dumps(x))
         elif(preq == '2'):
             return HttpResponse("INSERTED")
-        elif(preq == '3'):
-            logout(request)
-            resp = {'status' : '0', 'url' : 'http://localhost/login/'}
-            return HttpResponse(json.dumps(resp), content_type='application/json')
     return render(request, 'index.html')
 
 def login_portrait(request):
@@ -55,6 +51,10 @@ def login_portrait(request):
             return HttpResponse(json.dumps(resp), content_type = 'application/json')
     else :
         return render(request, 'login.html')
+
+def logout_portrait(request):
+    logout(request)
+    return redirect('http://localhost/')
 
 def pending_reg(request):
     if(request.method=='POST'):
