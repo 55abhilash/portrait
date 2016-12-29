@@ -19,8 +19,6 @@
         #tabs .ui-tabs-active {
             background: #966220;
         }
-        .ui-tabs {
-        }
         #header {
 	        position: relative;
 	        height: 70px;
@@ -47,6 +45,7 @@
             font-family: 'Exo', sans-serif;
             font-weight: 500;
         }
+
     </style>
 
 </head>
@@ -78,7 +77,7 @@
 							    SEND
 							</button>
 						</form>
-												
+						<br>
                         <form method="post" id="f2">
                             {% csrf_token %}
                             <button id="b2" type='submit' form="f2"> 
@@ -131,34 +130,63 @@
 							</script>
                         </div>
                         
-                        <div id="tabs-2">   
-                            <script>
-						        $( function() {
-			                        $( ".widget input[type=submit], .widget a, .widget button" ).button();
-                                    $(document).ready(function () {
-                                        $( "#view_pending" ).button().click( function( event ) {
-							    			$.ajax({
-												 type:"POST",
-												 url:"http://localhost/pending_reg/",
-                                                 data: {
-                                                    'action' : 'show',
-					    							'csrfmiddlewaretoken': '{{ csrf_token}}',       					
-												 },
-												 success: function(data){
-                                                 }
-											});
-											return false; //<---- move it here
-										});
-				  				  	});
-                                });
-							</script>
+                        <div id="tabs-2" style="display:flex;">  
+                            <div class="sidebar">
+                                <style>
+                                    .sidebar {
+                                        left: 0%;
+                                        width: 25%;
+                                        height: 100%;
+                                    }
+
+                                    .disp-area {
+                                        left: 25%;
+                                        width: 75%;
+                                        height: 100%;
+                                    }
+                                    ul#nav1 {
+                                        list-style-type: none;
+                                        padding: 10px;
+                                    }
+                                    ul#nav1 li {
+                                        border-style: none dotted dotted none;
+                                        border-width: 1px;
+                                        height: 50px;
+                                        text-align: center;
+                                        color: black;
+                                        padding: 10px;
+                                        font-family: 'Exo', sans-serif;
+                                        font-size: 100%;
+                                    }
+                                </style>
+                                <ul id="nav1">
+                                    <li> <a class="tmp" href="http://localhost/all_minions/">All minions</a></li>
+                                    <li> <a class="tmp" href="http://localhost/pending_reg/">View Pending Registrations</a></li>
+                                    <li> <a class="tmp" href="http://localhost/connect/">Connect To Selected </a></li>
+                                </ul>
+                            </div>
                             
-                            <div id="dialog" title="Pending Minion Registrations">
+                            <script>
+							    $('a.tmp').click(function (event){ 
+					   		        event.preventDefault(); 
+                                    $.ajax({
+                                        url: $(this).attr('href'),
+                                        success: function(response) {
+                                            if(response.content_type == "application/json") {
+                                                $('#disp_area').html(JSON.stringify(response, null, 2)); 
+                                            }
+                                            else {
+                                                $('#disp_area').html(response);
+                                            }
+                                        }
+                                    })
+                                    return false; //for good measure
+                                });
+                            </script>
+                            
+                            <div id="disp_area" class="disp_area">
                             </div>
-                                    
-                            <div class="widget" id="disp_area">
-                                <input id="view_pending" type="submit" value="View Pending Registrations">
-                            </div>
+
 						</div>
                         
                         <div id="tabs-3">
