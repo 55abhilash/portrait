@@ -54,9 +54,9 @@ class registrations():
         return wheel.cmd('key.list_all')
     def show_pending_registrations(self):
         return wheel.cmd('key.list_all')['minions_pre']
-    def accept_ids(machine_ids):
+    def accept_ids(self, machine_ids):
         for machine in machine_ids:
-            wheel.cmd('key.accept(' + machine + ')')
+            wheel.cmd('key.accept', machine.split())
     def reject_ids(machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.reject(' + machine + ')')
