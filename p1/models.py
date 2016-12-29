@@ -50,6 +50,8 @@ class connect():
         tmp = 0
 
 class registrations():
+    def show_all_registrations(self):
+        return wheel.cmd('key.list_all')
     def show_pending_registrations(self):
         return wheel.cmd('key.list_all')['minions_pre']
     def accept_ids(machine_ids):
