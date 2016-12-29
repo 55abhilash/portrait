@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^login/', views.login_portrait, name='login'),
     url(r'^logout/', views.logout_portrait, name='logout'),
     url(r'^pending_reg/', views.pending_reg, name='pending_reg'),
+    url(r'^all_minions/', views.all_minions, name='all_minions'),
 ]

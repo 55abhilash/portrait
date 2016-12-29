@@ -57,8 +57,9 @@ def logout_portrait(request):
     return redirect('http://localhost/')
 
 def pending_reg(request):
-    if(request.method=='POST'):
-        reg = registrations()
-        if(request.POST.get('action') == 'show'):
-            return HttpResponse(reg.show_pending_registrations())
-        #elif(request.POST.get('action') == 'accept'):
+    reg = registrations()
+    return HttpResponse(reg.show_pending_registrations())
+
+def all_minions(request):
+    reg = registrations()
+    return HttpResponse(json.dumps(reg.show_all_registrations()), content_type = 'application/text')
