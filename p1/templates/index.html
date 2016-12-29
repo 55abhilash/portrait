@@ -172,20 +172,16 @@
                                     $.ajax({
                                         url: $(this).attr('href'),
                                         success: function(response) {
-                                            if(response.content_type == "application/json") {
-                                                $('#disp_area').html(JSON.stringify(response, null, 2)); 
-                                            }
-                                            else {
-                                                $('#disp_area').html(response);
-                                            }
+                                            $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '150%', 'text-align' : 'center'});
+                                            $('#disp_area').html("<b>Pending Registrations</b>");
+                                            $('#disp_area').css({'font-size' : '100%'});
+                                            $('#disp_area').append("<br>" + response + "&nbsp;&nbsp;<input type='checkbox' id='chk'>&nbsp;<a href='http://localhost/accept?ids=local'>accept</a>");
                                         }
                                     })
                                     return false; //for good measure
                                 });
                             </script>
-                            
-                            <div id="disp_area" class="disp_area">
-                            </div>
+                        <div class="row" id="disp_area"></div>
 
 						</div>
                         
