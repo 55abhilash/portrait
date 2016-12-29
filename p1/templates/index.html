@@ -169,11 +169,16 @@
                             <script>
 							    $('a.tmp').click(function (event){ 
 					   		        event.preventDefault(); 
+                                            if($(this).attr('href') == "http://localhost/pending_reg/") { 
+                                                $('#disp_area').html("<b>Pending Registrations</b>");
+                                            }
+                                            else if($(this).attr('href') == "http://localhost/all_minions/") { 
+                                                $('#disp_area').html("<b>All Minions</b>");
+                                            }
                                     $.ajax({
                                         url: $(this).attr('href'),
                                         success: function(response) {
                                             $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '150%', 'text-align' : 'center'});
-                                            $('#disp_area').html("<b>Pending Registrations</b>");
                                             $('#disp_area').css({'font-size' : '100%'});
                                             $('#disp_area').append("<br>" + response + "&nbsp;&nbsp;<input type='checkbox' id='chk'>&nbsp;<a href='http://localhost/accept?ids=local'>accept</a>");
                                         }
