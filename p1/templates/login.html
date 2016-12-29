@@ -12,16 +12,17 @@
     <div class="body"></div>
     <div class="grad"></div>
 	<div class="header">
-		<div>PORTRAIT</span></div>
-	</div>
+        <div style="font-size: 400%;"><b>PORTRAIT</b></span></div><br>
+    </div>
+    <div class="header-note" style="font-size: 175%;">A free and open source systems management software</div>
 	<br>
-	<div class="login">
+	<div class="login"> 
 		<form method='post' id="loginform">
             {% csrf_token %}
 		    <input type="text" placeholder="username" id="user"><br>
 			<input type="password" placeholder="password" id="pwd"><br>
 			<input type="submit" value="Login" form="loginform">
-            <b><div id="div1" color="red"></div></b>
+            <b><div id="div1" style="color:red;"></div></b>
         </form>
 	</div>
     <script src="/static/jquery.js"></script>
