@@ -44,10 +44,10 @@ class task():
     def display_individual_output(self, selected_machines):
         tmp = 0
 
-class connect():
-    selected_machine_ids = list()
-    def redirect_to_task_page(self):
-        tmp = 0
+#class connect():
+#   selected_machine_ids = list()
+#    def redirect_to_task_page(self):
+#        tmp = 0
 
 class registrations():
     def show_all_registrations(self):

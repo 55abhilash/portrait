@@ -175,11 +175,13 @@
                                             else if($(this).attr('href') == "http://localhost/all_minions/") { 
                                                 $('#disp_area').html("<b>All Minions</b>");
                                             }
+                                            else if($(this).attr('href') == "http://localhost/connect/") { 
+                                                $('#disp_area').html("<b>Select task to apply from left pane</b>");
+                                            }
+                                            $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '100%', 'text-align' : 'center'});
                                     $.ajax({
                                         url: $(this).attr('href'),
                                         success: function(response) {
-                                            $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '150%', 'text-align' : 'center'});
-                                            $('#disp_area').css({'font-size' : '100%'});
                                             $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table style='border-style:dotted; border-width: 1px; position: absolute; left:40%;'><tr><th>Minion name</th></tr><tr><td>" + response + "</td></tr><table>");
                                         }
                                     })

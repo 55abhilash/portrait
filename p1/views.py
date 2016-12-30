@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from p1.models import registrations, connect
+from p1.models import registrations
 from django.contrib.auth import hashers
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -70,7 +70,7 @@ def accept(request):
     reg.accept_ids(ids)
     return HttpResponse("accepted")
 
-def connect_request(request):
-    req = connect()
-    req.selected_machine_ids = request.GET.get('ids').split(',')
-    req.redirect_to_start_page()
+#def connect_request(request):
+#    req = connect()
+#    req.selected_machine_ids = request.GET.get('ids').split(',')
+#    req.redirect_to_start_page()
