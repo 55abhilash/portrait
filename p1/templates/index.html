@@ -180,7 +180,7 @@
                                         success: function(response) {
                                             $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '150%', 'text-align' : 'center'});
                                             $('#disp_area').css({'font-size' : '100%'});
-                                            $('#disp_area').append("<br>" + response + "&nbsp;&nbsp;<input type='checkbox' id='chk'>&nbsp;<a href='http://localhost/accept?ids=local'>accept</a>");
+                                            $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table style='border-style:dotted; border-width: 1px; position: absolute; left:40%;'><tr><th>Minion name</th></tr><tr><td>" + response + "</td></tr><table>");
                                         }
                                     })
                                     return false; //for good measure

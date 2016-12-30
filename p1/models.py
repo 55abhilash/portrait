@@ -46,7 +46,7 @@ class task():
 
 class connect():
     selected_machine_ids = list()
-    def redirect_to_task_page(self, selected_machine_ids):
+    def redirect_to_task_page(self):
         tmp = 0
 
 class registrations():
