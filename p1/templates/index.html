@@ -69,9 +69,8 @@
 							<li style="width:30%;"><a href="#tabs-3">Running Tasks</a></li>
 						</ul>
 						<div id="tabs-1">
-				   
-
-						<form method='post' id="f">
+                        
+                        <form method='post' id="f">
 						    {% csrf_token %}
 						    <button id="b" type='submit' form="f"> 
 							    SEND
@@ -102,7 +101,7 @@
                                                 $('#div1').html(data) 
 											 }
 	    									 else if(data.status == '0') {
-											    window.location(data.url)
+											    window.location.replace(data.url)
 											 }
 										 }
 									});
@@ -120,7 +119,12 @@
 											'csrfmiddlewaretoken': '{{ csrf_token}}',       					
 										 },
 										 success: function(data){
-											$('#div1').html(data) 
+										     if(data.status == '-1') {
+                                                window.location.replace(data.url)
+                                             }
+                                             else {
+                                                $('#div1').html(data) 
+                                             }
                                          }
 									});
 									return false; //<---- move it here
@@ -165,26 +169,53 @@
                                     <li> <a class="tmp" href="http://localhost/connect/">Connect To Selected </a></li>
                                 </ul>
                             </div>
-                            
+                            <style>
+                            #minion-table {
+                               border-style: dotted; 
+                               border-width: 1px; 
+                               position: absolute; 
+                               left:40%; 
+                            }
+                            .tab-head {
+                               padding: 8px;
+                            }
+                            .Up {
+                               color: green;
+                               font-weight: bold;
+                            }
+                            .Down {
+                               color: red;
+                               font-weight: bold;
+                            }
+                            </style>
                             <script>
 							    $('a.tmp').click(function (event){ 
 					   		        event.preventDefault(); 
-                                            if($(this).attr('href') == "http://localhost/pending_reg/") { 
-                                                $('#disp_area').html("<b>Pending Registrations</b>");
-                                            }
-                                            else if($(this).attr('href') == "http://localhost/all_minions/") { 
-                                                $('#disp_area').html("<b>All Minions</b>");
-                                            }
-                                            else if($(this).attr('href') == "http://localhost/connect/") { 
-                                                $('#disp_area').html("<b>Select task to apply from left pane</b>");
-                                            }
-                                            $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '100%', 'text-align' : 'center'});
+                                    if($(this).attr('href') == "http://localhost/pending_reg/") { 
+                                       $('#disp_area').html("<b>Pending Registrations</b>");
+                                    }
+                                    else if($(this).attr('href') == "http://localhost/all_minions/") { 
+                                        $('#disp_area').html("<b>All Minions</b>");
+                                    }
+                                   else if($(this).attr('href') == "http://localhost/connect/") { 
+                                        $('#disp_area').html("<b>Select task to apply from left pane</b>");
+                                    }
+                                    $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '100%', 'text-align' : 'center'});
+                                    $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Minion name</th><th class='tab-head'>Status</th></tr></table>");
                                     $.ajax({
                                         url: $(this).attr('href'),
                                         success: function(response) {
-                                            $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table style='border-style:dotted; border-width: 1px; position: absolute; left:40%;'><tr><th>Minion name</th></tr><tr><td>" + response + "</td></tr><table>");
+                                            if(response.status == '-1') {
+                                                window.location.replace(response.url);
+                                            }
+                                            else {
+                                                var element;
+                                                for(element in response) {
+                                                    $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td></tr>");
+                                                }
+                                            }
                                         }
-                                    })
+                                    });
                                     return false; //for good measure
                                 });
                             </script>
