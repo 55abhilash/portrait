@@ -57,14 +57,23 @@ def logout_portrait(request):
     return redirect('http://localhost/')
 
 def pending_reg(request):
+    if(request.user.is_anonymous()):
+        resp = {'status' : '-1', 'url' : 'http://localhost/'}
+        return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
     return HttpResponse(reg.show_pending_registrations())
 
 def all_minions(request):
+    if(request.user.is_anonymous()):
+        resp = {'status' : '-1', 'url' : 'http://localhost/'}
+        return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
-    return HttpResponse(json.dumps(reg.show_all_registrations()), content_type = 'application/text')
+    return HttpResponse(json.dumps(reg.show_all_registrations()), content_type = 'application/json')
 
 def accept(request):
+    if(request.user.is_anonymous()):
+        resp = {'status' : '-1', 'url' : 'http://localhost/'}
+        return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
     ids = request.GET.get("ids").split(',')
     reg.accept_ids(ids)
