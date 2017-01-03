@@ -165,7 +165,7 @@
                                 </style>
                                 <ul id="nav1">
                                     <li> <a class="tmp" href="http://localhost/all_minions/">All minions</a></li>
-                                    <li> <a class="tmp" href="http://localhost/pending_reg/">View Pending Registrations</a></li>
+                                    <li> <a class="tmp" id="pr" href="http://localhost/pending_reg/">View Pending Registrations</a></li>
                                     <li> <a class="tmp" href="http://localhost/connect/">Connect To Selected </a></li>
                                 </ul>
                             </div>
@@ -190,18 +190,19 @@
                             </style>
                             <script>
 							    $('a.tmp').click(function (event){ 
-					   		        event.preventDefault(); 
+					   		        event.preventDefault();
                                     if($(this).attr('href') == "http://localhost/pending_reg/") { 
-                                       $('#disp_area').html("<b>Pending Registrations</b>");
+                                        $('#disp_area').html("<b>Pending Registrations</b>");
+                                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Request from </th><th class='tab-head'></th></tr></table>");
                                     }
                                     else if($(this).attr('href') == "http://localhost/all_minions/") { 
                                         $('#disp_area').html("<b>All Minions</b>");
+                                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Minion name</th><th class='tab-head'>Status</th></tr></table>");
                                     }
                                    else if($(this).attr('href') == "http://localhost/connect/") { 
                                         $('#disp_area').html("<b>Select task to apply from left pane</b>");
                                     }
                                     $('#disp_area').css({'left' : '25%', 'width' : '75%', 'font-size' : '100%', 'text-align' : 'center'});
-                                    $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Minion name</th><th class='tab-head'>Status</th></tr></table>");
                                     $.ajax({
                                         url: $(this).attr('href'),
                                         success: function(response) {
@@ -210,8 +211,44 @@
                                             }
                                             else {
                                                 var element;
-                                                for(element in response) {
-                                                    $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td></tr>");
+                                                var checkbox_cnt = 0;
+                                                if(this.url == "http://localhost/all_minions/") {
+                                                    for(element in response) {
+                                                        $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td></tr>");
+                                                    }
+                                                }
+                                                else if(this.url == "http://localhost/pending_reg/") {
+                                                    for(element in response) {
+                                                        $('#minion-table').append("<tr><td id=minname" + checkbox_cnt + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkbox" + checkbox_cnt + ">" + "</td></tr>");
+                                                        checkbox_cnt += 1;
+                                                    }
+                                                    $('#disp_area').append("<br><br><div><a class='ar' href='http://localhost/accept/'>Accept</div>");
+                                                    $('#disp_area').append("<br><div><a class='ar' href='http://localhost/reject/'>Reject</div>");
+                                                    function get_selected_ids(checkbox_cnt) {
+                                                        var selected_ids = Array();
+                                                        var i = 0;
+                                                        for(i = 0; i < checkbox_cnt; i++) {
+                                                            if(document.getElementById('chkbox' + i).checked) {
+                                                                selected_ids.push($('#minname' + i).text());
+                                                            }
+                                                        }
+                                                        return selected_ids;
+                                                    }
+                                                    $('a.ar').click(function(event) {
+                                                        event.preventDefault();    
+                                                        $.ajax({
+                                                            url: $(this).attr('href'),
+                                                            type: "GET",
+                                                            data: {
+                                                                'ids': JSON.stringify(get_selected_ids(checkbox_cnt)),
+                                                            },
+                                                            contentType: "application/json; charset=utf-8",
+                                                            success: function(response) {
+                                                                window.location.replace("http://localhost/#tabs-2");
+                                                                $('#pr').click();                                                               
+                                                            }
+                                                        });
+                                                    });
                                                 }
                                             }
                                         }
