@@ -6,9 +6,11 @@ import salt
 
 import salt.config
 import salt.wheel
+import salt.runner
+
 opts = salt.config.master_config('/etc/salt/master')
 wheel = salt.wheel.WheelClient(opts)
-
+run = salt.runner.RunnerClient(opts)
 
 # Create your models here.
 
@@ -51,7 +53,16 @@ class task():
 
 class registrations():
     def show_all_registrations(self):
-        return wheel.cmd('key.list_all')
+        all = wheel.cmd('key.list_all')['minions']
+        minion_status = dict()
+        salt_run_minion_status = run.cmd('manage.status')
+        for minion in all:
+            if(minion in salt_run_minion_status['down']):
+                minion_status[minion] = "Down"
+            else:
+                minion_status[minion] = "Up"
+        return minion_status
+
     def show_pending_registrations(self):
         return wheel.cmd('key.list_all')['minions_pre']
     def accept_ids(self, machine_ids):
