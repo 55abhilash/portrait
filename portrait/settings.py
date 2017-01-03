@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True          
+
+LOGIN_URL = '/login/'
