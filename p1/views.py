@@ -61,7 +61,7 @@ def pending_reg(request):
         resp = {'status' : '-1', 'url' : 'http://localhost/'}
         return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
-    return HttpResponse(reg.show_pending_registrations())
+    return HttpResponse(json.dumps(reg.show_pending_registrations()), content_type = 'application/json')
 
 def all_minions(request):
     if(request.user.is_anonymous()):
@@ -77,8 +77,16 @@ def accept(request):
     reg = registrations()
     ids = request.GET.get("ids").split(',')
     reg.accept_ids(ids)
-    return HttpResponse("accepted")
+    return HttpResponse("accepted", content_type = 'application/text')
 
+def reject(request):
+    if(request.user.is_anonymous()):
+        resp = {'status' : '-1', 'url' : 'http://localhost/'}
+        return HttpResponse(json.dumps(resp), content_type = 'application/json')        
+    reg = registrations()
+    ids = request.GET.get("ids").split(',')
+    reg.reject_ids(ids)
+    return HttpResponse("rejected", content_type = 'application/text')
 #def connect_request(request):
 #    req = connect()
 #    req.selected_machine_ids = request.GET.get('ids').split(',')
