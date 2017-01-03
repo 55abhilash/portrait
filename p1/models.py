@@ -8,6 +8,7 @@ import salt.config
 import salt.wheel
 import salt.runner
 
+from salt.modules import network
 opts = salt.config.master_config('/etc/salt/master')
 wheel = salt.wheel.WheelClient(opts)
 run = salt.runner.RunnerClient(opts)
@@ -70,7 +71,7 @@ class registrations():
             wheel.cmd('key.accept', machine.split())
     def reject_ids(machine_ids):
         for machine in machine_ids:
-            wheel.cmd('key.reject(' + machine + ')')
+            wheel.cmd('key.reject', machine.split())
 
 class job():
     jid = ""
