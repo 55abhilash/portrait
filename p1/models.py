@@ -69,7 +69,7 @@ class registrations():
     def accept_ids(self, machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.accept', machine.split())
-    def reject_ids(machine_ids):
+    def reject_ids(self, machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.reject', machine.split())
 

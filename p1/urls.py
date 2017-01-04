@@ -8,4 +8,5 @@ urlpatterns = [
         url(r'^pending_reg/', 'portrait.p1.views.pending_reg', name='pending_reg'),
         url(r'^logout/', 'portrait.p1.views.logout_portrait', name='logout'),
         url(r'^accept/', 'portrait.p1.views.accept', name='accept'),
+        url(r'^reject/', 'portrait.p1.views.reject', name='reject'),
 ]
