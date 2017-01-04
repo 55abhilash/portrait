@@ -212,11 +212,14 @@
                                             else {
                                                 var element;
                                                 var checkbox_cnt = 0;
+                                                var checkbox_cnt_am = 0;
                                                 if(this.url == "http://localhost/all_minions/") {
                                                     for(element in response) {
-                                                        $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td></tr>");
+                                                        $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td></tr>");
+                                                        checkbox_cnt_am += 1;
                                                     }
                                                 }
+                                                //Append checkboxes in front of minion names
                                                 else if(this.url == "http://localhost/pending_reg/") {
                                                     for(element in response) {
                                                         $('#minion-table').append("<tr><td id=minname" + checkbox_cnt + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkbox" + checkbox_cnt + ">" + "</td></tr>");
