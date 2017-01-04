@@ -75,7 +75,7 @@ def accept(request):
         resp = {'status' : '-1', 'url' : 'http://localhost/'}
         return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
-    ids = request.GET.get("ids").split(',')
+    ids = request.GET.get("ids").split('[')[1].split(']')[0].split(',')
     reg.accept_ids(ids)
     return HttpResponse("accepted", content_type = 'application/text')
 
@@ -84,7 +84,7 @@ def reject(request):
         resp = {'status' : '-1', 'url' : 'http://localhost/'}
         return HttpResponse(json.dumps(resp), content_type = 'application/json')        
     reg = registrations()
-    ids = request.GET.get("ids").split(',')
+    ids = request.GET.get("ids").split('[')[1].split(']')[0].split(',')
     reg.reject_ids(ids)
     return HttpResponse("rejected", content_type = 'application/text')
 #def connect_request(request):
