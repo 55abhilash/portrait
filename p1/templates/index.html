@@ -175,7 +175,9 @@
                                border-width: 1px; 
                                position: absolute; 
                                left:40%; 
+                               padding: 5px;
                             }
+
                             .tab-head {
                                padding: 8px;
                             }
@@ -240,6 +242,7 @@
                                                             checkbox_cnt = checkbox_cnt_pr;
                                                         }
                                                         for(i = 0; i < checkbox_cnt; i++) {
+                                                            console.log('chkbox' + id + i);
                                                             if(document.getElementById('chkbox' + id + i).checked) {
                                                                 selected_ids.push($('#minname' + id + i).text());
                                                             }
@@ -281,6 +284,36 @@
                         
                         <div id="tabs-3">
                         </div>
-
-    </body>
+                        <div class="modal"><!-- Place at bottom of page --></div>
+                        <style>
+						    .modal {
+                                display:    none;
+                                position:   fixed;
+                                z-index:    1000;
+                                top:        0;
+                                left:       0;
+                                height:     100%;
+                                width:      100%;
+                                background: rgba( 255, 255, 255, .8 ) 
+                                    url('/static/img/ajax-loader.gif') 
+                                    50% 50% 
+                                    no-repeat;
+                            }
+                            body.loading {
+                                overflow: hidden;   
+                                /* Anytime the body has the loading class, o
+								   modal element will be visible */
+                            }
+							body.loading .modal {
+                                display: block;
+                            }
+	                        </style>
+							<script>
+                                $body = $("body");
+                                $(document).on({
+                                    ajaxStart: function() { $body.addClass("loading");    },
+                                    ajaxStop: function() { $body.removeClass("loading"); }    
+                                });																	
+                            </script>
+</body>
 </html>
