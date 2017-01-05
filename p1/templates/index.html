@@ -164,8 +164,8 @@
                                     }
                                 </style>
                                 <ul id="nav1">
-                                    <li> <a class="tmp" href="http://localhost/all_minions/">All minions</a></li>
-                                    <li> <a class="tmp" id="pr" href="http://localhost/pending_reg/">View Pending Registrations</a></li>
+                                    <li> <a class="tmp" id="sidebar_am" href="http://localhost/all_minions/">All minions</a></li>
+                                    <li> <a class="tmp" id="sidebar_pr" href="http://localhost/pending_reg/">View Pending Registrations</a></li>
                                     <li> <a class="tmp" href="http://localhost/connect/">Connect To Selected </a></li>
                                 </ul>
                             </div>
@@ -211,48 +211,63 @@
                                             }
                                             else {
                                                 var element;
-                                                var checkbox_cnt = 0;
+                                                var checkbox_cnt_pr= 0;
                                                 var checkbox_cnt_am = 0;
                                                 if(this.url == "http://localhost/all_minions/") {
                                                     for(element in response) {
-                                                        $('#minion-table').append("<tr><td>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td></tr>");
+                                                        $('#minion-table').append("<tr><td id='minnameam"  + checkbox_cnt_am + "'>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td></tr>");
                                                         checkbox_cnt_am += 1;
                                                     }
+                                                    $('#disp_area').append("<br><br><div><a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</div>");
                                                 }
                                                 //Append checkboxes in front of minion names
                                                 else if(this.url == "http://localhost/pending_reg/") {
                                                     for(element in response) {
-                                                        $('#minion-table').append("<tr><td id=minname" + checkbox_cnt + ">" + response[element] + "</td><td>" + "<input type='checkbox' id=chkbox" + checkbox_cnt + ">" + "</td></tr>");
-                                                        checkbox_cnt += 1;
+                                                        $('#minion-table').append("<tr><td id='minnamepr" + checkbox_cnt_pr+ "'>" + response[element] + "</td><td>" + "<input type='checkbox' id=chkboxpr" + checkbox_cnt_pr + ">" + "</td></tr>");
+                                                        checkbox_cnt_pr+= 1;
                                                     }
-                                                    $('#disp_area').append("<br><br><div><a class='ar' href='http://localhost/accept/'>Accept</div>");
-                                                    $('#disp_area').append("<br><div><a class='ar' href='http://localhost/reject/'>Reject</div>");
-                                                    function get_selected_ids(checkbox_cnt) {
-                                                        var selected_ids = Array();
+                                                    $('#disp_area').append("<br><br><div><a id='pr' class='ar' href='http://localhost/accept/'>Accept</div>");
+                                                    $('#disp_area').append("<br><div><a id='pr' class='ar' href='http://localhost/reject/'>Reject</div>");
+                                                }
+                                                function get_selected_ids(id) {
+                                                    var selected_ids = Array();
                                                         var i = 0;
+                                                        var checkbox_cnt;
+                                                        if(id == "am") {
+                                                            checkbox_cnt = checkbox_cnt_am;
+                                                        }
+                                                        else {
+                                                            checkbox_cnt = checkbox_cnt_pr;
+                                                        }
                                                         for(i = 0; i < checkbox_cnt; i++) {
-                                                            if(document.getElementById('chkbox' + i).checked) {
-                                                                selected_ids.push($('#minname' + i).text());
+                                                            if(document.getElementById('chkbox' + id + i).checked) {
+                                                                selected_ids.push($('#minname' + id + i).text());
                                                             }
                                                         }
                                                         return selected_ids;
                                                     }
                                                     $('a.ar').click(function(event) {
-                                                        event.preventDefault();    
+                                                        event.preventDefault();
+                                                        console.log("this.attr(url) = " + $(this).attr('href'));
                                                         $.ajax({
                                                             url: $(this).attr('href'),
                                                             type: "GET",
                                                             data: {
-                                                                'ids': JSON.stringify(get_selected_ids(checkbox_cnt)),
+                                                                'ids': JSON.stringify(get_selected_ids($(this).attr('id'))),
                                                             },
                                                             contentType: "application/json; charset=utf-8",
                                                             success: function(response) {
                                                                 window.location.replace("http://localhost/#tabs-2");
-                                                                $('#pr').click();                                                               
+                                                                console.log("this.url = " + this.url);
+                                                                if(this.url.startsWith("http://localhost/delete_minions/")) {
+                                                                    $('#sidebar_am').click();
+                                                                }
+                                                                else {
+                                                                    $('#sidebar_pr').click(); 
+                                                                }
                                                             }
                                                         });
                                                     });
-                                                }
                                             }
                                         $('#tabs-2').css({'min-height' : '300px'});
                                         }

@@ -72,6 +72,9 @@ class registrations():
     def reject_ids(self, machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.reject', machine.split())
+    def delete_ids(self, machine_ids):
+        for machine in machine_ids:
+            wheel.cmd('key.delete', machine.split())
 
 class job():
     jid = ""

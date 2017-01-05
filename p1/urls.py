@@ -9,4 +9,5 @@ urlpatterns = [
         url(r'^logout/', 'portrait.p1.views.logout_portrait', name='logout'),
         url(r'^accept/', 'portrait.p1.views.accept', name='accept'),
         url(r'^reject/', 'portrait.p1.views.reject', name='reject'),
+        url(r'^delete_minions/', 'portrait.p1.views.delete_minions', name='delete_minions'),
 ]

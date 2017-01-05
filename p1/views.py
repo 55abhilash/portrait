@@ -87,6 +87,17 @@ def reject(request):
     ids = request.GET.get("ids").split('[')[1].split(']')[0].split(',')
     reg.reject_ids(ids)
     return HttpResponse("rejected", content_type = 'application/text')
+
+def delete_minions(request):
+    if(request.user.is_anonymous()):
+        resp = {'status' : '-1', 'url' : 'http://localhost/'}
+        return HttpResponse(json.dumps(resp), content_type = 'application/json')        
+    reg = registrations()
+    ids = request.GET.get("ids").split('[')[1].split(']')[0].split(',')
+    reg.delete_ids(ids)
+    return HttpResponse("deleted", content_type = 'application/text')
+     
+
 #def connect_request(request):
 #    req = connect()
 #    req.selected_machine_ids = request.GET.get('ids').split(',')

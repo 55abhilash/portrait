@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^all_minions/', views.all_minions, name='all_minions'),
     url(r'^accept/', views.accept, name='accept'),    
     url(r'^reject/', views.reject, name='reject'),    
+    url(r'^delete_minions/', views.delete_minions, name='delete_minions'),    
 ]
