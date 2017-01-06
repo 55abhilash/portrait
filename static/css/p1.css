@@ -2,98 +2,85 @@
             background: #966220;
         }
         #header {
-	        position: relative;
-	        height: 70px;
+            position: relative;
+            height: 70px;
             width: 100%;
             background: #966220;
         }
-        
         #welcome {
             margin-top: 18px;
             text-align: center;
             color: white;
-            font-size: 165%; 
+            font-size: 165%;
         }
-        
         #loginuser {
             margin-top: 25px;
             text-align: center;
             color: white;
-            font-size: 100%; 
+            font-size: 100%;
         }
-
         body {
             margin: 0;
             font-family: 'Exo', sans-serif;
             font-weight: 500;
         }
-
- .sidebar  {
-                                        left: 0%;
-                                        width: 25%;
-                                        height: 100%;
-                                    }
-
-                                    .disp-area {
-                                        left: 25%;
-                                        width: 75%;
-                                        height: 100%;
-                                    }
-                                    ul#nav1 {
-                                        list-style-type: none;
-                                        padding: 10px;
-                                    }
-                                    ul#nav1 li {
-                                        border-style: none dotted dotted none;
-                                        border-width: 1px;
-                                        height: 50px;
-                                        text-align: center;
-                                        color: black;
-                                        padding: 10px;
-                                        font-family: 'Exo', sans-serif;
-                                        font-size: 100%;
-                                    }
-
- #minion-table {
-                               border-style: dotted; 
-                               border-width: 1px; 
-                               position: absolute; 
-                               left:40%; 
-                               padding: 5px;
-                            }
-
-                            .tab-head {
-                               padding: 8px;
-                            }
-                            .Up {
-                               color: green;
-                               font-weight: bold;
-                            }
-                            .Down {
-                               color: red;
-                               font-weight: bold;
-                            }
-
-							.modal {
-                                display:    none;
-                                position:   fixed;
-                                z-index:    1000;
-                                top:        0;
-                                left:       0;
-                                height:     100%;
-                                width:      100%;
-                                background: rgba( 255, 255, 255, .8 ) 
-                                    url("/static/img/ajax-loader.gif") 
-                                    50% 50% 
-                                    no-repeat;
-                            }
-                            body.loading {
-                                overflow: hidden;   
-                                /* Anytime the body has the loading class, o
+        .sidebar {
+            left: 0%;
+            width: 25%;
+            height: 100%;
+        }
+        .disp-area {
+            left: 25%;
+            width: 75%;
+            height: 100%;
+        }
+        ul#nav1 {
+            list-style-type: none;
+            padding: 10px;
+        }
+        ul#nav1 li {
+            border-style: none dotted dotted none;
+            border-width: 1px;
+            height: 50px;
+            text-align: center;
+            color: black;
+            padding: 10px;
+            font-family: 'Exo', sans-serif;
+            font-size: 100%;
+        }
+        #minion-table {
+            border-style: dotted;
+            border-width: 1px;
+            position: absolute;
+            left: 40%;
+            padding: 5px;
+        }
+        .tab-head {
+            padding: 8px;
+        }
+        .Up {
+            color: green;
+            font-weight: bold;
+        }
+        .Down {
+            color: red;
+            font-weight: bold;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8) url("/static/img/ajax-loader.gif") 50% 50% no-repeat;
+        }
+        body.loading {
+            overflow: hidden;
+            /* Anytime the body has the loading class, o
 								   modal element will be visible */
-                            }
-							body.loading .modal {
-                                display: block;
-                            }
-          
-					
+        }
+        body.loading .modal {
+            display: block;
+        }
