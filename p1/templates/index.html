@@ -13,42 +13,8 @@
     <script src="{%  static "js/jquery-ui.js" %}"></script>
     <script src="{%  static "js/bootstrap.min.js" %}"></script>
     <link rel="stylesheet" href="{%  static "css/jquery-ui.css" %}">
-    <link rel="stylesheet" href="{%  static "css/style.css" %}">
     <link rel="stylesheet" href="{%  static "css/bootstrap.min.css" %}">
-
-    <style>
-        #tabs .ui-tabs-active {
-            background: #966220;
-        }
-        #header {
-	        position: relative;
-	        height: 70px;
-            width: 100%;
-            background: #966220;
-        }
-        
-        #welcome {
-            margin-top: 18px;
-            text-align: center;
-            color: white;
-            font-size: 165%; 
-        }
-        
-        #loginuser {
-            margin-top: 25px;
-            text-align: center;
-            color: white;
-            font-size: 100%; 
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Exo', sans-serif;
-            font-weight: 500;
-        }
-
-    </style>
-
+	<link rel="stylesheet" href="{%  static "css/p1.css" %}">
 </head>
 
 <body>
@@ -138,31 +104,7 @@
                         <div id="tabs-2" style="display:flex;">  
                             <div class="sidebar">
                                 <style>
-                                    .sidebar {
-                                        left: 0%;
-                                        width: 25%;
-                                        height: 100%;
-                                    }
-
-                                    .disp-area {
-                                        left: 25%;
-                                        width: 75%;
-                                        height: 100%;
-                                    }
-                                    ul#nav1 {
-                                        list-style-type: none;
-                                        padding: 10px;
-                                    }
-                                    ul#nav1 li {
-                                        border-style: none dotted dotted none;
-                                        border-width: 1px;
-                                        height: 50px;
-                                        text-align: center;
-                                        color: black;
-                                        padding: 10px;
-                                        font-family: 'Exo', sans-serif;
-                                        font-size: 100%;
-                                    }
+                                   
                                 </style>
                                 <ul id="nav1">
                                     <li> <a class="tmp" id="sidebar_am" href="http://localhost/all_minions/">All minions</a></li>
@@ -171,25 +113,7 @@
                                 </ul>
                             </div>
                             <style>
-                            #minion-table {
-                               border-style: dotted; 
-                               border-width: 1px; 
-                               position: absolute; 
-                               left:40%; 
-                               padding: 5px;
-                            }
-
-                            .tab-head {
-                               padding: 8px;
-                            }
-                            .Up {
-                               color: green;
-                               font-weight: bold;
-                            }
-                            .Down {
-                               color: red;
-                               font-weight: bold;
-                            }
+                           
                             </style>
                             <script>
 							    $('a.tmp').click(function (event){ 
@@ -285,9 +209,8 @@
                         
                         <div id="tabs-3">
                         </div>
-                        <div class="modal"><!-- Place at bottom of page --></div>
-                        <style>
-						    .modal {
+<style>        
+      	    .modal {
                                 display:    none;
                                 position:   fixed;
                                 z-index:    1000;
@@ -296,7 +219,7 @@
                                 height:     100%;
                                 width:      100%;
                                 background: rgba( 255, 255, 255, .8 ) 
-                                    url('/static/img/ajax-loader.gif') 
+                                    url("/static/img/ajax-loader.gif") 
                                     50% 50% 
                                     no-repeat;
                             }
@@ -308,7 +231,7 @@
 							body.loading .modal {
                                 display: block;
                             }
-	                        </style>
+</style>
 							<script>
                                 $body = $("body");
                                 $(document).on({
