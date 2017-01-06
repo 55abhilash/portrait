@@ -47,34 +47,8 @@ class task():
     def display_individual_output(self, selected_machines):
         tmp = 0
 
-#class connect():
-#   selected_machine_ids = list()
-#    def redirect_to_task_page(self):
-#        tmp = 0
-
 class registrations():
-    def show_all_registrations(self):
-        all = wheel.cmd('key.list_all')['minions']
-        minion_status = dict()
-        salt_run_minion_status = run.cmd('manage.status')
-        for minion in all:
-            if(minion in salt_run_minion_status['down']):
-                minion_status[minion] = "Down"
-            else:
-                minion_status[minion] = "Up"
-        return minion_status
-
-    def show_pending_registrations(self):
-        return wheel.cmd('key.list_all')['minions_pre']
-    def accept_ids(self, machine_ids):
-        for machine in machine_ids:
-            wheel.cmd('key.accept', machine.split())
-    def reject_ids(self, machine_ids):
-        for machine in machine_ids:
-            wheel.cmd('key.reject', machine.split())
-    def delete_ids(self, machine_ids):
-        for machine in machine_ids:
-            wheel.cmd('key.delete', machine.split())
+    tmp_machine_var = 0
 
 class job():
     jid = ""
