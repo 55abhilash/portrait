@@ -74,5 +74,26 @@
                                font-weight: bold;
                             }
 
+							.modal {
+                                display:    none;
+                                position:   fixed;
+                                z-index:    1000;
+                                top:        0;
+                                left:       0;
+                                height:     100%;
+                                width:      100%;
+                                background: rgba( 255, 255, 255, .8 ) 
+                                    url("/static/img/ajax-loader.gif") 
+                                    50% 50% 
+                                    no-repeat;
+                            }
+                            body.loading {
+                                overflow: hidden;   
+                                /* Anytime the body has the loading class, o
+								   modal element will be visible */
+                            }
+							body.loading .modal {
+                                display: block;
+                            }
           
 					
