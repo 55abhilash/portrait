@@ -34,11 +34,11 @@
             width: 75%;
             height: 100%;
         }
-        ul#nav1 {
+        ul {
             list-style-type: none;
             padding: 10px;
         }
-        ul#nav1 li {
+        ul li {
             border-style: none dotted dotted none;
             border-width: 1px;
             height: 50px;
@@ -48,6 +48,16 @@
             font-family: 'Exo', sans-serif;
             font-size: 100%;
         }
+        ul#nav2 li {
+            border-style: none none dotted dotted;
+            font-size: 87%;
+        }
+        .actionbar {
+            left: 80%;
+            width: 20%;
+            height: 100%;
+        }
+        
         #minion-table {
             border-style: dotted;
             border-width: 1px;
