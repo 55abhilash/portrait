@@ -32,29 +32,6 @@ def index(request):
             return HttpResponse("INSERTED")
     return render(request, 'index.html')
 
-def login_portrait(request):
-    if(not request.user.is_anonymous()):
-        return redirect('http://localhost/')
-    if(request.method=='POST'):
-        try:
-            getuser = User.objects.get(username="abhi")
-        except getuser.DoesNotExist:
-            #Create an example user abhi, if not already present
-            User.objects.create_user("abhi", "abhilashmhaisne@gmail.com", "abhi")
-        user = authenticate(username=request.POST.get('user'), password=request.POST.get('pwd'))
-        if(user is not None):
-            login(request, user)
-            resp = {'status' : '0', 'url' : 'http://localhost/'}
-            return HttpResponse(json.dumps(resp), content_type = 'application/json')
-        else :
-            resp = {'status' : '1', 'message' : 'Invalid Credentials'}
-            return HttpResponse(json.dumps(resp), content_type = 'application/json')
-    else :
-        return render(request, 'login.html')
-
-def logout_portrait(request):
-    logout(request)
-    return redirect('http://localhost/')
 
 def pending_reg(request):
     if(request.user.is_anonymous()):

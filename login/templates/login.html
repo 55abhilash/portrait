@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Portrait : A free and open source system's management software</title> 
-  
-  <link rel="stylesheet" href="/static/css/login_styles.css">
-  <script src="/static/prefix.js"></script>
+
+  {% load staticfiles %}
+
+  <link rel="stylesheet" href="{% static "css/login_styles.css" %}">
+  <script src="{% static "js/prefix.js" %}"></script>
+  <script src="{% static "js/jquery.js" %}"></script>
 </head>
 
 <body>
@@ -25,7 +28,6 @@
             <b><div id="div1" style="color:red;"></div></b>
         </form>
 	</div>
-    <script src="/static/jquery.js"></script>
     <script>
             var u = document.getElementById('user');
             var p = document.getElementById('pwd');

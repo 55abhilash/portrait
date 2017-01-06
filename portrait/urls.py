@@ -16,16 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from p1 import views
+import p1.views
+import login.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
-    url(r'^login/', views.login_portrait, name='login'),
-    url(r'^logout/', views.logout_portrait, name='logout'),
-    url(r'^pending_reg/', views.pending_reg, name='pending_reg'),
-    url(r'^all_minions/', views.all_minions, name='all_minions'),
-    url(r'^accept/', views.accept, name='accept'),    
-    url(r'^reject/', views.reject, name='reject'),    
-    url(r'^delete_minions/', views.delete_minions, name='delete_minions'),    
+    url(r'^$', p1.views.index, name='index'),
+    url(r'^login/', login.views.login_portrait, name='login'),
+    url(r'^logout/', login.views.logout_portrait, name='logout'),
+    url(r'^pending_reg/', p1.views.pending_reg, name='pending_reg'),
+    url(r'^all_minions/', p1.views.all_minions, name='all_minions'),
+    url(r'^accept/', p1.views.accept, name='accept'),    
+    url(r'^reject/', p1.views.reject, name='reject'),    
+    url(r'^delete_minions/', p1.views.delete_minions, name='delete_minions'),    
 ]
