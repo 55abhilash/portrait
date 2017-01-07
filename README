@@ -1,7 +1,44 @@
 -------------------------------- PORTRAIT ----------------------------------
 
-Portrait aims to be a completely free and open source, easy to deploy systems management software.
+Portrait aims to be a completely free, easy to deploy systems management software.
 
 It is built on top of the remote execution software salt stack.
 
+INSTALLATION : 
 
+Dependencies for running portrait are :-
+python-django, salt-*, mysql / mariadb
+
+1) Clone the project / Download the zip and extract. <br>
+2) In the project directory, open portrait/settings.py.
+   There is a dictionary variable called DATABASES <br>
+
+   Change it to these values :-
+
+	DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'portrait',
+        'USER': '', #database root username here 
+        'PASSWORD': '',# database password here
+        'HOST': '', # Specify host and port 
+        'PORT': '', # if your database runs on another machine
+    		}
+	}
+
+3)  After making the above changes, go to project root directory and do :-
+		
+		python manage.py makemigrations
+		python manage.py migrate
+
+Both as sudo user.
+
+4) As temporarily I am trying to run this on port 80, disable apache
+
+		sudo service apache2 stop
+
+4) Run the server in the project root directory :
+	
+		python manage.py runserver hostname:80
+
+Eg. python manage.py runserver 0.0.0.0:80   # for localhost
