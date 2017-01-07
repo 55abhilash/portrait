@@ -15,12 +15,13 @@ run = salt.runner.RunnerClient(opts)
 
 # Create your models here.
 
-class machine():
-    machine_id = ""
-    os = ""
-    arch = ""
-    is_live = False
-    in_use = False
+class machine(models.Model):
+    machine_id = models.CharField(max_length=128, primary_key=True, unique=True)
+    os = models.CharField(max_length=16)
+    arch_choices = (("amd64", "64 bit arch"),("i386", "32 bit arch"))
+    arch = models.CharField(max_length=8, choices = arch_choices)
+    is_live = models.BooleanField(default=False)
+    in_use = models.BooleanField(default=False)
 
 class task():
     selected_machines = list()

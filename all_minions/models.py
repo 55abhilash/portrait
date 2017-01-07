@@ -31,4 +31,5 @@ class registrations(p1.models.registrations):
     def delete_ids(self, machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.delete', machine.split())
-
+            mac = p1.models.machine.objects.filter(machine_id=machine)
+            mac.delete()

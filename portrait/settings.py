@@ -32,6 +32,9 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'p1',
     'login',
+    'pending_registrations',
+    'all_minions',
+    'stats',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +59,7 @@ ROOT_URLCONF = 'portrait.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['p1/templates'],
+        'DIRS': ['p1/templates', 'login/templates', 'pending_registrations/templates', 'all_minions/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'portrait.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
