@@ -116,10 +116,25 @@
                     event.preventDefault();
                     if ($(this).attr('href') == "http://localhost/pending_reg/") {
                         $('#disp_area').html("<b>Pending Registrations</b>");
-                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Request from </th><th class='tab-head'></th></tr></table>");
+                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;" + 
+                                "<table id='minion-table'>" + 
+                                "<tr>" + 
+                                "<th class='tab-head'>Request from </th>" + 
+                                "<th class='tab-head'></th>" + 
+                                "</tr>" + 
+                                "</table>");
                     } else if ($(this).attr('href') == "http://localhost/all_minions/") {
                         $('#disp_area').html("<b>All Minions</b>");
-                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;<table id='minion-table'><tr><th class='tab-head'>Minion name</th><th class='tab-head'>Status</th></tr></table>");
+                        $('#disp_area').append("<br>" + "&nbsp;&nbsp;" + 
+                                "<table id='minion-table'>" + 
+                                "<tr>" + 
+                                "<th class='tab-head'>Minion name</th>" + 
+                                "<th>OS</th>" + 
+                                "<th></th>" + 
+                                "<th>IP Address</th>" + 
+                                "<th class='tab-head'>Status</th>" + 
+                                "</tr>" + 
+                                "</table>");
                     } else if ($(this).attr('href') == "http://localhost/connect/") {
                         $('#disp_area').html("<b>Select task to apply from left pane</b>");
                     }
@@ -141,20 +156,43 @@
                                 var checkbox_cnt_am = 0;
                                 if (this.url == "http://localhost/all_minions/") {
                                     for (element in response) {
-                                        $('#minion-table').append("<tr><td id='minnameam" + checkbox_cnt_am + "'>" + element + "</td><td class=" + response[element] + ">" + response[element] + "</td><td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td></tr>");
+                                        // The table in all_minions section
+                                        // Note that the third column is an empty one 
+                                        // with just three blank spaces present
+                                        // This is deliberately done to increase gap between 
+                                        // the columns adjoining to it
+                                        $('#minion-table').append("<tr>" + 
+                                                "<td id='minnameam" + checkbox_cnt_am + "'>" + element + "</td>" + 
+                                                "<td>" + response[element][0] + "</td>" +
+                                                "<td>" + "&nbsp;&nbsp;&nbsp;" + "</td>" +
+                                                "<td>" + response[element][1] + "</td>" + 
+                                                "<td class=" + response[element][2] + ">" + response[element][2] + "</td>" + 
+                                                "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" + 
+                                                "</tr>");
                                         checkbox_cnt_am += 1;
                                     }
-                                    $('#nav2').html("<li id='actbar1'> <a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</a></li>");
-                                    $('#nav2').append("<li id='actbar2>' <a class='sidebar_element' href='http://localhost/connect/'>Connect To Selected </a></li>");
+                                    $('#nav2').html("<li id='actbar1'>" + 
+                                            "<a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</a>" + 
+                                            "</li>");
+                                    $('#nav2').append("<li id='actbar2>'" +  
+                                            "<a class='sidebar_element' href='http://localhost/connect/'>Connect To Selected </a>" + 
+                                            "</li>");
                                 }
                                 //Append checkboxes in front of minion names
                                 else if (this.url == "http://localhost/pending_reg/") {
                                     for (element in response) {
-                                        $('#minion-table').append("<tr><td id='minnamepr" + checkbox_cnt_pr + "'>" + response[element] + "</td><td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxpr" + checkbox_cnt_pr + ">" + "</td></tr>");
+                                        $('#minion-table').append("<tr>" + 
+                                                "<td id='minnamepr" + checkbox_cnt_pr + "'>" + response[element] + "</td>" + 
+                                                "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxpr" + checkbox_cnt_pr + ">" + "</td>" + 
+                                                "</tr>");
                                         checkbox_cnt_pr += 1;
                                     }
-                                    $('#nav2').html("<li id='actbar1'> <a id='pr' class='ar' href='http://localhost/accept/'>Accept</a></li>");
-                                    $('#nav2').append("<li id='actbar2'> <a id='pr' class='ar' href='http://localhost/reject/'>Reject</a></li>");
+                                    $('#nav2').html("<li id='actbar1'>" + 
+                                            "<a id='pr' class='ar' href='http://localhost/accept/'>Accept</a>" + 
+                                            "</li>");
+                                    $('#nav2').append("<li id='actbar2'>" + 
+                                            "<a id='pr' class='ar' href='http://localhost/reject/'>Reject</a>" + 
+                                            "</li>");
                                 }
 
                                 function get_selected_ids(id) {
