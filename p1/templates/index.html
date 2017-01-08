@@ -41,65 +41,6 @@
         </ul>
         <div id="tabs-1">
 
-            <form method='post' id="f">
-                {% csrf_token %}
-                <button id="b" type='submit' form="f">
-                    SEND
-                </button>
-            </form>
-            <br>
-            <form method="post" id="f2">
-                {% csrf_token %}
-                <button id="b2" type='submit' form="f2">
-                    INSERT
-                </button>
-            </form>
-
-            <div id="div1"></div>
-
-            <script>
-                $(document).ready(function() {
-                    $("#f").submit(function(event) {
-                        $.ajax({
-                            type: "POST",
-                            url: "http://localhost",
-                            data: {
-                                'postid': '1',
-                                'csrfmiddlewaretoken': '{{ csrf_token}}',
-                            },
-                            success: function(data) {
-                                if (data.status == '1') {
-                                    $('#div1').html(data)
-                                } else if (data.status == '0') {
-                                    window.location.replace(data.url)
-                                }
-                            }
-                        });
-                        return false; //<---- move it here
-                    });
-                });
-
-                $(document).ready(function() {
-                    $("#f2").submit(function(event) {
-                        $.ajax({
-                            type: "POST",
-                            url: "http://localhost",
-                            data: {
-                                'postid': '2',
-                                'csrfmiddlewaretoken': '{{ csrf_token}}',
-                            },
-                            success: function(data) {
-                                if (data.status == '-1') {
-                                    window.location.replace(data.url)
-                                } else {
-                                    $('#div1').html(data)
-                                }
-                            }
-                        });
-                        return false; //<---- move it here
-                    });
-                });
-            </script>
         </div>
 
         <div id="tabs-2" style="display:flex;">
