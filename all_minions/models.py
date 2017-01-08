@@ -25,7 +25,6 @@ class registrations(p1.models.registrations):
         for minion in all:
             minion_status[minion] = list()
             minion_status[minion].append(grains['os'] + " " + grains['osrelease'] + " " + grains['oscodename'])
-            print "DEBUG : OS INFO :- " + minion_status[minion][0]
             minion_status[minion].append(grains['ipv4'][0]) #The list returned by ipv4 contains the public ip at 0th index, localhost at 1st and other ips if present at later indexes
             if(minion in salt_run_minion_status['down']):
                 minion_status[minion].append("Down")
