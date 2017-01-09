@@ -17,9 +17,10 @@ run = salt.runner.RunnerClient(opts)
 
 class machine(models.Model):
     machine_id = models.CharField(max_length=128, primary_key=True, unique=True)
-    os = models.CharField(max_length=16)
+    os = models.CharField(max_length=32)
     arch_choices = (("amd64", "64 bit arch"),("i386", "32 bit arch"))
     arch = models.CharField(max_length=8, choices = arch_choices)
+    ip = models.CharField(max_length=16)
     is_live = models.BooleanField(default=False)
     in_use = models.BooleanField(default=False)
 
