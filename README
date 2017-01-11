@@ -7,7 +7,7 @@ It is built on top of the remote execution software salt stack.
 INSTALLATION : 
 
 Dependencies for running portrait are :-
-python-django, salt-*, mysql / mariadb
+python-django, salt-*, mysql / mariadb, python-mysqldb
 
 1) Clone the project / Download the zip and extract. <br>
 2) In the project directory, open portrait/settings.py.
