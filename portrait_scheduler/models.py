@@ -19,9 +19,10 @@ run = salt.runner.RunnerClient(opts)
 #s = sched.scheduler(time.time, time.sleep)
 
 class p_sched:
+    e = threading.Event()
+    e.clear()
     def get_up_status(self):
         # Do stuff
-        print "DEBUG : in get_up_status(self)"
         sys.stdout.flush()
         all = wheel.cmd('key.list_all')['minions']
         salt_run_minion_status = run.cmd('manage.status')
@@ -35,6 +36,7 @@ class p_sched:
             mac = machine.objects.get(machine_id=minion)
             mac.is_live = True
             mac.save()
+        self.e.set() 
         Timer(30, self.get_up_status).start()
     
     def start_sched_job(self, fn_name, fn_args=[]):

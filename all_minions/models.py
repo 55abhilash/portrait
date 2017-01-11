@@ -12,10 +12,10 @@ import salt.client
 
 import p1.models
 from p1.models import machine
+from pending_registrations.models import registrations as pr_registrations
+import portrait_scheduler.models
 
 from django.core.exceptions import ObjectDoesNotExist
-
-from pending_registrations.models import registrations as pr_registrations
 
 opts = salt.config.master_config('/etc/salt/master')
 wheel = salt.wheel.WheelClient(opts)
@@ -60,6 +60,8 @@ class registrations(p1.models.registrations):
             # If minion is down, use their latest ip saved in the database
             # If up, run grains command to get latest ip and also save it in 
             # the database
+            
+            portrait_scheduler.models.p_sched.e.wait()
             
             if mac.is_live == False:
                 minion_status[minion].append(mac.ip)
