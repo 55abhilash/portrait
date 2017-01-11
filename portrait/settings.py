@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'pending_registrations',
     'all_minions',
     'stats',
+    'portrait_scheduler',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

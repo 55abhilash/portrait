@@ -176,8 +176,11 @@
                                     });
                                 });
                             }
+                            var ti = $('#minion-table');
+                            var pos = ti.offset();
+                            bottom = pos.top + ti.height()
                             $('#tabs-2').css({
-                                'min-height': '300px'
+                                'min-height': bottom
                             });
                         }
                     });

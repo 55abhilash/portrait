@@ -27,8 +27,8 @@ client = salt.client.LocalClient()
 class registrations(p1.models.registrations):
     def show_all_registrations(self):
         all = wheel.cmd('key.list_all')['minions']
+        # salt_run_minion_status = run.cmd('manage.status')
         minion_status = dict()
-        salt_run_minion_status = run.cmd('manage.status')
         
         # Temporary check for whether object was found in db                         
         tmp_chk = 0 
@@ -61,7 +61,7 @@ class registrations(p1.models.registrations):
             # If up, run grains command to get latest ip and also save it in 
             # the database
             
-            if(minion in salt_run_minion_status['down']):
+            if mac.is_live == False:
                 minion_status[minion].append(mac.ip)
                 minion_status[minion].append("Down")
             else:
