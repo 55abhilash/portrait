@@ -10,6 +10,8 @@ import salt.runner
 import salt.loader
 import salt.client
 
+import threading
+
 import p1.models
 from p1.models import machine
 from pending_registrations.models import registrations as pr_registrations
@@ -22,7 +24,8 @@ wheel = salt.wheel.WheelClient(opts)
 run = salt.runner.RunnerClient(opts)
 grains = salt.loader.grains(opts)
 client = salt.client.LocalClient()
-# Create your models here.
+e2 = threading.Event()
+e2.set()
 
 class registrations(p1.models.registrations):
     def show_all_registrations(self):
@@ -75,7 +78,9 @@ class registrations(p1.models.registrations):
         return minion_status
 
     def delete_ids(self, machine_ids):
+        e2.clear()
         for minion in machine_ids:
             wheel.cmd('key.delete', minion.split())
             mac = machine.objects.get(machine_id=minion.split('"')[1])
             mac.delete()
+        e2.set()

@@ -1,11 +1,12 @@
         #tabs .ui-tabs-active {
-            background: #966220;
+            background: #85144b;
         }
         #header {
             position: relative;
             height: 70px;
             width: 100%;
-            background: #966220;
+            background: #85144b;
+            /*Shortlisted color : 966220, 85144b*/
         }
         #welcome {
             margin-top: 18px;
@@ -47,10 +48,12 @@
             padding: 10px;
             font-family: 'Exo', sans-serif;
             font-size: 100%;
+            background: #8cd6ff;
         }
         ul#nav2 li {
             border-style: none none dotted dotted;
             font-size: 87%;
+            background: #9dff8c;
         }
         .actionbar {
             left: 80%;
@@ -64,6 +67,7 @@
             position: absolute;
             left: 35%;
             padding: 5px;
+            background: #fff693;
         }
         .tab-head {
             padding: 8px;
