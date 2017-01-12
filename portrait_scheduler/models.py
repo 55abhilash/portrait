@@ -29,15 +29,22 @@ class p_sched:
         all = wheel.cmd('key.list_all')['minions']
         salt_run_minion_status = run.cmd('manage.status')
         
-
-        for minion in salt_run_minion_status['down']:
+        for minion in all:
+            mac = machine.objects.get(machine_id=minion)
+            try:
+                mac.is_live = client.cmd(minion, 'test.ping')[minion]
+                # ^ mac.is_live = True
+            except:
+                mac.is_live = False
+            mac.save()
+        '''for minion in salt_run_minion_status['down']:
             mac = machine.objects.get(machine_id=minion)
             mac.is_live = False
             mac.save()
         for minion in salt_run_minion_status['up']:
             mac = machine.objects.get(machine_id=minion)
             mac.is_live = True
-            mac.save()
+            mac.save()'''
         self.e.set() 
         Timer(30, self.get_up_status).start()
     
