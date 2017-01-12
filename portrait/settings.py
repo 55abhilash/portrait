@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'all_minions',
     'stats',
     'portrait_scheduler',
+    'task_page'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -15,8 +15,8 @@ import sys
 
 import all_minions.models
 opts = salt.config.master_config('/etc/salt/master')
-wheel = salt.wheel.WheelClient(opts)
-run = salt.runner.RunnerClient(opts)
+wheel = salt.wheel.Wheel(opts)
+run = salt.runner.Runner(opts)
 #s = sched.scheduler(time.time, time.sleep)
 
 class p_sched:
