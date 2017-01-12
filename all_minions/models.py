@@ -65,7 +65,7 @@ class registrations(p1.models.registrations):
             # If minion is down, use their latest ip saved in the database
             # If up, run grains command to get latest ip and also save it in 
             # the database
-            
+            tmp_chk = 0 
             portrait_scheduler.models.p_sched.e.wait()
             
             if mac.is_live == False:
