@@ -40,6 +40,8 @@ class registrations(p1.models.registrations):
             minion_status[minion] = list()
             try:
                 mac = machine.objects.get(machine_id=minion)
+                print "DEBUG : mac.machine_id = "
+                print mac.machine_id
             except ObjectDoesNotExist:
                 # Let the latter code know that exception was raised
                 tmp_chk = -1 

@@ -1,11 +1,11 @@
         #tabs .ui-tabs-active {
-            background: #85144b;
+            background: #966220;
         }
         #header {
             position: relative;
             height: 70px;
             width: 100%;
-            background: #85144b;
+            background: #966220;
             /*Shortlisted color : 966220, 85144b*/
         }
         #welcome {
