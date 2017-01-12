@@ -115,9 +115,11 @@
                                     $('#nav2').html("<li id='actbar1'>" + 
                                             "<a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</a>" + 
                                             "</li>");
-                                    $('#nav2').append("<li id='actbar2>'" +  
+                                    $('#nav2').append("<li id='actbar2'>" +  
                                             "<a class='sidebar_element' href='http://localhost/connect/'>Connect To Selected </a>" + 
                                             "</li>");
+                                    //class = ar implies that page is to be refreshed after the corresponding ajax success
+                                    //class = sidebar_element implies completely new content to be put in the sidebars and disp-area
                                 }
                                 //Append checkboxes in front of minion names
                                 else if (this.url == "http://localhost/pending_reg/") {
@@ -135,7 +137,17 @@
                                             "<a id='pr' class='ar' href='http://localhost/reject/'>Reject</a>" + 
                                             "</li>");
                                 }
-
+                                
+                                else if (this.url == "http://localhost/connect/") {
+                                    //$('#nav1').html("<li>" + 
+                                    //        "<a id='task_input' href='http://localhost/task?tid=" + response["0"]  + "'>" + response["1"] + "</a>" +
+                                    //        "</li>");       
+                                    for(element in response) {
+                                        $('#nav1').append("<li>" + 
+                                                "<a id='task_input' href='http://localhost/task?tid=" + response[element]  + "'>" + response[element] + "</a>" +
+                                                "</li>");       
+                                    }
+                                }    
                                 function get_selected_ids(id) {
                                     var i = 0;
                                     var checkbox_cnt;
