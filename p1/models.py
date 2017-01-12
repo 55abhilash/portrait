@@ -10,8 +10,8 @@ import salt.runner
 
 from salt.modules import network
 opts = salt.config.master_config('/etc/salt/master')
-wheel = salt.wheel.WheelClient(opts)
-run = salt.runner.RunnerClient(opts)
+wheel = salt.wheel.Wheel(opts)
+run = salt.runner.Runner(opts)
 
 # Create your models here.
 

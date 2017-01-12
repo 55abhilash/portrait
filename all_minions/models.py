@@ -20,8 +20,8 @@ import portrait_scheduler.models
 from django.core.exceptions import ObjectDoesNotExist
 
 opts = salt.config.master_config('/etc/salt/master')
-wheel = salt.wheel.WheelClient(opts)
-run = salt.runner.RunnerClient(opts)
+wheel = salt.wheel.Wheel(opts)
+run = salt.runner.Runner(opts)
 grains = salt.loader.grains(opts)
 client = salt.client.LocalClient()
 e2 = threading.Event()
