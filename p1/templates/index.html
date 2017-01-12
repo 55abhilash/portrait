@@ -184,6 +184,7 @@
                                 });
                                 $('a.task_page_class').click(function(event) {
                                     event.preventDefault();
+                                    window.open("http://localhost/task_page/");
                                     $('#disp_area').html("<b>Select task to apply from left pane</b>");
                                     $('#nav2').html('');
                                     $.ajax({
