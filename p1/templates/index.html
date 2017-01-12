@@ -76,8 +76,7 @@
                                 "<th class='tab-head'>Status</th>" + 
                                 "</tr>" + 
                                 "</table>");
-                    } else if ($(this).attr('href') == "http://localhost/connect/") {
-                        $('#disp_area').html("<b>Select task to apply from left pane</b>");
+                    } else if ($(this).attr('href') == "http://localhost/task_page/") {
                     }
                     $('#disp_area').css({
                         'left': '25%',
@@ -116,7 +115,7 @@
                                             "<a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</a>" + 
                                             "</li>");
                                     $('#nav2').append("<li id='actbar2'>" +  
-                                            "<a class='sidebar_element' href='http://localhost/task_page/'>Connect To Selected </a>" + 
+                                            "<a class='task_page_class' href='http://localhost/task_page/'>Connect To Selected </a>" + 
                                             "</li>");
                                     //class = ar implies that page is to be refreshed after the corresponding ajax success
                                     //class = sidebar_element implies completely new content to be put in the sidebars and disp-area
@@ -138,15 +137,11 @@
                                             "</li>");
                                 }
                                 
-                                else if (this.url == "http://localhost/connect/") {
+                                else if (this.url == "http://localhost/task_page/") {
                                     //$('#nav1').html("<li>" + 
                                     //        "<a id='task_input' href='http://localhost/task?tid=" + response["0"]  + "'>" + response["1"] + "</a>" +
-                                    //        "</li>");       
-                                    for(element in response) {
-                                        $('#nav1').append("<li>" + 
-                                                "<a id='task_input' href='http://localhost/task?tid=" + response[element]  + "'>" + response[element] + "</a>" +
-                                                "</li>");       
-                                    }
+                                    //        "</li>");    
+                                    alert(this.url);
                                 }    
                                 function get_selected_ids(id) {
                                     var i = 0;
@@ -184,6 +179,27 @@
                                                 $('#sidebar_pr').click();
                                                 checkbox_cnt_pr -= selected_ids.length;
                                             }
+                                        }
+                                    });
+                                });
+                                $('a.task_page_class').click(function(event) {
+                                    event.preventDefault();
+                                    $('#disp_area').html("<b>Select task to apply from left pane</b>");
+                                    $('#nav2').html('');
+                                    $.ajax({
+                                        url: $(this).attr('href'),
+                                        type: "GET",
+                                        success: function(response) {
+                                            $('#nav1').html("<li>" + 
+                                            "<a id='task_input' href='http://localhost/task?tid=" + response[0]  + "'>" + response[0] + "</a>" +
+                                            "</li>");
+                                            var element;
+                                            for(element = 1; element < response.length; element++ ) {
+                                                $('#nav1').append("<li>" + 
+                                                "<a id='task_input' href='http://localhost/task?tid=" + response[element]  + "'>" + response[element] + "</a>" +
+                                                "</li>");       
+                                            }
+
                                         }
                                     });
                                 });
