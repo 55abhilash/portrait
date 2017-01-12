@@ -24,7 +24,6 @@ class p_sched:
     e.clear()
     def get_up_status(self):
         # Do stuff
-        sys.stdout.flush()
         all_minions.models.e2.wait()
         all = wheel.cmd('key.list_all')['minions']
         salt_run_minion_status = run.cmd('manage.status')
