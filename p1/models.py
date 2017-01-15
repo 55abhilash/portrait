@@ -23,6 +23,7 @@ class machine(models.Model):
     ip = models.CharField(max_length=16)
     is_live = models.BooleanField(default=False)
     in_use = models.BooleanField(default=False)
+    status_last_update = models.DateTimeField(default=datetime.datetime.now())
 
 class task():
     selected_machines = list()

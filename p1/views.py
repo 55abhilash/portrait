@@ -15,8 +15,8 @@ import threading
 
 @login_required(login_url='/login/')
 def index(request):
-    s = p_sched()
-    threading.Thread(target=s.start_sched_job, args=['get_up_status']).start()
+    #s = p_sched()
+    #threading.Thread(target=s.start_sched_job, args=['get_up_status']).start()
     if(request.method=='POST'): 
         preq = request.POST.get('postid')
     return render(request, 'index.html')

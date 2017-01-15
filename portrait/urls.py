@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^accept/', pending_registrations.views.accept, name='accept'),    
     url(r'^reject/', pending_registrations.views.reject, name='reject'),    
     url(r'^delete_minions/', all_minions.views.delete_minions, name='delete_minions'),    
+    url(r'^refresh/', all_minions.views.refresh, name='refresh'),    
     url(r'^task_page/', task_page.views.send_task_list, name='send_task_list'),    
 ]

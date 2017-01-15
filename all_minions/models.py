@@ -56,7 +56,7 @@ class registrations(p1.models.registrations):
                     
                 os_info = grains_info[minion]['os'] + ' ' + grains_info[minion]['osrelease'] + ' ' + grains_info[minion]['oscodename']
                 ipv4 = grains_info[minion]['ipv4'][0]
-                mac = p1.models.machine(machine_id=minion, os=os_info, arch=grains_info[minion]['osarch'], ip=ipv4)
+                mac = p1.models.machine(machine_id=minion, os=os_info, arch=grains_info[minion]['osarch'], ip=ipv4, status_last_update=datetime.datetime.now())
                 mac.save()
                 minion_status[minion].append(os_info)
             if tmp_chk == 0:
@@ -66,18 +66,28 @@ class registrations(p1.models.registrations):
             # If up, run grains command to get latest ip and also save it in 
             # the database
             tmp_chk = 0 
-            portrait_scheduler.models.p_sched.e.wait()
             
             if mac.is_live == False:
                 minion_status[minion].append(mac.ip)
-                minion_status[minion].append("Down")
+                minion_status[minion].append("Down " + "(" + str(mac.status_last_update)  +")")
             else:
                 ipv4 = client.cmd(minion, 'grains.item', ['ipv4'])[minion]['ipv4'][0]
                 mac.ip = ipv4
                 # The list returned by ipv4 contains the public ip at 0th index, localhost at 1st and other ips if present at later indexes
                 minion_status[minion].append(ipv4) 
-                minion_status[minion].append("Up")
+                minion_status[minion].append("Up " + "(" + str(mac.status_last_update) + ")")
         return minion_status
+    
+    def refresh(self, machine_ids):
+        for item in machine_ids:
+            print "DEBUG : item = " + item
+            mac = machine.objects.get(machine_id=item)
+            try:
+                mac.is_live = client.cmd(item, 'test.ping')[item]
+            except:
+                mac.is_live = False
+            mac.status_last_update = datetime.datetime.now()
+            mac.save()
 
     def delete_ids(self, machine_ids):
         e2.clear()

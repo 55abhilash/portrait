@@ -73,7 +73,9 @@
                                 "<th style='text-align:center;'>OS</th>" + 
                                 "<th></th>" + 
                                 "<th>IP Address</th>" + 
-                                "<th class='tab-head'>Status</th>" + 
+                                "<th class='tab-head'>Status</th>" +
+                                "<th></th>" + 
+                                "<th>Refresh </th>" +
                                 "</tr>" + 
                                 "</table>");
                     } else if ($(this).attr('href') == "http://localhost/task_page/") {
@@ -106,8 +108,9 @@
                                                 "<td>" + response[element][0] + "</td>" +
                                                 "<td>" + "&nbsp;&nbsp;&nbsp;" + "</td>" +
                                                 "<td>" + response[element][1] + "</td>" + 
-                                                "<td class=" + response[element][2] + ">" + response[element][2] + "</td>" + 
-                                                "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" + 
+                                                "<td id=" + element + " class=" + response[element][2] + ">" + response[element][2] + "</td>" + 
+                                                "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
+                                                "<td> " + "<a class='ref' href='http://localhost/refresh?ids=" + element + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>"+ "</td>" + 
                                                 "</tr>");
                                         checkbox_cnt_am += 1;
                                     }
@@ -200,6 +203,23 @@
                                                 "<a id='task_input' href='http://localhost/task?tid=" + response[element]  + "'>" + response[element] + "</a>" +
                                                 "</li>");       
                                             }
+                                        }
+                                    });
+                                });
+                                $('a.ref').click(function(event) {
+                                    event.preventDefault();
+                                    $.ajax({
+                                        url: $(this).attr('href'),
+                                        type: "GET",
+                                        success: function(resp) {
+                                            for (element in resp) {
+                                                if((oc = $('#' + element).attr('class')) != resp[element][2]) {
+                                                    $('#' + element).toggleClass(oc + ' ' + resp[element][2]);
+                                                }
+
+                                               $('#' + element).html(resp[element][2]);
+                                            }
+                                            
                                         }
                                     });
                                 });
