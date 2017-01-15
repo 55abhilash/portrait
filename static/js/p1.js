@@ -1,3 +1,31 @@
+
+$('#machines_entry').append(
+        "<ul id='nav1'>" +
+            "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +
+            "</li>" + 
+            "<li> <a class='sidebar_element' id='sidebar_pr' href='http://localhost/pending_reg/'>View Pending Registrations</a>" + 
+            "</li>" +
+        "</ul>" + 
+        "</div>");
+$('#machines').append(
+        "<div class='row' id='disp_area'>" + 
+            "&nbsp; &nbsp; &nbsp; &nbsp;" +
+        "</div>" +
+        "<div class='actionbar'>" + 
+            "<ul id='nav2'>" + 
+            "</ul>" +
+            "</div>");
+$('.actionbar').css({'left':'83%', 'width':'20%', 'height':'100%', 'padding':'10px'});
+
+$('#machines').toggle(false);
+$('#nav1').toggle(false);
+
+$('a#machines_entry').click(function(event) {
+    $('#nav1').toggle();
+    $('.sidebar_element').css({'font-size':'16px'});
+});
+
+
 $('a.sidebar_element').click(function(event) {
      event.preventDefault();
      if ($(this).attr('href') == "http://localhost/pending_reg/") {
@@ -14,12 +42,13 @@ $('a.sidebar_element').click(function(event) {
          $('#disp_area').append("<br>" + "&nbsp;&nbsp;" +
              "<table id='minion-table'>" +
              "<tr>" +
+             "<th></th>" +
              "<th class='tab-head'>Minion name</th>" +
              "<th style='text-align:center;'>OS</th>" +
              "<th></th>" +
              "<th>IP Address</th>" +
-             "<th class='tab-head'>Status</th>" +
              "<th></th>" +
+             "<th class='tab-head' style='text-align:center;'>Status</th>" +
              "<th>Refresh </th>" +
              "</tr>" +
              "</table>");
@@ -28,7 +57,8 @@ $('a.sidebar_element').click(function(event) {
          'left': '25%',
          'width': '75%',
          'font-size': '100%',
-         'text-align': 'center'
+         'text-align': 'center',
+         'padding':'8px'
      });
      $.ajax({
          url: $(this).attr('href'),
@@ -48,12 +78,13 @@ $('a.sidebar_element').click(function(event) {
                          // This is deliberately done to increase gap between 
                          // the columns adjoining to it
                          $('#minion-table').append("<tr>" +
+                             "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
                              "<td id='minnameam" + checkbox_cnt_am + "'>" + element + "</td>" +
                              "<td>" + response[element][0] + "</td>" +
                              "<td>" + "&nbsp;&nbsp;&nbsp;" + "</td>" +
                              "<td>" + response[element][1] + "</td>" +
+                             "<td>" + "&nbsp;" + "</td>" +
                              "<td id=" + element + " class=" + response[element][2] + ">" + response[element][2] + "</td>" +
-                             "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
                              "<td> " + "<a class='ref' href='http://localhost/refresh?ids=" + element + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" +
                              "</tr>");
                          checkbox_cnt_am += 1;
@@ -173,12 +204,22 @@ $('a.sidebar_element').click(function(event) {
              $('#tabs-2').css({
                  'min-height': bottom
              });
+            $('#machines').toggle(true);
          }
      });
      return false; //for good measure
  });
 
+$('#leftbar').css({'width' : '250px'});
+$('#rightarea').css({'marginLeft' : '250px'});
+
 $('#togglesidebar').click(function(event) {
-    $('#leftbar').css({'width' : '250px'});
-    $('#rightarea').css({'marginLeft' : '250px'});
-});
+    if($('#leftbar').css('width') == '250px') {
+        $('#leftbar').css({'width' : '0px'});
+        $('#rightarea').css({'marginLeft' : '0px'});
+    }
+    else {
+        $('#leftbar').css({'width' : '250px'});
+        $('#rightarea').css({'marginLeft' : '250px'});
+    }
+});  

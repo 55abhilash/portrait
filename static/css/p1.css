@@ -5,7 +5,7 @@
             position: relative;
             height: 70px;
             width: 100%;
-            background: #966220;
+            background: #b8b894;
             /*Shortlisted color : 966220, 85144b*/
         }
         #welcome {
@@ -38,26 +38,73 @@
             left: 25%;
             width: 75%;
             height: 100%;
+            top: 45%;;
+        }
+        ul {
+            list-style-type: '-';
+            padding: 10px 0px 10px 10px;
         }
         ul#nav2 li {
             border-style: none none dotted dotted;
-            font-size: 87%;
+            border-width: 1px;
+            text-align: center;
+            text-color: black;
+            font-size: 95%;
+            padding: 10px;
             background: #9dff8c;
         }
         .actionbar {
-            left: 80%;
+            left: 83%;
             width: 20%;
             height: 100%;
+            
         }
         
         #minion-table {
             border-style: dotted;
             border-width: 1px;
             position: absolute;
-            left: 30%;
+            left: 25%;
             padding: 5px;
             background: #fff693;
+            -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+            -moz-animation: fadein 4s; /* Firefox < 16 */
+            -ms-animation: fadein 2s; /* Internet Explorer */
+            -o-animation: fadein 2s; /* Opera < 12.1 */
+            animation: fadein 4s;
         }
+
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from    { opacity: 0; }
+    to      { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
         .tab-head {
             padding: 8px;
         }
@@ -98,15 +145,15 @@
     left: 0;
     background-color: #111; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 40px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 /* The navigation menu links */
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 8px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: #818181;
     display: block;
     transition: 0.3s
@@ -117,19 +164,10 @@
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #rightarea {
     transition: margin-left .5s;
-    padding: 20px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
