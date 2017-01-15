@@ -177,3 +177,8 @@ $('a.sidebar_element').click(function(event) {
      });
      return false; //for good measure
  });
+
+$('#togglesidebar').click(function(event) {
+    $('#leftbar').css({'width' : '250px'});
+    $('#rightarea').css({'marginLeft' : '250px'});
+});

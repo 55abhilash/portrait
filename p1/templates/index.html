@@ -19,32 +19,28 @@
 </head>
 
 <body>
-    <div class="row header" id="header">
-        <div class="col-md-4" id="welcome"><img src="{% static "img/portrait_logo.png" %}" style="float: left; margin-left: 15%; margin-right: -35%; margin-top: -2%; width:50px; height:50px;" alt="Portrait"></img>PORTRAIT</div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4" id="loginuser">{{ request.user }}&nbsp; &nbsp; &nbsp; <a href="http://localhost/logout/" style="color:white;">Logout</a>
-        </div>
-    </div>
-    <script>
-        $(function() {
-            $("#tabs").tabs();
-        });
-    </script>
 
-    <div id="tabs">
+    <div id="leftbar" class="sidenav">
         <ul style="width:100%; text-align:center;">
-            <li style="width:30%;"><a href="#tabs-1">Dashboard</a>
+            <li><a href="#dashboard">Dashboard</a>
             </li>
-            <li style="width:30%;"><a href="#tabs-2">Machines</a>
+            <li><a href="#machines">Machines</a>
             </li>
-            <li style="width:30%;"><a href="#tabs-3">Running Tasks</a>
+            <li><a href="#runningtasks">Running Tasks</a>
             </li>
         </ul>
-        <div id="tabs-1">
+    </div>
+    <div id="rightarea">
+        <div class="row header" id="header">
+            <div class="col-md-4" id="welcome"><img id="togglesidebar" src="{% static "img/portrait_logo.png" %}" style="float: left; margin-left: 15%; margin-right: -35%; margin-top: -2%; width:50px; height:50px;" alt="Portrait"></img>PORTRAIT</div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4" id="loginuser">{{ request.user }}&nbsp; &nbsp; &nbsp; <a href="http://localhost/logout/" style="color:white;">Logout</a></div>
+        </div>
+        <div id="dashboard">
 
         </div>
 
-        <div id="tabs-2" style="display:flex;">
+        <div id="machines" style="display:flex;">
             <div class="sidebar">
                 <ul id="nav1">
                     <li> <a class="sidebar_element" id="sidebar_am" href="http://localhost/all_minions/">All minions</a>
@@ -66,7 +62,7 @@
             
         </div>
 
-        <div id="tabs-3">
+        <div id="runningtasks">
         </div>
 
         <div class="modal"> </div>
