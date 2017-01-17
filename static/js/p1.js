@@ -15,7 +15,7 @@ $('#machines').append(
             "<ul id='nav2'>" + 
             "</ul>" +
             "</div>");
-$('.actionbar').css({'left':'83%', 'width':'20%', 'height':'100%', 'padding':'10px'});
+$('.actionbar').css({'left':'83%', 'width':'20%', 'height':'100%', 'padding-top':'48px'});
 
 $('#machines').toggle(false);
 $('#nav1').toggle(false);
@@ -161,19 +161,18 @@ $('a.sidebar_element').click(function(event) {
                  });
                  $('a.task_page_class').click(function(event) {
                      event.preventDefault();
-                     window.open("http://localhost/task_page/");
-                     $('#disp_area').html("<b>Select task to apply from left pane</b>");
+                     $('#disp_area').html("<b>Select task to apply from right pane</b>");
                      $('#nav2').html('');
                      $.ajax({
                          url: $(this).attr('href'),
                          type: "GET",
                          success: function(response) {
-                             $('#nav1').html("<li>" +
+                             $('#nav2').html("<li>" +
                                  "<a id='task_input' href='http://localhost/task?tid=" + response[0] + "'>" + response[0] + "</a>" +
                                  "</li>");
                              var element;
                              for (element = 1; element < response.length; element++) {
-                                 $('#nav1').append("<li>" +
+                                 $('#nav2').append("<li>" +
                                      "<a id='task_input' href='http://localhost/task?tid=" + response[element] + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }

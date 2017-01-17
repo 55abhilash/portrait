@@ -12,6 +12,7 @@ import salt.wheel
 import salt.config
 import salt.runner
 import sys
+import datetime
 
 import all_minions.models
 opts = salt.config.master_config('/etc/salt/master')
@@ -26,7 +27,6 @@ class p_sched:
         # Do stuff
         all_minions.models.e2.wait()
         all = wheel.cmd('key.list_all')['minions']
-        salt_run_minion_status = run.cmd('manage.status')
         
         for minion in all:
             mac = machine.objects.get(machine_id=minion)
@@ -35,16 +35,13 @@ class p_sched:
                 # ^ mac.is_live = True
             except:
                 mac.is_live = False
+            if mac.is_live:
+                print "DEBUG : " + minion + " IS LIVE"
+                sys.stdout.flush()
+            mac.status_last_update = datetime.datetime.now()
             mac.save()
-        '''for minion in salt_run_minion_status['down']:
-            mac = machine.objects.get(machine_id=minion)
-            mac.is_live = False
-            mac.save()
-        for minion in salt_run_minion_status['up']:
-            mac = machine.objects.get(machine_id=minion)
-            mac.is_live = True
-            mac.save()'''
-        self.e.set() 
+        self.e.set()
+        print "DEBUG : SCHEDULER ITERATION COMPLETE"
         Timer(30, self.get_up_status).start()
     
     def start_sched_job(self, fn_name, fn_args=[]):

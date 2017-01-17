@@ -14,7 +14,6 @@ import threading
 
 import p1.models
 from p1.models import machine
-from pending_registrations.models import registrations as pr_registrations
 import portrait_scheduler.models
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -35,57 +34,44 @@ class registrations(p1.models.registrations):
         
         # Temporary check for whether object was found in db                         
         tmp_chk = 0 
+        grains_info_job = client.cmd_async('*', 'grains.items')
         
         for minion in all:
             minion_status[minion] = list()
-            try:
-                mac = machine.objects.get(machine_id=minion)
-                print "DEBUG : mac.machine_id = "
-                print mac.machine_id
-            except ObjectDoesNotExist:
-                # Let the latter code know that exception was raised
-                tmp_chk = -1 
-                
-                grains_info_job = client.cmd_async('*', 'grains.items')
-                grains_info_data = client.get_cli_returns(grains_info_job, minion)
             
-                grains_info = {}
-                for mid in list(grains_info_data):
-                    if(minion in dict(mid)):
-                        grains_info[minion] = dict(mid)[minion]['ret']
-                    
-                os_info = grains_info[minion]['os'] + ' ' + grains_info[minion]['osrelease'] + ' ' + grains_info[minion]['oscodename']
-                ipv4 = grains_info[minion]['ipv4'][0]
-                mac = p1.models.machine(machine_id=minion, os=os_info, arch=grains_info[minion]['osarch'], ip=ipv4, status_last_update=datetime.datetime.now())
-                mac.save()
-                minion_status[minion].append(os_info)
-            if tmp_chk == 0:
-                minion_status[minion].append(mac.os) 
+            mac = machine.objects.get(machine_id=minion)
+            minion_status[minion].append(mac.os) 
             
             # If minion is down, use their latest ip saved in the database
             # If up, run grains command to get latest ip and also save it in 
             # the database
-            tmp_chk = 0 
-            
             if mac.is_live == False:
                 minion_status[minion].append(mac.ip)
                 minion_status[minion].append("Down " + "(" + str(mac.status_last_update)  +")")
             else:
-                ipv4 = client.cmd(minion, 'grains.item', ['ipv4'])[minion]['ipv4'][0]
-                mac.ip = ipv4
                 # The list returned by ipv4 contains the public ip at 0th index, localhost at 1st and other ips if present at later indexes
-                minion_status[minion].append(ipv4) 
+                minion_status[minion].append(mac.ip) 
                 minion_status[minion].append("Up " + "(" + str(mac.status_last_update) + ")")
+                mac.save()
         return minion_status
     
     def refresh(self, machine_ids):
-        for item in machine_ids:
-            print "DEBUG : item = " + item
-            mac = machine.objects.get(machine_id=item)
+        for minion in machine_ids:
+            print "DEBUG : item = " + minion
+            mac = machine.objects.get(machine_id=minion)
             try:
-                mac.is_live = client.cmd(item, 'test.ping')[item]
+                mac.is_live = client.cmd(minion, 'test.ping')[minion]
             except:
                 mac.is_live = False
+            if mac.is_live: 
+                if mac.os == '':
+                # Write grains info to db if it is empty
+                # and when the machine is live; i.e., when
+                # localClient is able to run on the machine
+                    mac.os = client.cmd(minion, 'grains.item', ['os'])[minion]['os'] + ' ' + client.cmd(minion, 'grains.item', ['osrelease'])[minion]['osrelease'] + ' ' + client.cmd(minion, 'grains.item', ['oscodename'])[minion]['oscodename']
+                    mac.ip = client.cmd(minion, 'grains.item', ['ipv4'])[minion]['ipv4'][0]
+                    mac.arch = client.cmd(minion, 'grains.item', ['osarch'])[minion]['osarch']
+                    print "DEBUG : WROTE GRAINS DATA"
             mac.status_last_update = datetime.datetime.now()
             mac.save()
 

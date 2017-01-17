@@ -45,7 +45,10 @@
             padding: 10px 0px 10px 10px;
         }
         ul#nav2 li {
-            border-style: none none dotted dotted;
+            border-radius: 15px;
+            border-color: green;
+            border-collapse: separate;
+            border-style: solid;
             border-width: 1px;
             text-align: center;
             text-color: black;
@@ -61,10 +64,13 @@
         }
         
         #minion-table {
-            border-style: dotted;
+            border-radius: 15px;
+            border-color: orange;
+            border-collapse: separate;
+            border-style: solid;
             border-width: 1px;
             position: absolute;
-            left: 25%;
+            left: 20%;
             padding: 5px;
             background: #fff693;
             -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
