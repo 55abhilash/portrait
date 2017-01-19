@@ -15,7 +15,7 @@ $('#machines').append(
             "<ul id='nav2'>" + 
             "</ul>" +
             "</div>");
-$('.actionbar').css({'left':'83%', 'width':'20%', 'height':'100%', 'padding-top':'48px'});
+$('.actionbar').css({'left':'85%', 'width':'20%', 'height':'100%', 'padding-top':'48px', 'padding-left':'75px'});
 
 $('#machines').toggle(false);
 $('#nav1').toggle(false);
@@ -46,7 +46,7 @@ $('a.sidebar_element').click(function(event) {
              "<th class='tab-head'>Minion name</th>" +
              "<th style='text-align:center;'>OS</th>" +
              "<th></th>" +
-             "<th>IP Address</th>" +
+             "<th>Latest IP Address</th>" +
              "<th></th>" +
              "<th class='tab-head' style='text-align:center;'>Status</th>" +
              "<th>Refresh </th>" +
