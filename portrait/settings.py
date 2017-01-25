@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'stats',
     'portrait_scheduler',
     'task_page',
+    'module_install',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
