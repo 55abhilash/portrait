@@ -167,13 +167,9 @@ $('a.sidebar_element').click(function(event) {
                          url: $(this).attr('href'),
                          type: "GET",
                          success: function(response) {
-                             $('#nav2').html("<li>" +
-                                 "<a id='task_input' href='http://localhost/task?tid=" + response[0] + "'>" + response[0] + "</a>" +
-                                 "</li>");
-                             var element;
-                             for (element = 1; element < response.length; element++) {
+                             for (element in response) {
                                  $('#nav2').append("<li>" +
-                                     "<a id='task_input' href='http://localhost/task?tid=" + response[element] + "'>" + response[element] + "</a>" +
+                                     "<a id='task_input' href='http://localhost/task?tid=" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
                          }
