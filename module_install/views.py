@@ -34,7 +34,7 @@ TO DO :
 
 # Usage : python install_mod.py module_folder_path
 from module_install.models import module
-
+import os
 
 def mod_install_page(request):
     return render(request, 'install_mod.html')
@@ -47,7 +47,13 @@ def mod_install(request):
     mod.desc = request.POST.get("desc")
     mod.save()
     modfile = request.FILES["modfile"]
-    fp = open(mod.name.replace(" ", "_") + ".zip", "w")
+    modname_ = mod.name.replace(" ", "_")
+    fp = open(modname_ + ".zip", "w")
     fp.write(modfile.read())
     fp.close()
+    os.popen("python manage.py startapp " + mod.name.replace(" ", "_"))
+    os.popen("unzip " + modname_ + ".zip -d /tmp")
+    os.popen("cp /tmp/" + modname_ + "/views.py " + modname_)
+    os.popen("cp /tmp/" + modname_ + "/models.py " + modname_)
+    os.popen("cp -r /tmp/" + modname_ + "/templates " + modname_)
     return render(request, 'install_mod.html')         

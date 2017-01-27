@@ -20,5 +20,3 @@ def index(request):
     if(request.method=='POST'): 
         preq = request.POST.get('postid')
     return render(request, 'index.html')
-
-
