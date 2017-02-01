@@ -34,9 +34,12 @@ TO DO :
 
 # Usage : python install_mod.py module_folder_path
 from module_install.models import module
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 import os
 
 def mod_install_page(request):
+    #return HttpResponse(render_to_string('install_mod.html'))
     return render(request, 'install_mod.html')
 
 def mod_install(request): 
@@ -51,9 +54,12 @@ def mod_install(request):
     fp = open(modname_ + ".zip", "w")
     fp.write(modfile.read())
     fp.close()
-    os.popen("python manage.py startapp " + mod.name.replace(" ", "_"))
-    os.popen("unzip " + modname_ + ".zip -d /tmp")
-    os.popen("cp /tmp/" + modname_ + "/views.py " + modname_)
-    os.popen("cp /tmp/" + modname_ + "/models.py " + modname_)
-    os.popen("cp -r /tmp/" + modname_ + "/templates " + modname_)
-    return render(request, 'install_mod.html')         
+    try:
+        os.popen("python manage.py startapp " + mod.name.replace(" ", "_"))
+        os.popen("unzip " + modname_ + ".zip -d /tmp")
+        os.popen("cp /tmp/" + modname_ + "/views.py " + modname_)
+        os.popen("cp /tmp/" + modname_ + "/models.py " + modname_)
+        os.popen("cp -r /tmp/" + modname_ + "/templates " + modname_)
+        return HttpResponse('Succesfully installed!')
+    except:
+        return HttpResponse('Error in installation. Try Again.')

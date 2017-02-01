@@ -1,4 +1,3 @@
-
 $('#machines_entry').append(
         "<ul id='nav1'>" +
             "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +
@@ -24,7 +23,6 @@ $('a#machines_entry').click(function(event) {
     $('#nav1').toggle();
     $('.sidebar_element').css({'font-size':'16px'});
 });
-
 
 $('a.sidebar_element').click(function(event) {
      event.preventDefault();
@@ -159,6 +157,10 @@ $('a.sidebar_element').click(function(event) {
                          }
                      });
                  });
+                 
+                 // Request the html for new module installation 
+                 // The link for it has id = install_mod_page
+                 
                  $('a.task_page_class').click(function(event) {
                      event.preventDefault();
                      $('#disp_area').html("<b>Select task to apply from right pane</b>");
@@ -172,9 +174,45 @@ $('a.sidebar_element').click(function(event) {
                                      "<a id='task_input' href='http://localhost/task?tid=" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
-                         }
-                     });
-                 });
+                                $('#nav2').append("<li>" +
+                                    "<a class='install_mod_page' href='http://localhost/install_mod_page'>Install new module</a>" +
+                                    "</li>");
+                                // The click event handler of install_mod_page needs
+                                // to exist in the block where we append the element
+                                // with the class install_mod_page.
+                                // Eg. Here we write the event handler inside the 
+                                // success function of the ajax request
+                                $('a.install_mod_page').click(function(event) {
+                                    event.preventDefault();
+                                    $("#disp_area").html("<b> Install new module </b>");
+                                    $.ajax({
+                                        url: $(this).attr('href'),
+                                        type: "GET",
+                                        success: function(resp) {
+                                            $("#disp_area").append(resp);
+                                /*$('#modform').submit(function(event) {
+                                    event.preventDefault();
+                                    alert("Clicked");                    
+                                    $.ajax({
+                                        url: "http://localhost/install_mod/",
+                                        type: "POST",
+                                        data: {
+                                            'name': $('#name').val(), 
+                                            'desc': $('#desc').val(),
+                                            'modfile': $('#modfile').val(),
+                                            'csrfmiddlewaretoken': '{{csrf_token}}'
+                                        },
+                                        success : function(response) {
+                                            $('#disp-area').html(response);
+                                        }
+                                    });
+                                });*/
+                                        }
+                                    });
+                                });
+                        }
+                });
+            });
                  $('a.ref').click(function(event) {
                      event.preventDefault();
                      $.ajax({

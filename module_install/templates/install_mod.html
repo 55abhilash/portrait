@@ -1,12 +1,7 @@
-<html>
-    <head>
-        <form method="post" enctype="multipart/form-data" action="http://localhost/install_mod/">
-            {%  csrf_token %}
-            <input type="text" name="name">
-            <input type="text" name="desc">
-            <input type="file" name="modfile">
-            <input type="submit"> 
-        </form>
-    </head>
-</html>
-
+<form id="modform" method="post" enctype="multipart/form-data" action="http://localhost/install_mod/">
+    {%  csrf_token %}
+    <input type="text" id="name" name="name">
+    <input type="text" id="desc" name="desc">
+    <input type="file" id="modfile" name="modfile">
+    <input type="submit"> 
+</form>
