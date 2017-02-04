@@ -29,7 +29,7 @@ class task():
     selected_machines = list()
     task = -1
     task_status = -1
-
+    task_id = models.CharField(max_length=32)
     def generate_input(self):
         # Generate the input format for the particular task
         tmp = 0
