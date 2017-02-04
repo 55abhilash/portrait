@@ -1,17 +1,17 @@
 $('#machines_entry').append(
         "<ul id='nav1'>" +
             "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +
-            "</li>" + 
-            "<li> <a class='sidebar_element' id='sidebar_pr' href='http://localhost/pending_reg/'>View Pending Registrations</a>" + 
             "</li>" +
-        "</ul>" + 
+            "<li> <a class='sidebar_element' id='sidebar_pr' href='http://localhost/pending_reg/'>View Pending Registrations</a>" +
+            "</li>" +
+        "</ul>" +
         "</div>");
 $('#machines').append(
-        "<div class='row' id='disp_area'>" + 
+        "<div class='row' id='disp_area'>" +
             "&nbsp; &nbsp; &nbsp; &nbsp;" +
         "</div>" +
-        "<div class='actionbar'>" + 
-            "<ul id='nav2'>" + 
+        "<div class='actionbar'>" +
+            "<ul id='nav2'>" +
             "</ul>" +
             "</div>");
 $('.actionbar').css({'left':'85%', 'width':'20%', 'height':'100%', 'padding-top':'48px', 'padding-left':'75px'});
@@ -71,9 +71,9 @@ $('a.sidebar_element').click(function(event) {
                  if (this.url == "http://localhost/all_minions/") {
                      for (element in response) {
                          // The table in all_minions section
-                         // Note that the third column is an empty one 
+                         // Note that the third column is an empty one
                          // with just three blank spaces present
-                         // This is deliberately done to increase gap between 
+                         // This is deliberately done to increase gap between
                          // the columns adjoining to it
                          $('#minion-table').append("<tr>" +
                              "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
@@ -112,9 +112,9 @@ $('a.sidebar_element').click(function(event) {
                          "<a id='pr' class='ar' href='http://localhost/reject/'>Reject</a>" +
                          "</li>");
                  } else if (this.url == "http://localhost/task_page/") {
-                     //$('#nav1').html("<li>" + 
+                     //$('#nav1').html("<li>" +
                      //        "<a id='task_input' href='http://localhost/task?tid=" + response["0"]  + "'>" + response["1"] + "</a>" +
-                     //        "</li>");    
+                     //        "</li>");
                      alert(this.url);
                  }
 
@@ -157,10 +157,10 @@ $('a.sidebar_element').click(function(event) {
                          }
                      });
                  });
-                 
-                 // Request the html for new module installation 
+
+                 // Request the html for new module installation
                  // The link for it has id = install_mod_page
-                 
+
                  $('a.task_page_class').click(function(event) {
                      event.preventDefault();
                      $('#disp_area').html("<b>Select task to apply from right pane</b>");
@@ -171,7 +171,7 @@ $('a.sidebar_element').click(function(event) {
                          success: function(response) {
                              for (element in response) {
                                  $('#nav2').append("<li>" +
-                                     "<a id='task_input' href='http://localhost/task?tid=" + element + "'>" + response[element] + "</a>" +
+                                     "<a class='task_input' id='task_input' href='http://localhost/task?tid=" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
                                 $('#nav2').append("<li>" +
@@ -180,7 +180,7 @@ $('a.sidebar_element').click(function(event) {
                                 // The click event handler of install_mod_page needs
                                 // to exist in the block where we append the element
                                 // with the class install_mod_page.
-                                // Eg. Here we write the event handler inside the 
+                                // Eg. Here we write the event handler inside the
                                 // success function of the ajax request
                                 $('a.install_mod_page').click(function(event) {
                                     event.preventDefault();
@@ -192,12 +192,12 @@ $('a.sidebar_element').click(function(event) {
                                             $("#disp_area").append(resp);
                                 /*$('#modform').submit(function(event) {
                                     event.preventDefault();
-                                    alert("Clicked");                    
+                                    alert("Clicked");
                                     $.ajax({
                                         url: "http://localhost/install_mod/",
                                         type: "POST",
                                         data: {
-                                            'name': $('#name').val(), 
+                                            'name': $('#name').val(),
                                             'desc': $('#desc').val(),
                                             'modfile': $('#modfile').val(),
                                             'csrfmiddlewaretoken': '{{csrf_token}}'
@@ -207,6 +207,17 @@ $('a.sidebar_element').click(function(event) {
                                         }
                                     });
                                 });*/
+                                        }
+                                    });
+                                });
+                                $('a.task_input').click(function(event) {
+                                    event.preventDefault();
+                                    $.ajax({
+                                        url: $(this).attr('href'),
+                                        type: "GET",
+                                        success: function(resp) {
+                                            alert("success");
+                                            $('#disp_area').html(resp);
                                         }
                                     });
                                 });
@@ -255,4 +266,4 @@ $('#togglesidebar').click(function(event) {
         $('#leftbar').css({'width' : '250px'});
         $('#rightarea').css({'marginLeft' : '250px'});
     }
-});  
+});

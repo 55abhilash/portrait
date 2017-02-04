@@ -1,0 +1,27 @@
+<div id="mod_install_software_div">
+    <input id="ibox" type="text">
+    <div id="submit_install_software_div"> </div>
+</div>
+
+<script>
+    var tid;
+    //tid = get_current_tid();
+    tid = 22;
+    alert("In script!");
+    $("#mod_install_software_div").append('<a id="submit_install_software" href="http://localhost/task?tid=' + tid + '"');
+    $("a").on("click", "#submit_install_software", function(event) {
+        args[1] = Array();
+        args[1][0] = $("#ibox").html();
+        $.ajax({
+            url: $(this).attr('href'),
+            type: "POST",
+            data: {
+                'args': JSON.stringify(args),
+            },
+            success: function(response) {
+              // Print the message : " modulename installed successfully"
+                $('#mod_install_software_div').html($("#ibox").html() + "installed successfully!");
+            }
+        });
+    });
+</script>
