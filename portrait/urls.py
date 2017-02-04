@@ -21,6 +21,8 @@ import login.views
 import pending_registrations.views
 import all_minions.views
 import task_page.views
+import module_install.views
+import task.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,4 +36,8 @@ urlpatterns = [
     url(r'^delete_minions/', all_minions.views.delete_minions, name='delete_minions'),    
     url(r'^refresh/', all_minions.views.refresh, name='refresh'),    
     url(r'^task_page/', task_page.views.send_task_list, name='send_task_list'),    
+    url(r'^install_mod/', module_install.views.mod_install, name='mod_install'),    
+    url(r'^install_mod_page/', module_install.views.mod_install_page, name='install_mod_page'),    
+    url(r'^task/', task.views.run_view_from_taskid, name='run_view_from_taskid'),    
+    url(r'^run_task/', task.views.run_task, name='run_task'),    
 ]

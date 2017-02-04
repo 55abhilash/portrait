@@ -26,7 +26,6 @@ class machine(models.Model):
     status_last_update = models.DateTimeField(default=datetime.datetime.now())
 
 class task():
-    selected_machines = list()
     task = -1
     task_status = -1
     task_id = models.CharField(max_length=32)
@@ -54,7 +53,12 @@ class registrations():
     tmp_machine_var = 0
 
 class job():
-    jid = ""
-
+    jid = models.CharField(max_length=32, primary_key=True)
+    job_status = models.BooleanField(default=False)
+    job_desc = models.CharField(max_length=128)
     def notification(self):
         return 0
+
+class machine_to_job() :
+    machine_id = models.CharField(max_length=128)
+    jid = models.CharField(max_length=32)
