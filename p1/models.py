@@ -25,7 +25,7 @@ class machine(models.Model):
     in_use = models.BooleanField(default=False)
     status_last_update = models.DateTimeField(default=datetime.datetime.now())
 
-class task():
+class task(models.Model):
     task = -1
     task_status = -1
     task_id = models.CharField(max_length=32)
@@ -49,16 +49,16 @@ class task():
     def display_individual_output(self, selected_machines):
         tmp = 0
 
-class registrations():
+class registrations(models.Model):
     tmp_machine_var = 0
 
-class job():
+class job(models.Model):
     jid = models.CharField(max_length=32, primary_key=True)
     job_status = models.BooleanField(default=False)
     job_desc = models.CharField(max_length=128)
     def notification(self):
         return 0
 
-class machine_to_job() :
+class machine_to_job(models.Model) :
     machine_id = models.CharField(max_length=128)
     jid = models.CharField(max_length=32)
