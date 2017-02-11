@@ -26,7 +26,7 @@ client = salt.client.LocalClient()
 e2 = threading.Event()
 e2.set()
 
-class registrations(p1.models.registrations):
+class am_registrations(p1.models.registrations):
     def show_all_registrations(self):
         all = wheel.cmd('key.list_all')['minions']
         # salt_run_minion_status = run.cmd('manage.status')

@@ -15,7 +15,7 @@ import threading
 import thread
 import time
 
-from all_minions.models import registrations as am_registrations
+from all_minions.models import am_registrations
 
 from salt.modules import network
 opts = salt.config.master_config('/etc/salt/master')
@@ -24,7 +24,7 @@ run = salt.runner.RunnerClient(opts)
 e = threading.Event()
 # Create your models here.
 
-class registrations(p1.models.registrations):
+class pr_registrations(p1.models.registrations):
     grains_info_job = '' 
     def show_pending_registrations(self):
         return wheel.cmd('key.list_all')['minions_pre']
