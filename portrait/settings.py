@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'task',
+    'tmp_pre',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -56,8 +57,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'p1.middleware.mid.tmp_middleware',
 ]
-
 ROOT_URLCONF = 'portrait.urls'
 
 TEMPLATES = [
