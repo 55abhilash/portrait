@@ -42,6 +42,3 @@ class pr_registrations(p1.models.registrations):
     def reject_ids(self, machine_ids):
         for machine in machine_ids:
             wheel.cmd('key.reject', machine.split())
-
-
-
