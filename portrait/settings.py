@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task',
     'tmp_pre',
+    'plugin_api',
 ]
 
 MIDDLEWARE_CLASSES = [
