@@ -1,5 +1,4 @@
 """portrait URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
 Examples:
@@ -23,6 +22,10 @@ import all_minions.views
 import task_page.views
 import module_install.views
 import task.views
+from importlib import import_module
+from plugin_api.models import url as plugin_url
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -41,3 +44,7 @@ urlpatterns = [
     url(r'^task/', task.views.run_view_from_taskid, name='run_view_from_taskid'),    
     url(r'^run_task/', task.views.run_task, name='run_task'),    
 ]
+
+for item in plugin_url.objects.all():
+    mod = import_module(item.plugin_name + '.views')
+    urlpatterns.append(url(r'^' + item.url + '/', item.plugin_name + '.views.' + item.fn, name=item.plugin_name + '_' + item.fn))
