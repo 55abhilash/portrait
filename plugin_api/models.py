@@ -14,6 +14,7 @@ class plugins(models.Model):
     desc = models.CharField(max_length=256)
     version = models.FloatField()
     author = models.CharField()
+    is_active = models.BoolField(default=True)
 
 class url(models.Model):
     url = models.CharField(max_length=64)
@@ -54,4 +55,3 @@ class api(models.Model):
     def bind_url(pname, func, url_regex):
         u = url(plugin_name=pname, fn=func, url=url_regex)
         u.save()
-
