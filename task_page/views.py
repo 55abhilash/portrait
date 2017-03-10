@@ -11,7 +11,7 @@ def send_task_list(request):
 	mod = module.objects.all()
         task_dict = dict()
         for item in mod:
-            task_dict[item.id] = item.name
+            task_dict[item.url] = item.name
 	return HttpResponse(json.dumps(task_dict), content_type = 'application/json')
 
 # Create your views here.

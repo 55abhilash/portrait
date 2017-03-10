@@ -6,4 +6,4 @@ from django.db import models
 
 class module(models.Model):
     name = models.CharField(max_length=32)
-    desc = models.CharField(max_length=128)
+    url = models.CharField(max_length=128)
