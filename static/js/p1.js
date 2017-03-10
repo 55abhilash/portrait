@@ -171,7 +171,7 @@ $('a.sidebar_element').click(function(event) {
                          success: function(response) {
                              for (element in response) {
                                  $('#nav2').append("<li>" +
-                                     "<a class='task_input' id='task_input' href='http://localhost/task?tid=" + element + "'>" + response[element] + "</a>" +
+                                     "<a class='task_input' id='task_input' href='http://localhost/" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
                                 $('#nav2').append("<li>" +
