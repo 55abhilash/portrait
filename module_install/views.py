@@ -37,18 +37,21 @@ from module_install.models import module
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import os
+import zipfile
 
 def mod_install_page(request):
     #return HttpResponse(render_to_string('install_mod.html'))
     return render(request, 'install_mod.html')
 
+#TODO : Apply the new approach here
+# No name or description sent from the browser
+# All these will be written in comments in the initial.py file
+# in every plugin.
+# Parse the info from the comments and write to the db
 def mod_install(request): 
     mod = module()
     #mod.name = str(input("Enter name of module in max. 32 chars. (Displayed in task page of app)"))
     #mod.desc = str(input("Enter description of module in max. 128. chars"))
-    mod.name = request.POST.get("name")
-    mod.desc = request.POST.get("desc")
-    mod.save()
     modfile = request.FILES["modfile"]
     modname_ = mod.name.replace(" ", "_")
     fp = open(modname_ + ".zip", "w")
@@ -56,7 +59,16 @@ def mod_install(request):
     fp.close()
     try:
         os.popen("python manage.py startapp " + mod.name.replace(" ", "_"))
-        os.popen("unzip " + modname_ + ".zip -d /tmp")
+        z = zipfile.Zipfile(modfile)
+        z.extract('initial.py', path='/tmp')
+        fp = open('/tmp/initial.py', "r")
+
+        # Parse the comments in initial.py
+        # Start an app with appname=the plugin name in comment
+        # Get values from comments and write to db
+        # Extract other files and copy now to the app folder
+
+        z.extractall(path=name_of_plugin + '/')
         os.popen("cp /tmp/" + modname_ + "/views.py " + modname_)
         os.popen("cp /tmp/" + modname_ + "/models.py " + modname_)
         os.popen("cp -r /tmp/" + modname_ + "/templates " + modname_)
