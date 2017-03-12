@@ -13,8 +13,8 @@ class plugins(models.Model):
     name = models.CharField(max_length=128)
     desc = models.CharField(max_length=256)
     version = models.FloatField()
-    author = models.CharField()
-    is_active = models.BoolField(default=True)
+    author = models.CharField(max_length=128)
+    is_active = models.BooleanField(default=True)
 
 class url(models.Model):
     url = models.CharField(max_length=64)
