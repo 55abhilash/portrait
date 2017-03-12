@@ -38,6 +38,8 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 import os
 import zipfile
+import portrait.settings
+import plugin_api.models
 
 def mod_install_page(request):
     #return HttpResponse(render_to_string('install_mod.html'))
@@ -58,20 +60,21 @@ def mod_install(request):
     fp.write(modfile.read())
     fp.close()
     try:
-        os.popen("python manage.py startapp " + mod.name.replace(" ", "_"))
         z = zipfile.Zipfile(modfile)
         z.extract('initial.py', path='/tmp')
         fp = open('/tmp/initial.py', "r")
 
         # Parse the comments in initial.py
-        # Start an app with appname=the plugin name in comment
+        
         # Get values from comments and write to db
-        # Extract other files and copy now to the app folder
+        plugin_info = plugin_api.models.plugins(name=name_of_plugin, desc=description, version=version_plugin, author=plugin_author, is_active=True)
+        plugin_info.save()
 
-        z.extractall(path=name_of_plugin + '/')
-        os.popen("cp /tmp/" + modname_ + "/views.py " + modname_)
-        os.popen("cp /tmp/" + modname_ + "/models.py " + modname_)
-        os.popen("cp -r /tmp/" + modname_ + "/templates " + modname_)
+        # Start an app with appname=the plugin name in comment
+        os.popen("python manage.py startapp " + name_of_plugin)
+
+        # Extract other files and copy now to the app folder
+        z.extractall(path=portrait.settings.BASE_DIR + '/' + name_of_plugin + '/')
         return HttpResponse('Succesfully installed!')
     except:
         return HttpResponse('Error in installation. Try Again.')
