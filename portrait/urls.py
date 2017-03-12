@@ -23,8 +23,8 @@ import task_page.views
 import module_install.views
 import task.views
 from importlib import import_module
-from plugin_api.models import url as plugin_url
-
+#from plugin_api.models import url as plugin_url
+import plugin_api
 
 
 urlpatterns = [
@@ -45,6 +45,6 @@ urlpatterns = [
     url(r'^run_task/', task.views.run_task, name='run_task'),    
 ]
 
-for item in plugin_url.objects.all():
-    mod = import_module(item.plugin_name + '.views')
-    urlpatterns.append(url(r'^' + item.url + '/', item.plugin_name + '.views.' + item.fn, name=item.plugin_name + '_' + item.fn))
+#for item in plugin_url.url.objects.all():
+#    mod = import_module(item.plugin_name + '.views')
+#    urlpatterns.append(url(r'^' + item.url + '/', item.plugin_name + '.views.' + item.fn, name=item.plugin_name + '_' + item.fn))
