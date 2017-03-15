@@ -65,23 +65,16 @@ def mod_install(request):
         fp = open('/tmp/initial.py', "r")
 
         # Parse the comments in initial.py
-	s1, s2, s3, s4, name_of_plugin, s5, s6, s7 = line.split()                                                                        
-        temp = line.split()
-        description = ''
-        while (temp!='#')     
-                description = description + temp
-                description += ' '
-                temp = line.split()      
-        s8, s9, s10, plugin_version, s11, s12, s13 = line.split()
-        temp = line.split()
-        plugin_author = ''
-        while (temp!='#') 
-                plugin_author += temp
-                plugin_author += ' '
-                temp = line.split()
-        
+	line = fp.readline()
+	temp, name_of_plugin = line.split(': ')
+	line = fp.readline()
+	temp, description = line.split(': ')
+	line = fp.readline()
+	temp, plugin_version = line.split(': ')
+	line = fp.readline()
+	temp, plugin_author = line.split(': ')     
         # Get values from comments and write to db
-        plugin_info = plugin_api.models.plugins(name=name_of_plugin, desc=description, version=version_plugin, author=plugin_author, is_active=True)
+        plugin_info = plugin_api.models.plugins(name=name_of_plugin, desc=description, version=plugin_version, author=plugin_author, is_active=True)
         plugin_info.save()
 
         # Start an app with appname=the plugin name in comment
