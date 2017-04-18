@@ -1,4 +1,5 @@
 <form method=post>
+    {%  csrf_token %}
     <input id=ls_text type=text>
     <input id=ls_sub type=submit>
 </form>
@@ -8,7 +9,9 @@
             event.preventDefault();
             $.ajax({
                 method: 'POST',
-                data: $('#ls_text').html(),
+                data: { 
+                    'dir' : $('#ls_text').html(),
+                },
                 success: function(data) {
                     //jids_list is a global list 
                     //of all the job ids

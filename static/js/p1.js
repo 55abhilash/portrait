@@ -1,3 +1,8 @@
+// Pretty bad code I know,
+// please bear with me.
+// I'll organise this give me time :) 
+
+var jids_list = Array()
 $('#machines_entry').append(
         "<ul id='nav1'>" +
             "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +

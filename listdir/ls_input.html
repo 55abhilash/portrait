@@ -6,13 +6,19 @@
 <script>
     $('#ls_sub').click(function(event) {
             event.preventDefault();
+            alert( $('#ls_text').val());
             $.ajax({
+                url: 'http://localhost/task/ls_run',
                 method: 'POST',
-                data: $('#ls_text').html(),
+                data: { 
+                    'dir' : $('#ls_text').val(),
+                    'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                },
                 success: function(data) {
                     //jids_list is a global list 
                     //of all the job ids
-                    jids_list.append(data);
+                    jids_list += data;
+                    alert(jids_list);
                 }
             });
     });
