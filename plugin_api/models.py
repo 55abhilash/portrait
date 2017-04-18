@@ -6,13 +6,12 @@ from django.db import models
 
 from p1.models import machine
 from module_install.models import module
-from django.conf import settings
 import portrait.urls
 
 class plugins(models.Model):
     name = models.CharField(max_length=128)
     desc = models.CharField(max_length=256)
-    version = models.FloatField()
+    version = models.CharField(max_length=16)
     author = models.CharField(max_length=128)
     is_active = models.BooleanField(default=True)
 
@@ -24,12 +23,12 @@ class url(models.Model):
 class api(models.Model):
     fn_name = models.CharField(max_length=128)
     hook_name = models.CharField(max_length=64)
-    def get_minions():
+    def get_minions(self):
         mins_data = machine.objects.all()
         for item in mins_data:
             minions[item.machine_id] = item.is_live
         return minions
-    def add_action(fn, hook):
+    def add_action(self, fn, hook):
         # Now first we activate the middleware of 
         # the hook.
         # But settings.py cannot be edited at runtime
@@ -44,7 +43,7 @@ class api(models.Model):
         # all the functions on which add_action is called by the plugin 
         # from the db. Therefore, no need of the middleware features (Y).
         api(fn_name=fn, hook_name=hook).save()        
-    def add_to_task_list(nam, ur):
+    def add_to_task_list(self, nam, ur):
         # This is called only when the plugin is to be used
         # as a module. That is, when it is to be used as a module
         # to, usually, perform a specific salt function.
@@ -52,6 +51,6 @@ class api(models.Model):
         # module plugins might do, okay?
         mod = module(name=nam, url=ur)
         mod.save()
-    def bind_url(pname, func, url_regex):
+    def bind_url(self, pname, func, url_regex):
         u = url(plugin_name=pname, fn=func, url=url_regex)
         u.save()

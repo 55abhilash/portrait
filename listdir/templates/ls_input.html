@@ -1,0 +1,19 @@
+<form method=post>
+    <input id=ls_text type=text>
+    <input id=ls_sub type=submit>
+</form>
+
+<script>
+    $('#ls_sub').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'POST',
+                data: $('#ls_text').html(),
+                success: function(data) {
+                    //jids_list is a global list 
+                    //of all the job ids
+                    jids_list.append(data);
+                }
+            });
+    });
+</script>

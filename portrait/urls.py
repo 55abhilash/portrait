@@ -24,7 +24,7 @@ import module_install.views
 import task.views
 from importlib import import_module
 #from plugin_api.models import url as plugin_url
-import plugin_api
+import plugin_api.models
 
 
 urlpatterns = [
@@ -41,10 +41,10 @@ urlpatterns = [
     url(r'^task_page/', task_page.views.send_task_list, name='send_task_list'),    
     url(r'^install_mod/', module_install.views.mod_install, name='mod_install'),    
     url(r'^install_mod_page/', module_install.views.mod_install_page, name='install_mod_page'),    
-    url(r'^task/', task.views.run_view_from_taskid, name='run_view_from_taskid'),    
+    url(r'^task/', task.views.url_dispatcher, name='url_dispatcher'),    
     url(r'^run_task/', task.views.run_task, name='run_task'),    
 ]
 
-#for item in plugin_url.url.objects.all():
+#for item in plugin_api.models.url.objects.all():
 #    mod = import_module(item.plugin_name + '.views')
 #    urlpatterns.append(url(r'^' + item.url + '/', item.plugin_name + '.views.' + item.fn, name=item.plugin_name + '_' + item.fn))

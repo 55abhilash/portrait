@@ -2,19 +2,20 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from importlib import import_module
 from module_install.models import module
+# from plugin_api.models import url
 # Create your views here.
+import plugin_api
 
-def run_view_from_taskid(request):
-    # 1) Get database entry with the task_id argument
-    tid = request.GET.get("tid")
-    task = module.objects.get(id=tid)
-    # 2) Get the corresponding name and convert spaces in it to underscores
-    modname = task.name.replace(" ", "_") 
-    # 3) Import the view from the above module name
-    modview = modname + ".views"
-    modview_module = import_module(modview)
-    # 4) Return a call to the input function of the module
-    return modview_module.input_for_view(request)
+def url_dispatcher(request):
+    # url is of the form http://localhost/task/listdir_something
+    regex = request.path.split('/')[2]
+    for item in plugin_api.models.url.objects.all():
+        if item.url == regex:
+            plugin_name = item.plugin_name
+            views = import_module(plugin_name + ".views")
+            view_fn = getattr(views, item.fn, None)
+            return view_fn()
+    return "No url regex found!"
 
 def run_task(request):
     tid = request.GET.get("tid")

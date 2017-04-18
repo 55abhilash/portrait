@@ -171,11 +171,11 @@ $('a.sidebar_element').click(function(event) {
                          success: function(response) {
                              for (element in response) {
                                  $('#nav2').append("<li>" +
-                                     "<a class='task_input' id='task_input' href='http://localhost/" + element + "'>" + response[element] + "</a>" +
+                                     "<a class='task_input' id='task_input' href='http://localhost/task/" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
                                 $('#nav2').append("<li>" +
-                                    "<a class='install_mod_page' href='http://localhost/install_mod_page'>Install new module</a>" +
+                                    "<a class='install_mod_page' href='http://localhost/install_mod_page/'>Install new module</a>" +
                                     "</li>");
                                 // The click event handler of install_mod_page needs
                                 // to exist in the block where we append the element

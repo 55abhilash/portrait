@@ -40,6 +40,8 @@ import os
 import zipfile
 import portrait.settings
 import plugin_api.models
+import django
+
 
 def mod_install_page(request):
     #return HttpResponse(render_to_string('install_mod.html'))
@@ -51,16 +53,16 @@ def mod_install_page(request):
 # in every plugin.
 # Parse the info from the comments and write to the db
 def mod_install(request): 
-    mod = module()
-    #mod.name = str(input("Enter name of module in max. 32 chars. (Displayed in task page of app)"))
+        mod = module()
+        #mod.name = str(input("Enter name of module in max. 32 chars. (Displayed in task page of app)"))
     #mod.desc = str(input("Enter description of module in max. 128. chars"))
-    modfile = request.FILES["modfile"]
-    modname_ = mod.name.replace(" ", "_")
-    fp = open(modname_ + ".zip", "w")
-    fp.write(modfile.read())
-    fp.close()
-    try:
-        z = zipfile.Zipfile(modfile)
+        modfile = request.FILES["modfile"]
+        modname_ = mod.name.replace(" ", "_")
+        fp = open(modname_ + ".zip", "w")
+        fp.write(modfile.read())
+        fp.close()
+    #try:
+        z = zipfile.ZipFile(modfile)
         z.extract('initial.py', path='/tmp')
         fp = open('/tmp/initial.py', "r")
 
@@ -78,10 +80,14 @@ def mod_install(request):
         plugin_info.save()
 
         # Start an app with appname=the plugin name in comment
-        os.popen("python manage.py startapp " + name_of_plugin)
+        os.popen("python manage.py startapp " + name_of_plugin.replace('\n',''))
 
         # Extract other files and copy now to the app folder
-        z.extractall(path=portrait.settings.BASE_DIR + '/' + name_of_plugin + '/')
+        z.extractall(path=portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n', '') + '/')
+        # Run the plugins initial.py
+        os.popen('cp ' + portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n','') + '/' + 'initial.py ' + portrait.settings.BASE_DIR)
+        os.popen('python ' + portrait.settings.BASE_DIR + '/' + 'initial.py')
+        os.popen('rm ' + portrait.settings.BASE_DIR + '/initial.py')
         return HttpResponse('Succesfully installed!')
-    except:
-        return HttpResponse('Error in installation. Try Again.')
+    #except:
+     #   return HttpResponse('Error in installation. Try Again.')

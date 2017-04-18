@@ -3,9 +3,12 @@
 # Version : 0.0.1
 # Author : Lorik Canaar(canaar@openmailbox.org)
 
-import plugin_api.models
+import django
+django.setup()
 
-a = plugin_api.models.api()
+from plugin_api.models import api
+
+a = api()
 a.add_to_task_list('ls', 'ls_input')
 
 a.bind_url('ls', 'ls.views.ls_input', 'ls_input')
