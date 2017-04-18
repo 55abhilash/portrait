@@ -9,13 +9,15 @@ import plugin_api
 def url_dispatcher(request):
     # url is of the form http://localhost/task/listdir_something
     regex = request.path.split('/')[2]
+    print("DEBUG : regex requested = " + str(regex))
     for item in plugin_api.models.url.objects.all():
+        print("DEBUG : item.url = " + str(item.url))
         if item.url == regex:
             plugin_name = item.plugin_name
             views = import_module(plugin_name + ".views")
             view_fn = getattr(views, item.fn, None)
             return view_fn()
-    return "No url regex found!"
+    return HttpResponse("No url regex found!")
 
 def run_task(request):
     tid = request.GET.get("tid")
