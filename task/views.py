@@ -16,7 +16,7 @@ def url_dispatcher(request):
             plugin_name = item.plugin_name
             views = import_module(plugin_name + ".views")
             view_fn = getattr(views, item.fn, None)
-            return view_fn()
+            return view_fn(request)
     return HttpResponse("No url regex found!")
 
 def run_task(request):

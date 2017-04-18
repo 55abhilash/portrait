@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 def ls_input(request):
     print("DEBUG : Inside ls_input..")
-    return render(request, 'ls_input.html')
+    return HttpResponse(open('listdir/ls_input.html').read(), content_type='text')
 def list_files(request):
     jid = api.run_command(api.get_selected_minions(), 'ls', args=request.POST.folder)
     return HttpResponse(jid, content_type='text')
