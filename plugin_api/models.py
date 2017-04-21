@@ -8,6 +8,10 @@ from p1.models import machine
 from module_install.models import module
 import portrait.urls
 
+import salt.client
+local = salt.client.LocalClient()
+
+
 class plugins(models.Model):
     name = models.CharField(max_length=128)
     desc = models.CharField(max_length=256)
@@ -23,6 +27,8 @@ class url(models.Model):
 class api(models.Model):
     fn_name = models.CharField(max_length=128)
     hook_name = models.CharField(max_length=64)
+    def get_selected_minions(self):
+        pass
     def get_minions(self):
         mins_data = machine.objects.all()
         for item in mins_data:
@@ -54,3 +60,5 @@ class api(models.Model):
     def bind_url(self, pname, func, url_regex):
         u = url(plugin_name=pname, fn=func, url=url_regex)
         u.save()
+    def run_command(self, minions_list, command, args):
+        return local.cmd_async(minions_list, command, args) 

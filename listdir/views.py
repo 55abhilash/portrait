@@ -16,5 +16,11 @@ def ls_input(request):
     context = Context({'csrf_token':django.middleware.csrf.get_token(request)})
     return HttpResponse(template.render(context))
 def list_files(request):
-    jid = api.run_command(api.get_selected_minions(), 'ls', args=request.POST.folder)
+    #jid = api.run_command(api.get_selected_minions(), 'cmd.run', args=['ls', request.POST.folder])
+    # Running it on a single minion right now
+    # TODO : write the get_selected_minions function
+    a = api()
+    print("DEBUG : request.POST.get('minions[]') = " + str(request.POST.get('minions[]')))
+    print("DEBUG : request.POST = " + str(request.POST))
+    jid = a.run_command(request.POST.get('minions[]'), 'cmd.run', args=['ls', request.POST.get('dir')])
     return HttpResponse(jid, content_type='text')

@@ -2,7 +2,9 @@
 // please bear with me.
 // I'll organise this give me time :) 
 
-var jids_list = Array()
+
+var all_minions_list = Array();
+var all_jids_list = Array();
 $('#machines_entry').append(
         "<ul id='nav1'>" +
             "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +
@@ -80,6 +82,8 @@ $('a.sidebar_element').click(function(event) {
                          // with just three blank spaces present
                          // This is deliberately done to increase gap between
                          // the columns adjoining to it
+                         all_minions_list.push(element);
+                         alert(all_minions_list);
                          $('#minion-table').append("<tr>" +
                              "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
                              "<td id='minnameam" + checkbox_cnt_am + "'>" + element + "</td>" +
@@ -168,6 +172,7 @@ $('a.sidebar_element').click(function(event) {
 
                  $('a.task_page_class').click(function(event) {
                      event.preventDefault();
+                     var jids_list = Array();
                      $('#disp_area').html("<b>Select task to apply from right pane</b>");
                      $('#nav2').html('');
                      $.ajax({
@@ -221,11 +226,24 @@ $('a.sidebar_element').click(function(event) {
                                         url: $(this).attr('href'),
                                         type: "GET",
                                         success: function(resp) {
-                                            alert("success");
                                             $('#disp_area').html(resp);
+                                            alert("PLUGIN HTML RESP. = " + resp);
+                                            $('#disp_area').append("<div style='align:center;' id=minion_bar>" +
+                                                                   '<b>Run on</b> : ' +
+                                                                   '</div>');
+                                            for(item in all_minions_list) { 
+                                                $('#minion_bar').append(
+                                                        "<tr style>" +
+                                                        "<td style='padding: 5px;'>" + 
+                                                        "<input type='checkbox' id='" + all_minions_list[item] + "chk'>" + 
+                                                        "</td>" +
+                                                        "<td id='" + all_minions_list[item] + "'>" + all_minions_list[item] + "</td>" +
+                                                        "</tr>");
+                                            }
                                         }
                                     });
                                 });
+                                
                         }
                 });
             });
@@ -259,6 +277,29 @@ $('a.sidebar_element').click(function(event) {
      return false; //for good measure
  });
 
+// Return the list of selected minions 
+// from the table of all minions
+// below the html of every task
+//
+function get_selected_minions() {
+    var mins = Array();
+    // Iterate over list of minions
+    for(item in all_minions_list) {
+        // The minions list checkboxes are labelled as:
+        // // minionnamechk
+        if(document.getElementById(all_minions_list[item] + 'chk').checked)
+            mins.push(all_minions_list[item]);
+    }
+    return mins;
+}
+
+// Add new task to the running tasks tab
+// JID is a hyperlink to check the status
+// of that particular task
+
+function new_task(jid) {
+    all_jids_list.push(jid);
+}
 $('#leftbar').css({'width' : '250px'});
 $('#rightarea').css({'marginLeft' : '250px'});
 

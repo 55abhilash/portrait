@@ -6,19 +6,21 @@
 <script>
     $('#ls_sub').click(function(event) {
             event.preventDefault();
-            alert( $('#ls_text').val());
             $.ajax({
                 url: 'http://localhost/task/ls_run',
                 method: 'POST',
                 data: { 
                     'dir' : $('#ls_text').val(),
                     'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                    'minions' : get_selected_minions(),
                 },
                 success: function(data) {
                     //jids_list is a global list 
                     //of all the job ids
-                    jids_list += data;
-                    alert(jids_list);
+                    alert("JOB ID is : " + data);
+                    // Another function for the plugin writer.
+                    // data is jid (the only argument)
+                    new_task(data);
                 }
             });
     });
