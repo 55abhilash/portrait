@@ -54,6 +54,7 @@ class registrations(models.Model):
     tmp_machine_var = 0
 
 class job(models.Model):
+    taskname = models.CharField(max_length=32, default='tmp')
     jid = models.CharField(max_length=32, primary_key=True)
     job_status = models.BooleanField(default=False)
     job_desc = models.CharField(max_length=128)

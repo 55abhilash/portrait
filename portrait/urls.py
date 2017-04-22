@@ -41,8 +41,8 @@ urlpatterns = [
     url(r'^task_page/', task_page.views.send_task_list, name='send_task_list'),    
     url(r'^install_mod/', module_install.views.mod_install, name='mod_install'),    
     url(r'^install_mod_page/', module_install.views.mod_install_page, name='install_mod_page'),    
+    url(r'^task/get_all_jobs', task.views.get_all_jobs, name='get_all_jobs'),    
     url(r'^task/', task.views.url_dispatcher, name='url_dispatcher'),    
-    url(r'^run_task/', task.views.run_task, name='run_task'),    
 ]
 
 #for item in plugin_api.models.url.objects.all():

@@ -61,8 +61,8 @@ class api(models.Model):
     def bind_url(self, pname, func, url_regex):
         u = url(plugin_name=pname, fn=func, url=url_regex)
         u.save()
-    def run_command(self, minions_list, command, args, expr_form):
+    def run_command(self, minions_list, command, args, expr_form, task):
         jid = local.cmd_async(minions_list, command, args, expr_form) 
-        j = job(jid=jid, job_status=1, job_desc=str(minions_list))
+        j = job(taskname=task, jid=jid, job_status=1, job_desc=str(minions_list))
         j.save()
         return jid

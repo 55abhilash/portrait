@@ -5,6 +5,8 @@ from module_install.models import module
 # from plugin_api.models import url
 # Create your views here.
 import plugin_api
+from p1.models import job
+import json
 
 def url_dispatcher(request):
     # url is of the form http://localhost/task/listdir_something
@@ -19,14 +21,9 @@ def url_dispatcher(request):
             return view_fn(request)
     return HttpResponse("No url regex found!")
 
-def run_task(request):
-    tid = request.GET.get("tid")
-    task = module.objects.get(task_id=tid)
-    modname = task.name.replace(" ", "_") 
-    modview = modname + ".views"
-    modview_module = import_module(modview)
-
-    args = request.POST.get("args")
-    # By convention, args[0] is the list of minions
-    # and args[1] is the list of arguments to the function
-    return modview_module.run_task(request, args)
+def get_all_jobs(request):
+    resp = dict()
+    for item in job.objects.all():
+        resp[item.jid] = [item.taskname, item.job_status]
+    print("DEBUG : jids dict = " + str(resp))
+    return HttpResponse(json.dumps(resp), content_type='application/json')

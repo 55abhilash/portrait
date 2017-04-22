@@ -35,29 +35,40 @@ $('#runningtasks').toggle(false);
 $('#runningtasks_entry').click(function(event) {
     $('#machines').hide();
     $('#runningtasks').toggle();
-//TODO : Store task name along with jids
-// How to deal with the statuses of the jobs?
-// -> Write fn to get individual / status of list of jobs..
-// .. and keep on polling the request after an interval
-//
-// Keep the jid as a href link, which when clicked will
-// display status, and if completed, will let us know on which 
-// machines it is completed and which is yet to complete and
-// on which it has completed succesfully and on which it has failed
-//
-for(item in all_jids_list) {
-    var parsed_item = all_jids_list[item].split(",");
-    var taskname = parsed_item[0];
-    var jobid = parsed_item[1];
-    $('#task_table').append(
-            "<tr>" +
-            "<td>" + taskname + "</td>" +
-            "<td>" + "<a href='http://localhost/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
-            "<td>" + "<image src=/path/to/gif ></image>" + "</td>" + 
-            "<td>" + "<a class='ref' href='http://localhost/task/get_status?jobid=" + jobid + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" + 
-            "</tr>"
-            );
-    
-}
+    //TODO : Store task name along with jids
+    // How to deal with the statuses of the jobs?
+    // -> Write fn to get individual / status of list of jobs..
+    // .. and keep on polling the request after an interval
+    //
+    // Keep the jid as a href link, which when clicked will
+    // display status, and if completed, will let us know on which 
+    // machines it is completed and which is yet to complete and
+    // on which it has completed succesfully and on which it has failed
+    //
+
+    $.ajax({
+        url: 'http://localhost/task/get_all_jobs',
+        type: 'GET',
+        success: function(response) {
+            // Expect response in the form:
+            //         jid : {taskname, status}
+            for(element in response) {
+                all_jids_list.push(response[element][0] + ',' + element);
+            }
+            for(item in all_jids_list) {
+                var parsed_item = all_jids_list[item].split(",");
+                var taskname = parsed_item[0];
+                var jobid = parsed_item[1];
+                $('#task_table').append(
+                    "<tr>" +
+                   "<td>" + taskname + "</td>" +
+                    "<td>" + "<a href='http://localhost/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
+                    "<td>" + "<image src=/path/to/gif ></image>" + "</td>" + 
+                    "<td>" + "<a class='ref' href='http://localhost/task/get_status?jobid=" + jobid + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" + 
+                    "</tr>"
+                );
+            }
+        }
+    });
 });
 

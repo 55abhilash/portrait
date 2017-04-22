@@ -89,7 +89,6 @@ $('a.sidebar_element').click(function(event) {
                          
                          if($.inArray(element, all_minions_list) == -1) 
                             all_minions_list.push(element);
-                         alert(all_minions_list);
                          $('#minion-table').append("<tr>" +
                              "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
                              "<td id='minnameam" + checkbox_cnt_am + "'>" + element + "</td>" +
@@ -233,7 +232,6 @@ $('a.sidebar_element').click(function(event) {
                                         type: "GET",
                                         success: function(resp) {
                                             $('#disp_area').html(resp);
-                                            alert("PLUGIN HTML RESP. = " + resp);
                                             $('#disp_area').append("<b>Run on </b> " + 
                                                                    "<div  id=minion_bar style='padding: 0px 0px 0px 350px;'  >" +
                                                                    "<table id=minion_bar_tab ></table>" +
@@ -306,7 +304,8 @@ function get_selected_minions() {
 // of that particular task
 
 function new_task(taskname, jid) {
-    all_jids_list.push(taskname + ',' + jid);
+    if($.inArray(taskname + ',' + jid, all_jids_list) == -1) 
+        all_jids_list.push(taskname + ',' + jid);
 }
 $('#leftbar').css({'width' : '250px'});
 $('#rightarea').css({'marginLeft' : '250px'});
