@@ -6,6 +6,7 @@
 <script>
     $('#ls_sub').click(function(event) {
             event.preventDefault();
+            alert("Selected minions = " + get_selected_minions());
             $.ajax({
                 url: 'http://localhost/task/ls_run',
                 method: 'POST',
@@ -20,7 +21,7 @@
                     alert("JOB ID is : " + data);
                     // Another function for the plugin writer.
                     // data is jid (the only argument)
-                    new_task(data);
+                    new_task('listdir', data);
                 }
             });
     });

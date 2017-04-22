@@ -13,7 +13,7 @@ $('#machines_entry').append(
             "</li>" +
         "</ul>" +
         "</div>");
-$('#machines').append(
+$('#machines').html(
         "<div class='row' id='disp_area'>" +
             "&nbsp; &nbsp; &nbsp; &nbsp;" +
         "</div>" +
@@ -33,6 +33,10 @@ $('a#machines_entry').click(function(event) {
 
 $('a.sidebar_element').click(function(event) {
      event.preventDefault();
+     // What is clicked on in the left pane under machines;
+     // All minions or pending registrations
+     // display respective html
+     $('#runningtasks').hide();
      if ($(this).attr('href') == "http://localhost/pending_reg/") {
          $('#disp_area').html("<b>Pending Registrations</b>");
          $('#disp_area').append("<br>" + "&nbsp;&nbsp;" +
@@ -45,7 +49,7 @@ $('a.sidebar_element').click(function(event) {
      } else if ($(this).attr('href') == "http://localhost/all_minions/") {
          $('#disp_area').html("<b>All Minions</b>");
          $('#disp_area').append("<br>" + "&nbsp;&nbsp;" +
-             "<table id='minion-table'>" +
+             "<table id='minion-table' class='minion-table'>" +
              "<tr>" +
              "<th></th>" +
              "<th class='tab-head'>Minion name</th>" +
@@ -82,7 +86,9 @@ $('a.sidebar_element').click(function(event) {
                          // with just three blank spaces present
                          // This is deliberately done to increase gap between
                          // the columns adjoining to it
-                         all_minions_list.push(element);
+                         
+                         if($.inArray(element, all_minions_list) == -1) 
+                            all_minions_list.push(element);
                          alert(all_minions_list);
                          $('#minion-table').append("<tr>" +
                              "<td style='padding: 5px;'>" + "<input type='checkbox' id=chkboxam" + checkbox_cnt_am + ">" + "</td>" +
@@ -228,12 +234,13 @@ $('a.sidebar_element').click(function(event) {
                                         success: function(resp) {
                                             $('#disp_area').html(resp);
                                             alert("PLUGIN HTML RESP. = " + resp);
-                                            $('#disp_area').append("<div style='align:center;' id=minion_bar>" +
-                                                                   '<b>Run on</b> : ' +
+                                            $('#disp_area').append("<b>Run on </b> " + 
+                                                                   "<div  id=minion_bar style='padding: 0px 0px 0px 350px;'  >" +
+                                                                   "<table id=minion_bar_tab ></table>" +
                                                                    '</div>');
                                             for(item in all_minions_list) { 
-                                                $('#minion_bar').append(
-                                                        "<tr style>" +
+                                                $('#minion_bar_tab').append(
+                                                        "<tr>" +
                                                         "<td style='padding: 5px;'>" + 
                                                         "<input type='checkbox' id='" + all_minions_list[item] + "chk'>" + 
                                                         "</td>" +
@@ -287,8 +294,9 @@ function get_selected_minions() {
     for(item in all_minions_list) {
         // The minions list checkboxes are labelled as:
         // // minionnamechk
-        if(document.getElementById(all_minions_list[item] + 'chk').checked)
-            mins.push(all_minions_list[item]);
+        if(document.getElementById(all_minions_list[item] + 'chk').checked) {
+                mins.push(all_minions_list[item]);
+        }
     }
     return mins;
 }
@@ -297,8 +305,8 @@ function get_selected_minions() {
 // JID is a hyperlink to check the status
 // of that particular task
 
-function new_task(jid) {
-    all_jids_list.push(jid);
+function new_task(taskname, jid) {
+    all_jids_list.push(taskname + ',' + jid);
 }
 $('#leftbar').css({'width' : '250px'});
 $('#rightarea').css({'marginLeft' : '250px'});

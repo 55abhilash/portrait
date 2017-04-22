@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 
 from p1.models import machine
+from p1.models import job
 from module_install.models import module
 import portrait.urls
 
@@ -60,5 +61,8 @@ class api(models.Model):
     def bind_url(self, pname, func, url_regex):
         u = url(plugin_name=pname, fn=func, url=url_regex)
         u.save()
-    def run_command(self, minions_list, command, args):
-        return local.cmd_async(minions_list, command, args) 
+    def run_command(self, minions_list, command, args, expr_form):
+        jid = local.cmd_async(minions_list, command, args, expr_form) 
+        j = job(jid=jid, job_status=1, job_desc=str(minions_list))
+        j.save()
+        return jid

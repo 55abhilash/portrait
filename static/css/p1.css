@@ -63,7 +63,7 @@
             
         }
         
-        #minion-table {
+        .minion-table {
             border-radius: 15px;
             border-color: orange;
             border-collapse: separate;

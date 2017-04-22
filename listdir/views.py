@@ -20,7 +20,7 @@ def list_files(request):
     # Running it on a single minion right now
     # TODO : write the get_selected_minions function
     a = api()
-    print("DEBUG : request.POST.get('minions[]') = " + str(request.POST.get('minions[]')))
+    print("DEBUG : request.POST.get('minions[]') = " + str(request.POST.getlist('minions[]') ))
     print("DEBUG : request.POST = " + str(request.POST))
-    jid = a.run_command(request.POST.get('minions[]'), 'cmd.run', args=['ls', request.POST.get('dir')])
+    jid = a.run_command(request.POST.getlist('minions[]'), 'cmd.run', args=['ls', request.POST.get('dir')], expr_form='list')
     return HttpResponse(jid, content_type='text')
