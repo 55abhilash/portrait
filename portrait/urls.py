@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^install_mod/', module_install.views.mod_install, name='mod_install'),    
     url(r'^install_mod_page/', module_install.views.mod_install_page, name='install_mod_page'),    
     url(r'^task/get_all_jobs', task.views.get_all_jobs, name='get_all_jobs'),    
+    url(r'^task/job_info', task.views.job_info, name='job_info'),    
     url(r'^task/', task.views.url_dispatcher, name='url_dispatcher'),    
 ]
 

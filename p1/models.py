@@ -58,6 +58,8 @@ class job(models.Model):
     jid = models.CharField(max_length=32, primary_key=True)
     job_status = models.BooleanField(default=False)
     job_desc = models.CharField(max_length=128)
+    def job_output(self, jid):
+        return run.cmd('jobs.lookup_jid', arg=jid)
     def notification(self):
         return 0
 

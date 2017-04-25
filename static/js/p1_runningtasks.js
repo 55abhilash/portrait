@@ -4,16 +4,22 @@
 //      JID
 //      Status
 
+// Right hand side area in the running tasks div is 
+// for outputs
+// We call it the output area
 $('#runningtasks').html(
         "<div class='row' id='disp_area_tasks'>" +
         "&nbsp; &nbsp; &nbsp; &nbsp;" +
+        "</div>" + 
+        "<div class='output_area' id='output_area'>" +
         "</div>"
 );
+$('#output_area').css({'left': '60%', 'padding-top': '48px', 'padding-left': '500px'});
  $('#disp_area_tasks').css({
     'left': '25%',
     'width': '75%',
     'font-size': '100%',
-    'text-align': 'center',
+    'text-indent': '200px',
     'padding':'8px'
  });
 
@@ -59,16 +65,48 @@ $('#runningtasks_entry').click(function(event) {
                 var parsed_item = all_jids_list[item].split(",");
                 var taskname = parsed_item[0];
                 var jobid = parsed_item[1];
-                $('#task_table').append(
-                    "<tr>" +
-                   "<td>" + taskname + "</td>" +
-                    "<td>" + "<a href='http://localhost/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
-                    "<td>" + "<image src=/path/to/gif ></image>" + "</td>" + 
-                    "<td>" + "<a class='ref' href='http://localhost/task/get_status?jobid=" + jobid + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" + 
-                    "</tr>"
-                );
+                if($('#task_table').html().indexOf(jobid) == -1) { 
+                
+                    $('#task_table').append(
+                        "<tr>" +
+                        "<td>" + taskname + "</td>" +
+                        "<td>" + "<a class='job_entry' href='http://localhost/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
+                        "<td>" + "<image src=/path/to/gif ></image>" + "</td>" + 
+                        "<td>" + "<a class='ref' href='http://localhost/task/get_status?jobid=" + jobid + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" + 
+                        "</tr>"
+                    );
+                }
             }
+            $('.job_entry').click(function(event) {
+                event.preventDefault();
+                // First empty the output area
+                // so as not to append same job info
+                // again and again
+                $('#output_area').html('');
+                $.ajax({
+                    url: $(this).attr('href'),
+                    success: function(response) {
+                    // Expect response in the form:
+                    //         minion_name: result_on_that_minion
+                        for(element in response) {
+                            $('#output_area').append(
+                                    "<a class='rslt' id='" + element + "_result_href' " + "href='#" + element + "_result'>" + "&#10 &#13" +  element + "</a>" +
+                                    "<div id='" + element + "_result'>" + response[element] +  "</div>"
+                                    );
+                            $('#' + element + '_result').toggle();
+                            $('#' + element + '_result_href').click(function(event) {
+                                event.preventDefault();
+                                //The required division id is elementname_result
+                                //So we have to obtain only the elementname :
+                                $('#' + element + '_result').toggle();
+                            });
+                        }
+                    }
+                });     
+            });
         }
     });
 });
+
+
 

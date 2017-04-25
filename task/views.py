@@ -7,6 +7,11 @@ from module_install.models import module
 import plugin_api
 from p1.models import job
 import json
+import salt.runner
+import salt.config
+
+opts = salt.config.client_config('/etc/salt/master')
+run = salt.runner.RunnerClient(opts)
 
 def url_dispatcher(request):
     # url is of the form http://localhost/task/listdir_something
@@ -27,3 +32,7 @@ def get_all_jobs(request):
         resp[item.jid] = [item.taskname, item.job_status]
     print("DEBUG : jids dict = " + str(resp))
     return HttpResponse(json.dumps(resp), content_type='application/json')
+
+def job_info(request):
+    jid = request.GET.get('jobid')
+    return HttpResponse(json.dumps(run.cmd('jobs.lookup_jid', arg=[jid])), content_type='application/json')
