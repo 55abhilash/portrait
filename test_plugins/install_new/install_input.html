@@ -1,0 +1,28 @@
+<form method=post>
+    <input id=install_text type=text>
+    <input id=install_sub type=submit>
+</form>
+
+<script>
+    $('#install_sub').click(function(event) {
+            event.preventDefault();
+            alert("Selected minions = " + get_selected_minions());
+            $.ajax({
+                url: 'http://localhost/task/install',
+                method: 'POST',
+                data: { 
+                    'soft' : $('#install_text').val(),
+                    'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                    'minions' : get_selected_minions(),
+                },
+                success: function(data) {
+                    //jids_list is a global list 
+                    //of all the job ids
+                    alert("JOB ID is : " + data);
+                    // Another function for the plugin writer.
+                    // data is jid (the only argument)
+                    new_task('listdir', data);
+                }
+            });
+    });
+</script>

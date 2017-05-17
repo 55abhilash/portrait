@@ -20,9 +20,10 @@ def url_dispatcher(request):
     for item in plugin_api.models.url.objects.all():
         print("DEBUG : item.url = " + str(item.url))
         if item.url == regex:
-            plugin_name = item.plugin_name
-            views = import_module(plugin_name + ".views")
+            plugin_name = item.plugin_name.replace(' ', '_')
+            views = import_module(plugin_name + ".views")   
             view_fn = getattr(views, item.fn, None)
+            print("DEBUG : item.fn = " + str(item.fn))
             return view_fn(request)
     return HttpResponse("No url regex found!")
 

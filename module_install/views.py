@@ -4,33 +4,6 @@ from django.shortcuts import render
 
 # latter custom modules will work.
 ####
-'''
-TO DO : 
-    WHAT THIS SCRIPT IS SUPPOSED TO DO AND HOW ACTUALLY AND INSTALLED MODULE IS GOING TO WORK
-            
-    Take as input the name of the module and its short description.
-    Save it in db (using module_install.models).
-    While saving there is no primary key. Therefore, a field called id is added by django.
-
-    Now, we start a django app with the name of the module (spaces replaced with underscores).
-    The created app folders' all files will be replaced with those written by the user.
-
-    WHAT HAPPENS ACTUALLY, FRONTEND TO BACKEND, STEP BY STEP?
-
-    1) User clicks on CONNECT TO SELECTED link.
-    2) Request is redirected to the task_page app3) The task_page apps view called send_task_list performs here.
-    3) The task_page apps view called send_task_list performs here.
-    4) The view will read the db table called modules.
-    5) It will return a dictionary of module id as key and name as value.
-    6) Browser receives the dictionary in json format.
-    7) We now fill the received json in the right hand side action bar.
-    8) Now each of the module name is an element of the unordered list.
-    9) But what url should it redirect to; when each of this element is clicked?
-    10) We give it a url as localhost/get_task_input?task_id=THE_TASK_ID
-    11) Now if an element is clicked, the view to send input of the specified task_id is run
-    12) The view basically, gets the module name(i) corresponding to the task_id in the GET request
-    13) It then calls the view in the custom module which is the app with the module name (i) 
-'''
 
 # Usage : python install_mod.py module_folder_path
 from module_install.models import module
@@ -80,12 +53,12 @@ def mod_install(request):
         plugin_info.save()
 
         # Start an app with appname=the plugin name in comment
-        os.popen("python manage.py startapp " + name_of_plugin.replace('\n',''))
+        os.popen("python manage.py startapp " + name_of_plugin.replace('\n','').replace(' ', '_'))
 
         # Extract other files and copy now to the app folder
-        z.extractall(path=portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n', '') + '/')
+        z.extractall(path=portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n', '').replace(' ', '_') + '/')
         # Run the plugins initial.py
-        os.popen('cp ' + portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n','') + '/' + 'initial.py ' + portrait.settings.BASE_DIR)
+        os.popen('cp ' + portrait.settings.BASE_DIR + '/' + name_of_plugin.replace('\n','').replace(' ', '_') + '/' + 'initial.py ' + portrait.settings.BASE_DIR)
         os.popen('python ' + portrait.settings.BASE_DIR + '/' + 'initial.py')
         os.popen('rm ' + portrait.settings.BASE_DIR + '/initial.py')
         return HttpResponse('Succesfully installed!')

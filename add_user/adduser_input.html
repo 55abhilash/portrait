@@ -1,0 +1,26 @@
+<form method=post>
+    <input id=adduser_uname placeholder=UserName type=text>
+    <input id=adduser_pwd placeholder=Password type=password>
+    <input id=adduser_sub type=submit>
+</form>
+
+<script>
+    $('#adduser_sub').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: 'http://localhost/task/add_user',
+                method: 'POST',
+                data: {
+                    'uname': $('#adduser_uname').val(),
+                    'pwd': $('#adduser_pwd').val(),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'minions': get_selected_minions(),
+                },
+                success: function(data) {
+                    //jids_list is a global list 
+                    //of all the job ids
+                    new_task('add_user', data);
+                }
+            });
+    });
+</script>
