@@ -8,7 +8,7 @@
             event.preventDefault();
             alert("Selected minions = " + get_selected_minions());
             $.ajax({
-                url: 'http://localhost/task/install',
+                url: 'http://localhost/task/install_run',
                 method: 'POST',
                 data: { 
                     'soft' : $('#install_text').val(),
@@ -21,7 +21,7 @@
                     alert("JOB ID is : " + data);
                     // Another function for the plugin writer.
                     // data is jid (the only argument)
-                    new_task('listdir', data);
+                    new_task('Install a Software', data);
                 }
             });
     });

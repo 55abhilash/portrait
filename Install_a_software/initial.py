@@ -11,8 +11,8 @@ from plugin_api.models import api
 a = api()
 a.add_to_task_list('Install a software', 'install_input')
 
-a.bind_url('Install a software', 'Install_a_software.views.install_input', 'install_input')
-a.bind_url('Install a software', 'Install_a_software.views.install_run', 'install_run')
+a.bind_url('Install a software', 'install_input', 'install_input')
+a.bind_url('Install a software', 'install_run', 'install_run')
 
 #TODO Urgent : Change the way the task list is rendered in browser 
 # (Right now the url of each task in the list is localhost/task?tid=something
