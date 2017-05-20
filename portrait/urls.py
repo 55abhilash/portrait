@@ -25,7 +25,7 @@ import task.views
 from importlib import import_module
 #from plugin_api.models import url as plugin_url
 import plugin_api.models
-
+import stats.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -43,7 +43,10 @@ urlpatterns = [
     url(r'^install_mod_page/', module_install.views.mod_install_page, name='install_mod_page'),    
     url(r'^task/get_all_jobs', task.views.get_all_jobs, name='get_all_jobs'),    
     url(r'^task/job_info', task.views.job_info, name='job_info'),    
-    url(r'^task/', task.views.url_dispatcher, name='url_dispatcher'),    
+    url(r'^task/', task.views.url_dispatcher, name='url_dispatcher'),
+    url(r'^job_statuses/', task.views.job_statuses, name='job_statuses'),
+    url(r'^get_graph_data_tasks/', stats.views.graph_data_tasks, name='graph_data_tasks'),
+    url(r'^get_graph_data_minions/', stats.views.graph_data_minions, name='graph_data_minions'),
 ]
 
 #for item in plugin_api.models.url.objects.all():

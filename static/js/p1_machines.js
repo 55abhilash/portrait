@@ -1,15 +1,35 @@
+/*
+Copyright (C) <2017>  Abhilash Mhaisne <55abhilash@openmailbox.org>
+                      Ajinkya Panaskar <ajinkya.panaskar@outlook.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+
 // Pretty bad code I know,
 // please bear with me.
 // I'll organise this give me time :) 
 
-
+//Did it ;)
 var all_minions_list = Array();
 var all_jids_list = Array();
 $('#machines_entry').append(
         "<ul id='nav1'>" +
-            "<li> <a class='sidebar_element' id='sidebar_am' href='http://localhost/all_minions/'>All minions</a>" +
+            "<li> <a class='sidebar_element' id='sidebar_am' href='/all_minions/'>All minions</a>" +
             "</li>" +
-            "<li> <a class='sidebar_element' id='sidebar_pr' href='http://localhost/pending_reg/'>View Pending Registrations</a>" +
+            "<li> <a class='sidebar_element' id='sidebar_pr' href='/pending_reg/'>View Pending Registrations</a>" +
             "</li>" +
         "</ul>" +
         "</div>");
@@ -37,31 +57,32 @@ $('a.sidebar_element').click(function(event) {
      // All minions or pending registrations
      // display respective html
      $('#runningtasks').hide();
-     if ($(this).attr('href') == "http://localhost/pending_reg/") {
+     $('#dashboard').hide();
+     if ($(this).attr('href') == "/pending_reg/") {
          $('#disp_area').html("<b>Pending Registrations</b>");
          $('#disp_area').append("<br>" + "&nbsp;&nbsp;" +
-             "<table id='minion-table'>" +
+             "<table id='minion-table' class='minion-table'>" +
              "<tr>" +
              "<th class='tab-head'>Request from </th>" +
              "<th class='tab-head'></th>" +
              "</tr>" +
              "</table>");
-     } else if ($(this).attr('href') == "http://localhost/all_minions/") {
+     } else if ($(this).attr('href') == "/all_minions/") {
          $('#disp_area').html("<b>All Minions</b>");
          $('#disp_area').append("<br>" + "&nbsp;&nbsp;" +
              "<table id='minion-table' class='minion-table'>" +
              "<tr>" +
-             "<th></th>" +
+             "<th> <input id='select_all' type='checkbox'> </a></th>" +
              "<th class='tab-head'>Minion name</th>" +
              "<th style='text-align:center;'>OS</th>" +
              "<th></th>" +
              "<th>Latest IP Address</th>" +
              "<th></th>" +
              "<th class='tab-head' style='text-align:center;'>Status</th>" +
-             "<th>Refresh </th>" +
+             "<th> </th>" +
              "</tr>" +
              "</table>");
-     } else if ($(this).attr('href') == "http://localhost/task_page/") {}
+     } else if ($(this).attr('href') == "/task_page/") {}
      $('#disp_area').css({
          'left': '25%',
          'width': '75%',
@@ -79,7 +100,7 @@ $('a.sidebar_element').click(function(event) {
                  var selected_ids = Array();
                  var checkbox_cnt_pr = 0;
                  var checkbox_cnt_am = 0;
-                 if (this.url == "http://localhost/all_minions/") {
+                 if (this.url == "/all_minions/") {
                      for (element in response) {
                          // The table in all_minions section
                          // Note that the third column is an empty one
@@ -97,21 +118,24 @@ $('a.sidebar_element').click(function(event) {
                              "<td>" + response[element][1] + "</td>" +
                              "<td>" + "&nbsp;" + "</td>" +
                              "<td id=" + element + " class=" + response[element][2] + ">" + response[element][2] + "</td>" +
-                             "<td> " + "<a class='ref' href='http://localhost/refresh?ids=" + element + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" +
+                             "<td> " + "<a class='ref' href='/refresh?ids=" + element + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" +
                              "</tr>");
                          checkbox_cnt_am += 1;
                      }
                      $('#nav2').html("<li id='actbar1'>" +
-                         "<a id='am' class='ar' href='http://localhost/delete_minions/'>Delete</a>" +
+                         "<a id='am' class='ar' href='/delete_minions/'>Delete</a>" +
                          "</li>");
                      $('#nav2').append("<li id='actbar2'>" +
-                         "<a class='task_page_class' href='http://localhost/task_page/'>Connect To Selected </a>" +
+                         "<a class='task_page_class' href='/task_page/'>Task Menu</a>" +
+                         "</li>");
+                     $('#nav2').append("<li id='actbar3'>" +
+                         "<a id='ra' class='ar' href='/refresh/'>Refresh</a>" +
                          "</li>");
                      //class = ar implies that page is to be refreshed after the corresponding ajax success
                      //class = sidebar_element implies completely new content to be put in the sidebars and disp-area
                  }
                  //Append checkboxes in front of minion names
-                 else if (this.url == "http://localhost/pending_reg/") {
+                 else if (this.url == "/pending_reg/") {
                      for (element in response) {
                          $('#minion-table').append("<tr>" +
                              "<td id='minnamepr" + checkbox_cnt_pr + "'>" + response[element] + "</td>" +
@@ -120,12 +144,12 @@ $('a.sidebar_element').click(function(event) {
                          checkbox_cnt_pr += 1;
                      }
                      $('#nav2').html("<li id='actbar1'>" +
-                         "<a id='pr' class='ar' href='http://localhost/accept/'>Accept</a>" +
+                         "<a id='pr' class='ar' href='/accept/'>Accept</a>" +
                          "</li>");
                      $('#nav2').append("<li id='actbar2'>" +
-                         "<a id='pr' class='ar' href='http://localhost/reject/'>Reject</a>" +
+                         "<a id='pr' class='ar' href='/reject/'>Reject</a>" +
                          "</li>");
-                 } else if (this.url == "http://localhost/task_page/") {
+                 } else if (this.url == "/task_page/") {
                      //$('#nav1').html("<li>" +
                      //        "<a id='task_input' href='http://localhost/task?tid=" + response["0"]  + "'>" + response["1"] + "</a>" +
                      //        "</li>");
@@ -135,12 +159,15 @@ $('a.sidebar_element').click(function(event) {
                  function get_selected_ids(id) {
                      var i = 0;
                      var checkbox_cnt;
-                     if (id == "am") {
+                     if ((id == "am") || (id == "ra")) {
                          checkbox_cnt = checkbox_cnt_am;
                      } else {
                          checkbox_cnt = checkbox_cnt_pr;
                      }
                      for (i = 0; i < checkbox_cnt; i++) {
+                         if(id == "ra") {
+                            id = "am";
+                         }
                          console.log('chkbox' + id + i);
                          if (document.getElementById('chkbox' + id + i).checked) {
                              selected_ids.push($('#minname' + id + i).text());
@@ -159,15 +186,18 @@ $('a.sidebar_element').click(function(event) {
                          },
                          contentType: "application/json; charset=utf-8",
                          success: function(response) {
-                             window.location.replace("http://localhost/#tabs-2");
+                             window.location.replace("/#tabs-2");
                              console.log("this.url = " + this.url);
-                             if (this.url.startsWith("http://localhost/delete_minions/")) {
+                             if (this.url.startsWith("/delete_minions/")) {
                                  $('#sidebar_am').click();
                                  checkbox_cnt_am -= selected_ids.length;
-                             } else {
+                             } else if (this.url.startsWith("/pending_reg/")){
                                  $('#sidebar_pr').click();
                                  checkbox_cnt_pr -= selected_ids.length;
+                             } else {
+                                 $('#sidebar_am').click();
                              }
+                             
                          }
                      });
                  });
@@ -186,11 +216,11 @@ $('a.sidebar_element').click(function(event) {
                          success: function(response) {
                              for (element in response) {
                                  $('#nav2').append("<li>" +
-                                     "<a class='task_input' id='task_input' href='http://localhost/task/" + element + "'>" + response[element] + "</a>" +
+                                     "<a class='task_input' id='task_input' href='/task/" + element + "'>" + response[element] + "</a>" +
                                      "</li>");
                              }
                                 $('#nav2').append("<li>" +
-                                    "<a class='install_mod_page' href='http://localhost/install_mod_page/'>Install new module</a>" +
+                                    "<a class='install_mod_page' href='/install_mod_page/'>Install new module</a>" +
                                     "</li>");
                                 // The click event handler of install_mod_page needs
                                 // to exist in the block where we append the element
@@ -279,6 +309,19 @@ $('a.sidebar_element').click(function(event) {
             $('#machines').toggle(true);
          }
      });
+     $('#select_all').click(function(event) {
+            var v = 0;
+            if(document.getElementById('select_all').checked) {
+                for(v = 0; v < all_minions_list.length; v++) {
+                    $('#chkboxam' + v)[0].checked = true;
+                }   
+            }
+            else {
+                for(v = 0; v < all_minions_list.length; v++) {
+                    $('#chkboxam' + v)[0].checked = false;
+                }
+            }
+        });
      return false; //for good measure
  });
 

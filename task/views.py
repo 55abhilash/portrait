@@ -1,3 +1,22 @@
+'''
+Copyright (C) <2017>  Abhilash Mhaisne <55abhilash@openmailbox.org>
+                      Ajinkya Panaskar <ajinkya.panaskar@outlook.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+'''
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from importlib import import_module
@@ -9,9 +28,11 @@ from p1.models import job
 import json
 import salt.runner
 import salt.config
+import salt.output
 
 opts = salt.config.client_config('/etc/salt/master')
 run = salt.runner.RunnerClient(opts)
+#out = salt.output.nested.NestDisplay()
 
 def url_dispatcher(request):
     # url is of the form http://localhost/task/listdir_something
@@ -34,6 +55,25 @@ def get_all_jobs(request):
     print("DEBUG : jids dict = " + str(resp))
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
+def job_statuses(request):
+    stat = dict()
+    for item in job.objects.all():
+        if item.job_status == 1:
+            com = run.cmd('jobs.lookup_jid', arg=[item.jid])
+            total_mins = len(item.job_desc.split(','))
+            stat[item.jid] = (len(com),total_mins)
+            if len(com) == total_mins:
+                item.job_status = 0
+                item.save()
+        else :
+            total_mins = len(item.job_desc.split(','))
+            stat[item.jid] = (total_mins, total_mins)
+    return HttpResponse(json.dumps(stat), content_type='application/json')
+
+
 def job_info(request):
     jid = request.GET.get('jobid')
-    return HttpResponse(json.dumps(run.cmd('jobs.lookup_jid', arg=[jid])), content_type='application/json')
+    com = run.cmd('jobs.lookup_jid', arg=[jid])
+    #print(salt.output.display_output(com, 'yaml'))
+    print("DEBUG : json.dumps = " + str(json.dumps(com, indent=4)))
+    return HttpResponse(json.dumps(com, indent=4), content_type='application/json')

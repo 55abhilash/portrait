@@ -1,12 +1,32 @@
-//Running tasks tab
-//Table consists of these coloumns:
-//      Task name
-//      JID
-//      Status
+/*
+Copyright (C) <2017>  Abhilash Mhaisne <55abhilash@openmailbox.org>
+                      Ajinkya Panaskar <ajinkya.panaskar@outlook.com>
 
-// Right hand side area in the running tasks div is 
-// for outputs
-// We call it the output area
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+/*Running tasks tab
+Table consists of these coloumns:
+      Task name
+      JID
+      Status
+
+ Right hand side area in the running tasks div is 
+ for outputs
+ We call it the output area
+*/
 $('#runningtasks').html(
         "<div class='row' id='disp_area_tasks'>" +
         "&nbsp; &nbsp; &nbsp; &nbsp;" +
@@ -14,7 +34,7 @@ $('#runningtasks').html(
         "<div class='output_area' id='output_area'>" +
         "</div>"
 );
-$('#output_area').css({'left': '60%', 'padding-top': '48px', 'padding-left': '500px'});
+$('#output_area').css({'left': '80%', 'padding-top': '48px', 'padding-left': '500px'});
  $('#disp_area_tasks').css({
     'left': '25%',
     'width': '75%',
@@ -24,7 +44,6 @@ $('#output_area').css({'left': '60%', 'padding-top': '48px', 'padding-left': '50
  });
 
 $('#disp_area_tasks').html('<b>Tasks</b>');
-
 // First of all the coloumn headers in the table
 // // are displayed.
 $('#disp_area_tasks').append("<br>" + "&nbsp;&nbsp;" +
@@ -32,15 +51,17 @@ $('#disp_area_tasks').append("<br>" + "&nbsp;&nbsp;" +
         "<tr>" +
         "<th class='tab-head'>Task</th>" + 
         "<th> Job ID</th>" +
+        "<th> &nbsp;&nbsp;</th>" +
         "<th> Status</th>" +
-        "<th> Refresh</th>" +
         "</tr>" +
         "</table>"
 );
 $('#runningtasks').toggle(false);
 $('#runningtasks_entry').click(function(event) {
     $('#machines').hide();
+    $('#dashboard').hide();
     $('#runningtasks').toggle();
+    $('#output_area').html('');
     //TODO : Store task name along with jids
     // How to deal with the statuses of the jobs?
     // -> Write fn to get individual / status of list of jobs..
@@ -53,7 +74,7 @@ $('#runningtasks_entry').click(function(event) {
     //
 
     $.ajax({
-        url: 'http://localhost/task/get_all_jobs',
+        url: '/task/get_all_jobs',
         type: 'GET',
         success: function(response) {
             // Expect response in the form:
@@ -70,9 +91,9 @@ $('#runningtasks_entry').click(function(event) {
                     $('#task_table').append(
                         "<tr>" +
                         "<td>" + taskname + "</td>" +
-                        "<td>" + "<a class='job_entry' href='http://localhost/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
-                        "<td>" + "<image src=/path/to/gif ></image>" + "</td>" + 
-                        "<td>" + "<a class='ref' href='http://localhost/task/get_status?jobid=" + jobid + "'>" + "<img src='/static/img/refresh.png' class='refresh'>" + "</a>" + "</td>" + 
+                        "<td>" + "<a class='job_entry' href='/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
+                        "<td>" + "" + "</td>" + 
+                        "<td>" + "&nbsp;&nbsp;<image id='" + jobid + "_img' src=/static/img/running.gif ></image>" + "</td>" + 
                         "</tr>"
                     );
                 }
@@ -91,7 +112,8 @@ $('#runningtasks_entry').click(function(event) {
                         for(element in response) {
                             $('#output_area').append(
                                     "<a class='rslt' id='" + element + "_result_href' " + "href='#" + element + "_result'>" + "&#10 &#13" +  element + "</a>" +
-                                    "<div id='" + element + "_result'>" + response[element] +  "</div>"
+                                    //"<div id='" + element + "_result'>" + JSON.stringify(response[element], null) +  "</div>"
+                                    "<div id='" + element + "_result'>" + JSON.stringify(response[element]).replace(/{/g, "").replace(/}/g, "").replace(/"/g, "").replace(/:/g, "&#13<br>").replace(/\\n/g, "<br>") +  "</div>"
                                     );
                             $('#' + element + '_result').toggle();
                             $('#' + element + '_result_href').click(function(event) {
@@ -104,6 +126,30 @@ $('#runningtasks_entry').click(function(event) {
                     }
                 });     
             });
+            job_statuses();
+            function job_statuses() {
+                //$(document).ajaxStart(function() {
+                  //  $("body").removeClass('loading');
+                //});
+                $.ajax({
+                    url: '/job_statuses/',
+                    global: false,
+                    success: function(response) {
+                        for(jid in response) {
+                            if(response[jid][0] == response[jid][1]) {
+                                $('#' + jid + '_img').attr("src", "/static/img/job_done.png");
+                                $('#' + jid + '_img').attr("width", "16");
+                                $('#' + jid + '_img').attr("height", "16");
+                                $('#' + jid + '_img').attr("title", "Job completed on " + response[jid][0] + " out of " + response[jid][1] + " machines.");
+                            }
+                            else {
+                                $('#' + jid + '_img').attr("title", "Job completed on " + response[jid][0] + " out of " + response[jid][1] + " machines.");
+                            }
+                        }
+                        setTimeout(job_statuses, 60000);
+                    }
+                });
+            }
         }
     });
 });

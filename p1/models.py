@@ -1,3 +1,22 @@
+'''
+Copyright (C) <2017>  Abhilash Mhaisne <55abhilash@openmailbox.org>
+                      Ajinkya Panaskar <ajinkya.panaskar@outlook.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+'''
+
 from __future__ import unicode_literals
 
 from django.db import models
@@ -57,7 +76,7 @@ class job(models.Model):
     taskname = models.CharField(max_length=32, default='tmp')
     jid = models.CharField(max_length=32, primary_key=True)
     job_status = models.BooleanField(default=False)
-    job_desc = models.CharField(max_length=128)
+    job_desc = models.CharField(max_length=4096)
     def job_output(self, jid):
         return run.cmd('jobs.lookup_jid', arg=jid)
     def notification(self):
