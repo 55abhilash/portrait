@@ -82,6 +82,6 @@ class api(models.Model):
         u.save()
     def run_command(self, minions_list, command, args, expr_form, task):
         jid = local.cmd_async(minions_list, command, args, expr_form) 
-        j = job(taskname=task, jid=jid, job_status=1, job_desc=str(minions_list))
+        j = job(taskname=task, jid=jid, job_desc=str(minions_list))
         j.save()
         return jid

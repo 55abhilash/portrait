@@ -1,0 +1,20 @@
+<form id=script_form method=post enctype="multipart/form-data" >
+    <input id=script_file type=file>
+    <input id=rs_sub type=submit>
+</form>
+
+<script>
+    $('#rs_sub').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/task/rs_run/',
+                method: 'POST',
+                data: new FormData($('form#script_form')[0]),
+                success: function(data) {
+                    //jids_list is a global list 
+                    //of all the job ids
+                    new_task("Run Script", data);
+                }
+            });
+    });
+</script>

@@ -1,0 +1,33 @@
+-------------------PORTRAIT PLUGIN WRITING GUIDE--------------------------
+
+TODO : We will write a scaffold code template for plugins
+       So authors do not have to only write the plugin specific code
+CONTENTS :-
+1) What a plugin is in portrait and what it is not?
+2) Conventional files in plugins
+3) Specific rules while writing the plugins
+4) HTML files
+5) Views, models, etc.
+
+1) WHAT A PLUGIN IS IN PORTRAIT AND WHAT IT IS NOT :-
+
+A plugin as we know offers a modular functionality, which can be plugged in / out
+of the core system (portrait). 
+Portrait plugins are similar. However, there are few key constraints :-
+
+    i)  A plugin is a module added to the task list in the task menu. It is not any random feature addition anywhere.
+    ii) Plugin must be added to the task list through the add_to_task_list function. More on this later.
+    iii) Usually, a basic plugin page (called the input page) should be displayed on click of the plugin entry in task list; 
+        or any other action if do be done should be specified.
+    iii) There can be any number of links / buttons present on the plugin. Each one is mapped should be mapped to a view function. 
+        Appropriate html / js should be written in templates, which is returned when these buttons, etc. are clicked.
+    iv) In case the plugin requires a link to start a salt job on selected minions, the url to such a link MUST BE /task/pluginname_run
+
+2) CONVENTIONAL FILES IN PLUGINS :-
+
+i) initial.py : Contains author name, etc. info to be written in comments.
+                url bindings, etc. api functions called here. Is run only once while installation.
+
+ii) views.py : View functions which run when a specific url is called and return html / js.
+ii) html templates : Any kind of html / js / css can be used. Django templates can be used, however the author must
+                render the templates in the views file.

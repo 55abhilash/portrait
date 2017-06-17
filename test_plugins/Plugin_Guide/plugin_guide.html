@@ -1,0 +1,26 @@
+<div id=pg_div>
+    <div id=pg_link_div1>
+        <a class=pg_link href='/task/pg_tut'>Plugin tutorial</a>
+    </div>
+    <div id=pg_link_div2>
+        <a class=pg_link href='/task/pg_eg'>Simple Plugin example</a>
+    </div>
+</div>
+
+<script>
+    $('.pg_link').click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).url,
+                method: 'GET',
+                success: function(data) {
+                    if(($(this).url).contains('pg_tut')) {
+                        $('#pg_link_div1').append(data);
+                    }
+                    else {
+                        $('#pg_link_div2').append(data);
+                    }
+                }
+            });
+    });
+</script>

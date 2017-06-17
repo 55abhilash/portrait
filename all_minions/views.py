@@ -26,15 +26,21 @@ from django.contrib.auth import hashers
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+import salt.auth.django
 import json
 
+import salt.config
+opts = salt.config.client_config('/etc/salt/master')
 # Create your views here.
 
 def all_minions(request):
     if(request.user.is_anonymous()):
         resp = {'status' : '-1', 'url' : 'http://localhost/'}
         return HttpResponse(json.dumps(resp), content_type = 'application/json')        
+
+    #salt.auth.django.django_auth_setup()
+    #salt.auth.django.auth(request.user, User.objects.get(username=request.user).password)
+    #salt.auth.django.auth('abhi', 'goosfrabaD')
     reg = am_registrations()
     return HttpResponse(json.dumps(reg.show_all_registrations()), content_type = 'application/json')
 

@@ -1,4 +1,3 @@
-# Plugin Name : listdir
 # Description : Display file and directory listing of root folder
 # Version : 0.0.1
 # Author : Lorik Canaar(canaar@openmailbox.org)

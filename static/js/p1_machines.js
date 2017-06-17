@@ -350,6 +350,13 @@ function new_task(taskname, jid) {
     if($.inArray(taskname + ',' + jid, all_jids_list) == -1) 
         all_jids_list.push(taskname + ',' + jid);
 }
+
+// Remove the minion table if not required by plugin
+// WIll be present by default
+
+function no_minions_disp() {
+    $('#minion_bar_tab').html('');
+}
 $('#leftbar').css({'width' : '250px'});
 $('#rightarea').css({'marginLeft' : '250px'});
 

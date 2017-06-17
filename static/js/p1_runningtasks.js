@@ -82,6 +82,7 @@ $('#runningtasks_entry').click(function(event) {
             for(element in response) {
                 all_jids_list.push(response[element][0] + ',' + element);
             }
+            //alert(JSON.stringify(response))
             for(item in all_jids_list) {
                 var parsed_item = all_jids_list[item].split(",");
                 var taskname = parsed_item[0];
@@ -89,14 +90,28 @@ $('#runningtasks_entry').click(function(event) {
                 if($('#task_table').html().indexOf(jobid) == -1) { 
                 
                     $('#task_table').append(
-                        "<tr>" +
+                        "<tr id='row_" + jobid + "'>" +
                         "<td>" + taskname + "</td>" +
                         "<td>" + "<a class='job_entry' href='/task/job_info?jobid=" + jobid + "'>" + jobid + "</a></td>" +
                         "<td>" + "" + "</td>" + 
-                        "<td>" + "&nbsp;&nbsp;<image id='" + jobid + "_img' src=/static/img/running.gif ></image>" + "</td>" + 
                         "</tr>"
                     );
                 }
+                //alert("Response[jobid][1] = " + JSON.stringify(response[jobid][1]));
+                if(JSON.stringify(response[jobid][1]) === "true") {   
+                    //We check if the logo is already there for both types of logos
+                    if($('#logo_job_done_' + jobid).length == 0) {
+                        $('#row_' + jobid).append("<td id='logo_job_done_" + jobid + "'>" + "&nbsp;&nbsp;<image id='" + jobid + "_img' src=/static/img/job_done.png ></image>" + "</td>");  
+                    }
+                }
+                else {
+                    if($('#logo_running_' + jobid).length == 0) {
+                        $('#row_' + jobid).append("<td id='logo_running_" + jobid + "'>" + "&nbsp;&nbsp;<image id='" + jobid + "_img' src=/static/img/running.gif ></image>" + "</td>");   
+                    }
+                }
+                $('#' + jobid + '_img').attr("width", "16");
+                $('#' + jobid + '_img').attr("height", "16");
+
             }
             $('.job_entry').click(function(event) {
                 event.preventDefault();
@@ -126,7 +141,7 @@ $('#runningtasks_entry').click(function(event) {
                     }
                 });     
             });
-            job_statuses();
+            setTimeout(job_statuses, 30000);
             function job_statuses() {
                 //$(document).ajaxStart(function() {
                   //  $("body").removeClass('loading');
@@ -136,10 +151,9 @@ $('#runningtasks_entry').click(function(event) {
                     global: false,
                     success: function(response) {
                         for(jid in response) {
+                            //if job finished on all, change icon to tick mark
                             if(response[jid][0] == response[jid][1]) {
                                 $('#' + jid + '_img').attr("src", "/static/img/job_done.png");
-                                $('#' + jid + '_img').attr("width", "16");
-                                $('#' + jid + '_img').attr("height", "16");
                                 $('#' + jid + '_img').attr("title", "Job completed on " + response[jid][0] + " out of " + response[jid][1] + " machines.");
                             }
                             else {

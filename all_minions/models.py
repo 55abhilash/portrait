@@ -35,6 +35,8 @@ import p1.models
 from p1.models import machine
 import portrait_scheduler.models
 
+import salt.auth
+
 from django.core.exceptions import ObjectDoesNotExist
 
 opts = salt.config.master_config('/etc/salt/master')
@@ -44,7 +46,6 @@ grains = salt.loader.grains(opts)
 client = salt.client.LocalClient()
 e2 = threading.Event()
 e2.set()
-
 class am_registrations(p1.models.registrations):
     def show_all_registrations(self):
         all = wheel.cmd('key.list_all')['minions']
@@ -57,7 +58,8 @@ class am_registrations(p1.models.registrations):
         
         for minion in all:
             minion_status[minion] = list()
-            
+            print("DEBUG : all = ")
+            print(all)
             mac = machine.objects.get(machine_id=minion)
             minion_status[minion].append(mac.os) 
             

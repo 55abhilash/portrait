@@ -58,12 +58,13 @@ def get_all_jobs(request):
 def job_statuses(request):
     stat = dict()
     for item in job.objects.all():
-        if item.job_status == 1:
+        print("DEBUG : item.status, name = " + str(item.job_status) + " " + str(item.taskname))
+        if item.job_status == False:
             com = run.cmd('jobs.lookup_jid', arg=[item.jid])
             total_mins = len(item.job_desc.split(','))
             stat[item.jid] = (len(com),total_mins)
             if len(com) == total_mins:
-                item.job_status = 0
+                item.job_status = True
                 item.save()
         else :
             total_mins = len(item.job_desc.split(','))
